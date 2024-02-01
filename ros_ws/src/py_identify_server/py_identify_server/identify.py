@@ -3,6 +3,7 @@ from interfaces.srv import Identify
 import sys
 import rclpy
 from rclpy.node import Node
+from .spin_robot import SpinRobot
 
 
 class IdentifyService(Node):
@@ -14,6 +15,8 @@ class IdentifyService(Node):
     def serve(self, request, response):
         response.b = request.a * 2
         self.get_logger().info(f'Incoming request, a: {request.a}')
+
+        SpinRobot().trigger()
 
         return response
 
