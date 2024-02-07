@@ -1,3 +1,4 @@
+import time
 from interfaces.srv import Identify
 
 import sys
@@ -17,6 +18,8 @@ class IdentifyService(Node):
         self.get_logger().info(f'Incoming request, a: {request.a}')
 
         SpinRobot().trigger()
+        time.sleep(10)
+        SpinRobot().stop()
 
         return response
 

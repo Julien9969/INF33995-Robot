@@ -1,3 +1,4 @@
+rm /etc/ros/rosdep/sources.list.d/20-default.list
 apt update
 rosdep init
 rosdep update

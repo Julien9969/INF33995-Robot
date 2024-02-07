@@ -16,7 +16,7 @@ class SpinRobot(Node):
 
     def trigger(self):
         rotate_msg = Twist()
-        # rotate_msg.linear.x = 1
+        # rotate_msg.linear.x = 1.0
         rotate_msg.angular.z = 3.14
         print(rotate_msg)
         
@@ -24,6 +24,11 @@ class SpinRobot(Node):
         # self.publisher_.publish("{linear: {x: 1, y: 0, z: 0}, angular: {x: 0, y: 0, z: 6.28}}")
 
         self.get_logger().info('Spinning: "%s"' % rotate_msg)
+
+    def stop(self):
+        rotate_msg = Twist()        
+        self.publisher_.publish(rotate_msg)
+        self.get_logger().info('Stopping spinning: "%s"' % rotate_msg)
         # self.i += 1
 
 
