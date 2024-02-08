@@ -41,7 +41,6 @@ WORKDIR /root
 RUN mkdir /root/INF3995-Robot/ros_ws -p
 COPY deploy-simulation.sh .
 RUN chmod +x /root/deploy-simulation.sh
-RUN mkdir /root/INF3995
 RUN export TERM=xterm-256color
 
 # DISPLAY STUFF
