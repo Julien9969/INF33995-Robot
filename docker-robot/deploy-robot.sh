@@ -5,3 +5,4 @@ rosdep update
 rosdep install --from-paths /root/INF3995-Robot/ros_ws/src --ignore-src -r -i -y --rosdistro humble
 sleep 5
 colcon build
+source install/setup.bash
