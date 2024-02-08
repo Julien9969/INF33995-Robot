@@ -37,7 +37,6 @@ RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
 RUN echo "export GZ_VERSION=fortress" >> /root/.bashrc
 
 RUN mkdir /root/INF3995-Robot -p
-COPY deploy.sh /root
-RUN chmod +x /root/deploy.sh
+COPY deploy-robot.sh /root/deploy-robot.sh
+RUN chmod +x /root/deploy-robot.sh
 
-# TODO : Ajouter un lien vers les périphériques (voir le script de Guillaume)
