@@ -1,0 +1,19 @@
+version: '3'
+services:
+  docker-robot:
+    network-mode: host
+    build: ./docker-robot
+    image: docker-robot
+    container_name: docker-robot-container
+    environment:
+      - ROS_DOMAIN_ID=102
+      - TERM='xterm-256color'
+    devices:
+      - /dev/ttyTHS1
+      - /dev/ydlidar
+      - /sys/bus/usb/001/010
+    volumes:
+      - /home/nvidia/INF3995-Robot:/root/INF3995-Robot
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    # Décommenter cette commande lorsqu'on voudra lancer un launch file automatiquement (RR)
+    # command: /bin/bash -c "source /ros2_ws/install/setup.bash && ros2 launch my_package my_launch_file.launch.py"
