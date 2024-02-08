@@ -40,3 +40,5 @@ RUN mkdir /root/INF3995-Robot -p
 COPY deploy-robot.sh /root/deploy-robot.sh
 RUN chmod +x /root/deploy-robot.sh
 
+COPY clean_workspace.sh /root/clean_workspace.sh
+RUN chmod +x /root/clean_workspace.sh
