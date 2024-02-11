@@ -43,6 +43,9 @@ RUN mkdir /root/INF3995-Robot/ros_ws -p
 COPY deploy-simulation.sh .
 RUN chmod +x /root/deploy-simulation.sh
 RUN export TERM=xterm-256color
+RUN echo "export ROS_DOMAIN_ID=62" >> /root/.bashrc
+RUN echo "export ROS_HOSTNAME=localhost" >> /root/.bashrc
+RUN echo "export ROS_MASTER_URI=http://localhost:11311" >> /root/.bashrc
 
 # DISPLAY STUFF
 #RUN xauth add pop-os/unix:1 MIT-MAGIC-COOKIE-1 1a8a086b0cad131f229f8fe587d633ae
