@@ -14,13 +14,17 @@ class IdentifyService(Node):
         self.srv = self.create_service(Identify, 'identify', self.serve)
 
     def serve(self, request, response):
-        response.b = request.a * 2
-        self.get_logger().info(f'Incoming request, a: {request.a}')
+        if request.identify == 0:
+            response.response = "Identify request not treated"
+            return response
+
+        self.get_logger().info(f'Incoming request, identify: {bool(request.identify)}')
 
         SpinRobot().trigger()
         time.sleep(10)
         SpinRobot().stop()
 
+        response.response = "Identify request completed"
         return response
 
 
