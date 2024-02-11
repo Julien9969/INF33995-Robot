@@ -2,11 +2,12 @@ version: '3'
 services:
   docker-robot:
     network_mode: host
+    ipc: host
+    pid: host
     build: ./docker-robot
     image: docker-robot
     container_name: docker-robot-container
     environment:
-      - ROS_DOMAIN_ID=102
       - TERM='xterm-256color'
     devices:
       - /dev/ttyTHS1
