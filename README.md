@@ -11,3 +11,21 @@ Pour rouler le docker de la simulation, utiliser directement le `Dockerfile` de 
 Il est ensuite possible de lancer le docker avec la commande suivante:
 
 `source <emplacement_de_votre_venv_avec_rocker>/bin/activate && rocker --x11 --network=host --device=/dev/dri --volume <emplacement_de_votre_clone_de_INF3995-Robot>:/root/INF3995-Robot --image-name=rosign rosignbase`
+
+
+Start Rocker
+```
+rocker --x11 --network=host --device=/dev/dri --volume $(pwd):/root/INF3995-Robot  --image-name=rosign --name=simulation-ign rosignbase 
+```
+**Lancer la simulation**
+```
+./deploy-simulation.sh
+```
+**Open a Bash in Rocker**
+```
+docker exec -it simulation-ign bash 
+```
+**Source setup.sh**
+```
+source INF3995-Robot/ros_ws/install/setup.sh
+```
