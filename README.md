@@ -29,3 +29,15 @@ docker exec -it simulation-ign bash
 ```
 source INF3995-Robot/ros_ws/install/setup.sh
 ```
+
+**Le topic ne reçoit rien ?**
+```
+ros2 topic info </topic_name>
+```
+
+**Tester la connection rapidement**  
+D'abord publish le ros2 topic pub --rate 1 /limo/cmd_vel... dans le backend  
+**puis**
+```
+ros2 topic echo /limo/cmd_vel
+```
