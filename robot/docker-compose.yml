@@ -9,6 +9,7 @@ services:
     container_name: docker-robot-container
     environment:
       - TERM='xterm-256color'
+      - ROBOT_NUM=X
     devices:
       - /dev/ttyTHS1
       - /dev/ydlidar
