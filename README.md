@@ -1,8 +1,12 @@
 # Repos pour le robot
 
-Pour rouler le docker du robot, utiliser le `docker-compose.yml`
+### Robot
 
-Pour rouler le docker de la simulation, utiliser directement le `Dockerfile` de `docker-simulation`
+Pour rouler le docker du robot, utiliser le fichier `robot/docker-compose.yml`. Celui-ci permet au docker d'avoir accès aux périphériques du robot.
+
+### Simulation
+
+Pour rouler le docker de la simulation, utiliser directement le `Dockerfile` de `simulation/docker-simulation`.
 
 Il est ensuite possible de lancer le docker avec la commande suivante:
 
