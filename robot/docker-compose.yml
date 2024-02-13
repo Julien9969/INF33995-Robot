@@ -10,6 +10,7 @@ services:
     environment:
       - TERM='xterm-256color'
       - ROBOT_NUM=X
+      - ROS_DOMAIN_ID=62
     devices:
       - /dev/ttyTHS1
       - /dev/ydlidar
