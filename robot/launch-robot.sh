@@ -47,9 +47,16 @@ do
         if [ -d /home/nvidia/INF3995-Robot ]; then
             cd /home/nvidia/INF3995-Robot && git pull && git switch $BRANCH && git pull;
         else
-            git clone git@gitlab.com:polytechnique-montr-al/inf3995/20241/equipe-102/INF3995-Robot.git;
+            git clone git@gitlab.com:polytechnique-montr-al/inf3995/20241/equipe-102/INF3995-Robot.git -b $BRANCH;
         fi
+
         sed -i 's/ROBOT_NUM=[a-zA-Z0-9]*/ROBOT_NUM='$i'/g' /home/nvidia/INF3995-Robot/robot/docker-compose.yml
-        cd /home/nvidia/INF3995-Robot/robot && docker compose up
+        cd /home/nvidia/INF3995-Robot/robot
+
+        if [ -n '\$(docker ps -a | grep docker-robot-container)' ]; then
+            docker stop docker-robot-container && docker rm docker-robot-container            
+        fi
+
+        docker compose up --detach
         """
 done
