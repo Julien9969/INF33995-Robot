@@ -35,7 +35,6 @@ RUN apt install python3-colcon-common-extensions -y
 RUN apt update && apt install -y vim
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
 RUN echo "export GZ_VERSION=fortress" >> /root/.bashrc
-RUN echo "export ROS_DOMAIN_ID=102" >> /root/.bashrc
 
 # INSTALL LIMO'S GAZEBO FILES AND STUFF
 WORKDIR /root
@@ -44,9 +43,6 @@ COPY deploy-simulation.sh .
 RUN chmod +x /root/deploy-simulation.sh
 RUN export TERM=xterm-256color
 RUN echo "export ROS_DOMAIN_ID=62" >> /root/.bashrc
-RUN echo "export ROS_HOSTNAME=localhost" >> /root/.bashrc
-RUN echo "export ROS_MASTER_URI=http://localhost:11311" >> /root/.bashrc
-
 # DISPLAY STUFF
 #RUN xauth add pop-os/unix:1 MIT-MAGIC-COOKIE-1 1a8a086b0cad131f229f8fe587d633ae
 #VOLUME /tmp/.X11-unix:/tmp/.X11-unix
