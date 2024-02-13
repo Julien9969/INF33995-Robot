@@ -44,7 +44,11 @@ NUM_ROBOTS=${#ROBOTS[@]}
 for i in $(seq 1 $NUM_ROBOTS);
 do
     ssh $USERNAME@${ROBOTS[$((i-1))]}  """
-        echo "export ROS_DOMAIN_ID=62" > /home/nvidia/.bashrc
+        if [ -n '\$(cat /home/nvidia/.bashrc | grep ROS_DOMAIN_ID)' ]; then
+            echo "export ROS_DOMAIN_ID=62" >> /home/nvidia/.bashrc
+        else
+            sed -i 's/ROS_DOMAIN_ID=[0-9]*/ROS_DOMAIN_ID=62/g' /home/nvidia/.bashrc
+        fi
 
         if [ -d /home/nvidia/INF3995-Robot ]; then
             cd /home/nvidia/INF3995-Robot && git pull && git switch $BRANCH && git pull;
