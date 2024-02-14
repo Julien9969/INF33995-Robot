@@ -35,7 +35,7 @@ RUN apt install python3-colcon-common-extensions -y
 RUN apt update && apt install -y vim
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
 RUN echo "export GZ_VERSION=fortress" >> /root/.bashrc
-RUN echo "export ROS_DOMAIN_ID=102" >> /root/.bashrc
+RUN echo "export ROS_DOMAIN_ID=62" >> /root/.bashrc
 
 RUN mkdir /root/INF3995-Robot -p
 COPY deploy-robot.sh /root/deploy-robot.sh
