@@ -56,12 +56,8 @@ do
             git clone git@gitlab.com:polytechnique-montr-al/inf3995/20241/equipe-102/INF3995-Robot.git -b $BRANCH;
         fi
 
-        if [ -n '\$(docker ps -a | grep docker-robot-container)' ]; then
-            docker stop docker-robot-container && docker rm docker-robot-container            
-        fi
-
         cd /home/nvidia/INF3995-Robot/robot
         docker build -t docker-robot .
-        docker run --rm --network=host --ipc=host --pid=host --device=/dev/ttyTHS1 --device=/dev/ydlidar -v /home/nvidia/INF3995-Robot:/root/INF3995-Robot -v /tmp/.X11-unix:/tmp/.X11-unix --env ROS_DOMAIN_ID=62 --env ROBOT_NUM=$i docker-robot '/root/clean_workspace.sh && source /opt/ros/humble/setup.bash && cd root && /root/deploy-robot.sh && source /root/INF3995-Robot/ros_ws/install/setup.bash && ros2 launch py_identify_server identify.launch.py'
+        docker run --rm --network=host --ipc=host --pid=host --device=/dev/ttyTHS1 --device=/dev/ydlidar -v /home/nvidia/INF3995-Robot:/root/INF3995-Robot -v /tmp/.X11-unix:/tmp/.X11-unix --env ROS_DOMAIN_ID=62 --env ROBOT_NUM=$i docker-robot bash -c '/root/clean_workspace.sh && source /opt/ros/humble/setup.bash && cd root && /root/deploy-robot.sh && source /root/INF3995-Robot/ros_ws/install/setup.bash && ros2 launch py_identify_server identify.launch.py'
         """
 done
