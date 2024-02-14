@@ -3,7 +3,7 @@
 BRANCH="main"
 ROBOTS=("192.168.0.102" "192.168.0.106")
 USERNAME=nvidia
-COMMAND="ros2 launch py_identify_server identify.launch.py"
+COMMAND="ros2 launch limo_bringup limo_start.launch.py"
 
 function print_usage {
     echo "Usage: ./launch-robot.sh [-b|--branch <branch-name>] [-r|--robots <ip-addresses-of-robots-separated-by-space>] [-h|--help] [-c|--command <ros2-command-to-run>]"

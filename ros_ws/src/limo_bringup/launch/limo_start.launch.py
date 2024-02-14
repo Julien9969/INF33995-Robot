@@ -53,7 +53,11 @@ def generate_launch_description():
          launch.actions.IncludeLaunchDescription(
              launch.launch_description_sources.PythonLaunchDescriptionSource(
                  os.path.join(get_package_share_directory('limo_base'),
-                              'launch','open_ydlidar_launch.py')))
+                              'launch','open_ydlidar_launch.py'))),
+         launch.actions.IncludeLaunchDescription(
+             launch.launch_description_sources.PythonLaunchDescriptionSource(
+                 os.path.join(get_package_share_directory('ros_gz_example_bringup'),
+                              'launch','robot.launch.py')))
     ])
     return ld
 
