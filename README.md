@@ -2,7 +2,7 @@
 
 ### Robot
 
-Pour rouler le docker du robot, il suffit de lancer le script `robot/launch-robot.sh` et de rentrer le mot de passe de l'utilisateur nvidia sur le robot lorsque demandé. Le script prend en paramètre l'adresse ip des robots qu'on souhaite lancer, la branch du dépot git sur laquelle on souhaite que les robots se synchronisent ainsi que la commande ros2 que l'on souhaite exécuter sur le robot. Les paramètres sont tous optionnels. Une option par défaut permet d'exécuter du code automatiquement sur le robot sans spécifier de paramètre à la commande.
+Pour rouler le docker du robot, il suffit de lancer le script `robot/launch-robot.sh` et de rentrer le mot de passe de l'utilisateur nvidia sur le robot lorsque demandé. Le script prend en paramètre l'adresse ip des robots qu'on souhaite lancer, la branch du dépot git sur laquelle on souhaite que les robots se synchronisent ainsi que la commande ros2 que l'on souhaite exécuter sur le robot. Les paramètres sont tous optionnels. Une option par défaut permet d'exécuter du code automatiquement sur le robot sans spécifier de paramètre à la commande. **Il est important d'attendre 1 minute ou 2 après que la commande launch-robot.sh ait terminé pour donner le temps au robot de se déployer**.
 
 Si une erreur survient ou si pour tout autre raison vous souhaitez ne pas utiliser ce script, vous pouvez vous connecter directement au robot, cloner le dépot si ce n'est pas déjà fait, naviguer à `INF3995-Robot/robot/`, construire le robot avec `docker build -t docker-robot .` puis lancer le conteneur avec la commande suivante en remplacant les éléments entre crochet:
 
