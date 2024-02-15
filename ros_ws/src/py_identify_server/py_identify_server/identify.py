@@ -19,8 +19,9 @@ class IdentifyService(Node):
         response.b = request.a * 2
         self.get_logger().info(f'Incoming request, a: {request.a}')
 
-        for i in range(6):
+        for i in range(5):
             self.trigger()
+            time.sleep(0.5)
 
         return response
 
