@@ -1,11 +1,12 @@
 import time
 from interfaces.srv import Identify
+import os
 
 import sys
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
-import os
+
 
 class IdentifyService(Node):
 
