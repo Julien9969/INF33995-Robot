@@ -55,18 +55,18 @@
       </link>
     </model>
 
-    <model name="diff_drive">
+    <model name="diff_drive_1">
       <self_collide>true</self_collide>
       <pose>0 0 0.35 0 0 0</pose>
       <include merge="true">
-        <uri>package://ros_gz_description/models/limo_diff_drive</uri>
+        <uri>package://ros_gz_description/models/limo_diff_drive_1</uri>
       </include>
     </model>
-    <model name="diff_drive2">
+    <model name="diff_drive_2">
       <self_collide>true</self_collide>
       <pose>3 0 0.35 0 0 3.14</pose>
       <include merge="true">
-        <uri>package://ros_gz_description/models/limo_diff_drive</uri>
+        <uri>package://ros_gz_description/models/limo_diff_drive_2</uri>
       </include>
     </model>
   </world>
