@@ -99,13 +99,27 @@ def generate_launch_description():
 
     # Node pour identification:
         # Bridge ROS topics and Gazebo messages for establishing communication
-    identify = Node(
+    identify1 = Node(
         package='py_identify_server',
         executable='identify',
         # parameters=[{
         #     'config_file': os.path.join(pkg_project_bringup, 'config', 'simulation_bridge.yaml'),
         #     'qos_overrides./tf_static.publisher.durability': 'transient_local',
         # }],
+        namespace='robot1',
+        output='screen'
+    )
+    
+    # Node pour identification:
+        # Bridge ROS topics and Gazebo messages for establishing communication
+    identify2 = Node(
+        package='py_identify_server',
+        executable='identify',
+        # parameters=[{
+        #     'config_file': os.path.join(pkg_project_bringup, 'config', 'simulation_bridge.yaml'),
+        #     'qos_overrides./tf_static.publisher.durability': 'transient_local',
+        # }],
+        namespace='robot2',
         output='screen'
     )
 
@@ -116,5 +130,6 @@ def generate_launch_description():
         robot_state_publisher_1,
         robot_state_publisher_2,
         # rviz,
-        identify
+        identify1,
+        identify2
     ])
