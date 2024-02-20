@@ -81,12 +81,4 @@ do
         export ROBOT_NUM=$i
         sudo /home/nvidia/INF3995-Robot/robot/clean_workspace.sh && source /opt/ros/humble/setup.bash && /home/nvidia/INF3995-Robot/robot/deploy-robot.sh && source /home/nvidia/INF3995-Robot/ros_ws/install/setup.bash && $COMMAND
         """
-        # docker build -t docker-robot .
-        # docker run -d --rm -p 22900:22900 -p 22901:22901 -p 22902:22902 -p 22910-22921:22910-22921 --device=/dev/ttyTHS1 --device=/dev/ydlidar -v /home/nvidia/INF3995-Robot:/root/INF3995-Robot -v /tmp/.X11-unix:/tmp/.X11-unix --env ROS_DOMAIN_ID=62 --env ROBOT_NUM=$i docker-robot bash -c '/root/clean_workspace.sh && source /opt/ros/humble/setup.bash && cd root && /root/deploy-robot.sh && source /root/INF3995-Robot/ros_ws/install/setup.bash && $COMMAND'
 done
-
-
-# TODO : Ajouter param si on veut cloner tout from scratch.
-# Si on veut tout pull, rerouler tout ce qui est dans le dockerfile
-
-# TODO : Voir si sudo cause probleme
