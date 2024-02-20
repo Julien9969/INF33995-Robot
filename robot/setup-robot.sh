@@ -32,6 +32,6 @@ curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key
 apt install python3-colcon-common-extensions -y
 
 apt update && apt install -y vim
-echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
-echo "export GZ_VERSION=fortress" >> /root/.bashrc
-echo "export ROS_DOMAIN_ID=62" >> /root/.bashrc
+echo "source /opt/ros/humble/setup.bash" >> /home/nvidia/.bashrc
+echo "export GZ_VERSION=fortress" >> /home/nvidia/.bashrc
+echo "export ROS_DOMAIN_ID=62" >> /home/nvidia/.bashrc
