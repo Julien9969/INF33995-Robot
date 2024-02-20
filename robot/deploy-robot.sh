@@ -1,4 +1,4 @@
-cd /root/INF3995-Robot/ros_ws
+cd /home/nvidia/INF3995-Robot/ros_ws
 rm /etc/ros/rosdep/sources.list.d/20-default.list
 rosdep init
 rosdep update
