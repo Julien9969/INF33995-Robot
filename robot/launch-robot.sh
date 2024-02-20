@@ -56,7 +56,8 @@ NUM_ROBOTS=${#ROBOTS[@]}
 for i in $(seq 1 $NUM_ROBOTS);
 do
     if [ "$REINSTALL" == "true" ]; then
-        scp $SCRIPT_PATH/ssh_keys/robot_ssh $SCRIPT_PATH/setup-robot.sh scp://$USERNAME@${ROBOTS[$((i-1))]}//home/nvidia/setup-robot.sh
+        ssh-copy-id -i $SCRIPT_PATH/ssh_keys/robot_ssh $USERNAME@${ROBOTS[$((i-1))]}
+        scp -i $SCRIPT_PATH/ssh_keys/robot_ssh $SCRIPT_PATH/setup-robot.sh scp://$USERNAME@${ROBOTS[$((i-1))]}//home/nvidia/setup-robot.sh
     fi
 
     ssh -i $SCRIPT_PATH/ssh_keys/robot_ssh -t $USERNAME@${ROBOTS[$((i-1))]}  """
