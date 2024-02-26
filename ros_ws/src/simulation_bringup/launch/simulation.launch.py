@@ -94,11 +94,24 @@ def generate_launch_description():
         output='screen'
     )
 
+    # Node pour navigation:
+        # Bridge ROS topics and Gazebo messages for establishing communication
+    navigation = Node(
+        package='py_navigation_server',
+        executable='navigation',
+        # parameters=[{
+        #     'config_file': os.path.join(pkg_project_bringup, 'config', 'simulation_bridge.yaml'),
+        #     'qos_overrides./tf_static.publisher.durability': 'transient_local',
+        # }],
+        output='screen'
+    )
+
     return LaunchDescription([
         gz_sim,
         # DeclareLaunchArgument('rviz', default_value='true', description='Open RViz.'),
         bridge,
         robot_state_publisher,
         # rviz,
-        identify
+        identify,
+        navigation,
     ])
