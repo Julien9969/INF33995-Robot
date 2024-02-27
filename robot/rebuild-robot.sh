@@ -17,8 +17,8 @@ function revert_changes {
 }
 
 if [ -f /home/nvidia/INF3995-Robot/robot/update_queue/update.txt ]; then
-    NEW_FILE_LOCATION=/home/nvidia/INF3995-Robot/robot/update_queue/$(cat /home/nvidia/INF3995-Robot/update_queue/update.txt | awk '{print $1}')
-    NEW_FILE_DESTINATION=/home/nvidia/INF3995-Robot/ros_ws/src/$(cat /home/nvidia/INF3995-Robot/update_queue/update.txt | awk '{print $2}')
+    NEW_FILE_LOCATION=/home/nvidia/INF3995-Robot/robot/update_queue/$(cat /home/nvidia/INF3995-Robot/robot/update_queue/update.txt | awk '{print $1}')
+    NEW_FILE_DESTINATION=/home/nvidia/INF3995-Robot/ros_ws/src/$(cat /home/nvidia/INF3995-Robot/robot/update_queue/update.txt | awk '{print $2}')
     rm /home/nvidia/INF3995-Robot/robot/update_queue/update.txt
 else
     log "ERROR: Update queue is empty"
