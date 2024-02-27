@@ -14,15 +14,15 @@ GOAL_POSE.pose.z = 0.0
 TIMEOUT_ERROR = 600
 
 
-{header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}
+# {header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}
 
 class NavigationService(Node):
     self.initPose = INIT_POSE
     self.goalPose = GOAL_POSE
     
     def __init__():
-        super().__init__('identify_service')
-        self.srv = self.create_service(Navigation, 'identify', self.navigate)
+        super().__init__('navigation_service')
+        self.srv = self.create_service(Navigation, 'navigation', self.navigate)
         rclpy.init()
         self.nav = BasicNavigator()
         self.nav.setInitialPose(self.initPose)
@@ -36,6 +36,7 @@ class NavigationService(Node):
         self.getPath()
         self.goToPosition()
         response.b = self.result
+
         return response
 
     #Initializes the path the robot takes to go to goal position
