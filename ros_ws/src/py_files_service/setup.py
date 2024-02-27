@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'py_identify_client'
+package_name = 'py_files_service'
 
 setup(
     name=package_name,
@@ -15,12 +15,12 @@ setup(
     zip_safe=True,
     maintainer='root',
     maintainer_email='root@todo.todo',
-    description='Identify the robot being contacted',
+    description='Transfer files to the robot',
     license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'identify = py_identify_client.identify:main',
+            'files = files_service.files_service:main',
         ],
     },
 )
