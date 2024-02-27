@@ -55,6 +55,19 @@
       </link>
     </model>
 
+    <road>
+      <name>road</name>
+      <width>10</width>
+      <point>-5 0 0.01</point>
+      <point>5 0 0.01</point>
+      <material>
+        <script>
+          <uri>file://media/materials/scripts/gazebo.material</uri>
+          <name>Gazebo/Grey</name>
+        </script>
+      </material>
+    </road>
+
     <model name="diff_drive_1">
       <self_collide>true</self_collide>
       <pose>0 0 0.35 0 0 0</pose>

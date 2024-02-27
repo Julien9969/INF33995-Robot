@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# TODO : Enlever la fonctionnalité de relancer quand ça casse
+
 function log {
-    if [ -d /home/nvidia/INF3995-Robot/robot/log ]; then
+    if ! [ -d /home/nvidia/INF3995-Robot/robot/log ]; then
         mkdir /home/nvidia/INF3995-Robot/robot/log
     fi
     echo $(date)" | $1" >> /home/nvidia/INF3995-Robot/robot/log/rebuild-robot.log
@@ -9,8 +11,9 @@ function log {
 
 function revert_changes {
     log "Reverting changes"
-    rm -rf /home/nvidia/INF3995-Robot/ros_ws
-    unzip /home/nvidia/INF3995-Robot/ros_ws.backup.zip -d /home/nvidia/INF3995-Robot/
+    sudo rm -rf /home/nvidia/INF3995-Robot/ros_ws
+    cd /home/nvidia/INF3995-Robot
+    unzip ros_ws.backup.zip
     rm /home/nvidia/INF3995-Robot/ros_ws.backup.zip
     source /home/nvidia/INF3995-Robot/ros_ws/install/setup.bash
     ros2 launch robot_bringup robot_bringup.launch.py
@@ -25,9 +28,10 @@ else
     exit 1
 fi
 
-zip /home/nvidia/INF3995-Robot/ros_ws.backup.zip -r /home/nvidia/INF3995-Robot/ros_ws
+cd /home/nvidia/INF3995-Robot
+zip ros_ws.backup.zip -r ros_ws
 mv $NEW_FILE_LOCATION $NEW_FILE_DESTINATION
-cd /home/nvidia/INF3995-Robot/ros_ws/ && rm -r build/ install/ log/
+cd /home/nvidia/INF3995-Robot/ros_ws/ && rm -rf /home/nvidia/INF3995-Robot/ros_ws/build/ /home/nvidia/INF3995-Robot/ros_ws/install/ /home/nvidia/INF3995-Robot/ros_ws/log/
 colcon build
 if [ $? -ne 0 ]; then
     log "ERROR: Build failed"
