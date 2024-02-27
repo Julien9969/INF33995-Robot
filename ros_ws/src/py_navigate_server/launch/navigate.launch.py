@@ -5,8 +5,8 @@ import os
 def generate_launch_description():
     return LaunchDescription([
         Node(
-            package='py_navigation_server',
-            executable='navigation',
+            package='py_navigate_server',
+            executable='navigate',
             output='screen',
             namespace=f'robot{os.environ["ROBOT_NUM"]}',
         ),

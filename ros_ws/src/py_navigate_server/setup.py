@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'py_navigation_server'
+package_name = 'py_navigate_server'
 
 setup(
     name=package_name,
@@ -10,7 +10,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/launch', ['launch/navigation.launch.py'])
+        ('share/' + package_name + '/launch', ['launch/navigate.launch.py'])
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -21,7 +21,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'navigation = py_navigation_server.navigation:main',
+            'navigate = py_navigate_server.navigate:main',
         ],
     },
 )

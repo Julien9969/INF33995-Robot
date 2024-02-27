@@ -40,14 +40,14 @@ def generate_launch_description():
         namespace=f'robot{os.environ["ROBOT_NUM"]}',
     )
 
-    navigation = Node(
-        package='py_navigation_server',
-        executable='navigation',
+    navigate= Node(
+        package='py_navigate_server',
+        executable='navigate',
         output='screen',
         namespace=f'robot{os.environ["ROBOT_NUM"]}',
     )
 
     return LaunchDescription([
         identify,
-        navigation,
+        navigate,
     ])

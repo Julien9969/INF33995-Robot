@@ -16,13 +16,13 @@ TIMEOUT_ERROR = 600
 
 # {header: {stamp: {sec: 0}, frame_id: 'map'}, pose: {position: {x: 0.2, y: 0.0, z: 0.0}, orientation: {w: 1.0}}}
 
-class NavigationService(Node):
+class NavigateService(Node):
     self.initPose = INIT_POSE
     self.goalPose = GOAL_POSE
     
     def __init__():
-        super().__init__('navigation_service')
-        self.srv = self.create_service(Navigation, 'navigation', self.navigate)
+        super().__init__('navigate_service')
+        self.srv = self.create_service(Navigate, 'navigate', self.navigate)
         rclpy.init()
         self.nav = BasicNavigator()
         self.nav.setInitialPose(self.initPose)
@@ -49,7 +49,7 @@ class NavigationService(Node):
         self.nav.goToPose(self.goalPose)
         while not self.nav.isTaskComplete():
         feedback = self.nav.getFeedback()
-        if feedback.navigation_duration > TIMEOUT_ERROR:
+        if feedback.navigate_duration > TIMEOUT_ERROR:
             self.nav.cancelTask()
         self.result = self.nav.getResult()
         if self.result == TaskResult.SUCCEEDED:
@@ -67,9 +67,9 @@ class NavigationService(Node):
 def main():
     rclpy.init()
 
-    navigation_service = NavigationService()
+    navigate_service = NavigateService()
 
-    rclpy.spin(navigation_service)
+    rclpy.spin(navigate_service)
 
 
 

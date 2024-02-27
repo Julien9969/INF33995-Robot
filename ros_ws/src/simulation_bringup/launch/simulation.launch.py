@@ -96,9 +96,9 @@ def generate_launch_description():
 
     # Node pour navigation:
         # Bridge ROS topics and Gazebo messages for establishing communication
-    navigation = Node(
-        package='py_navigation_server',
-        executable='navigation',
+    navigate = Node(
+        package='py_navigate_server',
+        executable='navigate',
         # parameters=[{
         #     'config_file': os.path.join(pkg_project_bringup, 'config', 'simulation_bridge.yaml'),
         #     'qos_overrides./tf_static.publisher.durability': 'transient_local',
@@ -113,5 +113,5 @@ def generate_launch_description():
         robot_state_publisher,
         # rviz,
         identify,
-        navigation,
+        navigate,
     ])
