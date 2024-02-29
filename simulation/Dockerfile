@@ -42,6 +42,7 @@ RUN mkdir /root/INF3995-Robot/ros_ws -p
 COPY deploy-simulation.sh .
 COPY start-files-server.sh .
 RUN chmod +x /root/deploy-simulation.sh
+RUN chmod +x /root/start-files-server.sh
 RUN export TERM=xterm-256color
 RUN echo "export ROS_DOMAIN_ID=62" >> /root/.bashrc
 # DISPLAY STUFF

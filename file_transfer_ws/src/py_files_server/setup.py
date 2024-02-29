@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'file_server = py_files_server.files_server:main',
+            'files_server = py_files_server.files_server:main',
         ],
     },
 )

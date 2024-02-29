@@ -3,7 +3,7 @@ import os
 import os
 import json
 
-FOLDER_PATH = '../../'
+FOLDER_PATH = './'
 
 def build_json_file_tree():
     """
@@ -27,7 +27,7 @@ def build_json_file_tree():
             # It's a file, so mark it as such
             file_tree[item] = None
 
-    json_string = json.dump(file_tree, indent=4)
+    json_string = json.dumps(file_tree, indent=4)
     return json_string
 
 

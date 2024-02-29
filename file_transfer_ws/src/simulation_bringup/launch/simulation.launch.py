@@ -29,15 +29,21 @@ from launch_ros.actions import Node
 def generate_launch_description():
     # Configure ROS nodes for launch
 
-    # Setup project paths
-
     files_server1 = Node(
         package='py_files_server',
         executable='files_server',
         output='screen',
-        namespace=f'robot{os.environ["ROBOT_NUM"]}',
+        namespace='robot1',
+    )
+
+    files_server2 = Node(
+        package='py_files_server',
+        executable='files_server',
+        output='screen',
+        namespace='robot2',
     )
 
     return LaunchDescription([
         files_server1,
+        files_server2
     ])
