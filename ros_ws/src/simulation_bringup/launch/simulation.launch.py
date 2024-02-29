@@ -137,6 +137,7 @@ def generate_launch_description():
         namespace='robot2',
     )
 
+
     return LaunchDescription([
         gz_sim,
         # DeclareLaunchArgument('rviz', default_value='true', description='Open RViz.'),

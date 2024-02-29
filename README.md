@@ -45,3 +45,6 @@ D'abord publish le ros2 topic pub --rate 1 /limo/cmd_vel... dans le backend
 ```
 ros2 topic echo /limo/cmd_vel
 ```
+
+
+rocker --x11 --device=/dev/dri --volume $(pwd):/root/INF3995-Robot --port 22900:22900 --port 22901:22901 --port 22902:22902 --port 22910-22921:22910-22921 --image-name=rosign --name=simulation-ign rosignbase 
