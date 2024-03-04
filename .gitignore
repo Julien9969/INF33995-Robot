@@ -9,4 +9,6 @@ file_transfer_ws/log
 robot/log
 robot/update_queue
 
+__pycache__/
+
 .vscode

@@ -1,34 +1,58 @@
 import os
-
-import os
 import json
 
-FOLDER_PATH = './'
+node_counter = 0
 
-def build_json_file_tree():
+def build_file_tree(path="./", new_tree=False):
     """
     Function to build a file tree as a nested dictionary.
     """
-    file_tree = {}
+    global node_counter
 
-    # List all files and folders in the given path
-    items = os.listdir(FOLDER_PATH)
+    if new_tree:
+        node_counter = 0  
 
-    # Iterate through each item
+    file_tree = []
+
+    items = os.listdir(path)
+
     for item in items:
-        # Create the full path by joining the current path and the item
-        full_path = os.path.join(FOLDER_PATH, item)
+        full_path = os.path.join(path, item)
+        node_counter += 1
 
-        # Check if the item is a directory
-        if os.path.isdir(full_path):
-            # Recursively call the function to build the file tree inside this directory
-            file_tree[item] = build_json_file_tree(full_path)
-        else:
-            # It's a file, so mark it as such
-            file_tree[item] = None
+        node = {
+            "name": item,
+            "id": node_counter,
+            "children": build_file_tree(full_path) if os.path.isdir(full_path) else None
+        }
+        file_tree.append(node)
 
-    json_string = json.dumps(file_tree, indent=4)
-    return json_string
+    return file_tree
 
+def get_file_tree(path="./src"):
+    """
+    Function to get a file tree as a string.
+    """
+    file_tree =  build_file_tree(path, new_tree=True)
+    return json.dumps(file_tree, indent=4, ensure_ascii=False)
 
+def get_full_path_recursive(node_id, name, file_tree, path=""):
+    """
+    Function to get the full path of a file or directory.
+    """
+    for node in file_tree:
+        if node["id"] == node_id and node["name"] == name:
+            return os.path.join(path, name)
+        elif node["children"]:
+            full_path = get_full_path_recursive(node_id, name, node["children"], os.path.join(path, node["name"]))
+            if full_path:
+                return full_path
+    return None
+
+def get_full_path(node_id, name, path="./src"):
+    """
+    Function to get the full path of a file or directory.
+    """
+    file_tree = build_file_tree(path, new_tree=True)
+    return get_full_path_recursive(node_id, name, file_tree, path)
 

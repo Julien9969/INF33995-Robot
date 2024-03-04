@@ -1,17 +1,19 @@
+import json
 import time
 from interfaces.srv import FilesServer
 
-import sys
+import sys, os
 import rclpy
 from rclpy.node import Node
-# from .files_tree import build_json_file_tree
+from py_files_server.files_tree import get_file_tree, get_full_path
 
 from enum import Enum
 
 class Commands(Enum):
     FILES_TREE = "files-tree" 
     GET_FILE = "get-file"
-    RECEIVE_FILE = "receive-file"
+    EDIT_FILE = "edit-file"
+    UPDATE_ROBOT = "update-robot"
 
 class FileServer(Node):
 
@@ -21,24 +23,54 @@ class FileServer(Node):
 
     def serve(self, request, response):
         command:str = str(request.command)
+        
         self.get_logger().info(f'Files Service Incoming request, {command}')
 
-        if command == "files-tree":
-            try:
-                # response.content = build_json_file_tree()
-                response.content = "build_json_file_tree()"
+        try:
+            if command == Commands.FILES_TREE.value:
+                response.content = get_file_tree()
                 response.message = "Success"
-            except Exception as e:
-                response.content = "Error"
-                response.message = f"{str(e)}"
-        else :
-            response.message = "Command not found"
-            response.content = ""
+            
+            elif command == Commands.GET_FILE.value:
+                self.get_logger().info(request.content)
+                fileDict = json.loads(request.content.replace("'", '"'))
+                file_path = get_full_path(fileDict["id"], fileDict["name"])
 
-        self.get_logger().info(f'response: {response.message}')
+                if os.path.exists(file_path):
+                    with open(file_path, 'r') as file:
+                        response.content = file.read()
+                        response.message = "Success"
+                else:
+                    response.message = "Error"
+                    response.content = "File not found or moved"
+            
+            elif command == Commands.EDIT_FILE.value:
+                fileDict = json.loads(request.content.replace("'", '"'))
+                file_path = get_full_path(fileDict["id"], fileDict["name"])
+                if os.path.exists(file_path):
+
+                    with open(file_path, 'w') as file:
+                        file.write(fileDict["content"])
+                        response.message = "Success"
+                        response.content = "File received"  
+                else:
+                    response.message = "Error"
+                    response.content = "File not found or moved"
+
+            elif command == Commands.UPDATE_ROBOT.value:
+                response.message = "Success"
+                response.content = "Robot updated"
+            
+            else :
+                response.message = "Error"
+                response.content = "Command not found"
+        
+        except Exception as e:
+            response.content = f"{str(e)}"
+            response.message = "Error"
+
+        self.get_logger().info(f'response: {response.message} {"" if response.message == "Success" else response.content}')
         return response
-
-
 
 def main():
     rclpy.init()
