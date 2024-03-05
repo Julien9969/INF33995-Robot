@@ -13,7 +13,7 @@ class IdentifyService(Node):
     def __init__(self):
         super().__init__('identify_service')
         self.srv = self.create_service(Identify, 'identify', self.serve)
-        self.publisher_ = self.create_publisher(Twist, f'/robot2/cmd_vel', 10)
+        self.publisher_ = self.create_publisher(Twist, f'/robot{os.environ["ROBOT_NUM"]}/cmd_vel', 10)
 
     def serve(self, request, response):
         response.b = request.a * 2
