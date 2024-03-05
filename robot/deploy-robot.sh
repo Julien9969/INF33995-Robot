@@ -1,8 +1,30 @@
-cd /home/nvidia/INF3995-Robot/ros_ws
+#!/bin/bash
+
+pkill ros2
+apt update -y
+
+echo "export ROBOT_ENV='SIMULATION'" >> /root/.bashrc
+
 rm /etc/ros/rosdep/sources.list.d/20-default.list
 rosdep init
 rosdep update
+
 rosdep install --from-paths /home/nvidia/INF3995-Robot/ros_ws/src --ignore-src -r -i -y --rosdistro humble
+rosdep install --from-paths /home/nvidia/INF3995-Robot/file_transfer_ws/src --ignore-src -r -i -y --rosdistro humble
 sleep 5
+
+cd /home/nvidia/INF3995-Robot/ros_ws
 colcon build
-source install/setup.bash
+source /home/nvidia/INF3995-Robot/ros_ws/install/setup.bash
+ros2 launch robot_bringup robot_bringup.launch.py &
+
+source /home/nvidia/agilex/install/setup.bash
+ros2 launch limo_bringup limo_start.launch.py &
+
+cd /home/nvidia/INF3995-Robot/file_transfer_ws 
+source /home/nvidia/INF3995-Robot/file_transfer_ws/install/setup.bash
+ros2 launch file_server robot_bringup.launch.py &
+
+sleep 1
+
+export ROBOT_ENV="ROBOT"

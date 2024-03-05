@@ -1,8 +1,8 @@
 import json
-import time
 from interfaces.srv import FilesServer
 
 import sys, os
+import subprocess
 import rclpy
 from rclpy.node import Node
 from py_files_server.files_tree import get_file_tree, get_full_path
@@ -14,6 +14,10 @@ class Commands(Enum):
     GET_FILE = "get-file"
     EDIT_FILE = "edit-file"
     UPDATE_ROBOT = "update-robot"
+
+
+
+
 
 class FileServer(Node):
 
@@ -33,7 +37,7 @@ class FileServer(Node):
             
             elif command == Commands.GET_FILE.value:
                 self.get_logger().info(request.content)
-                fileDict = json.loads(request.content.replace("'", '"'))
+                fileDict = json.loads(request.content)
                 file_path = get_full_path(fileDict["id"], fileDict["name"])
 
                 if os.path.exists(file_path):
@@ -45,7 +49,8 @@ class FileServer(Node):
                     response.content = "File not found or moved"
             
             elif command == Commands.EDIT_FILE.value:
-                fileDict = json.loads(request.content.replace("'", '"'))
+                self.get_logger().info(request.content)
+                fileDict = json.loads(request.content)
                 file_path = get_full_path(fileDict["id"], fileDict["name"])
                 if os.path.exists(file_path):
 
@@ -58,8 +63,13 @@ class FileServer(Node):
                     response.content = "File not found or moved"
 
             elif command == Commands.UPDATE_ROBOT.value:
+                self.get_logger().info(f'Update: {os.environ.get("ROBOT_ENV")}')
+
+                with open("./rebuild_scripts/stdout.txt", "w") as f:
+                    subprocess.run(["bash", "./rebuild_scripts/rebuild-robot.sh"], stdout=f, stderr=subprocess.STDOUT)
+    
                 response.message = "Success"
-                response.content = "Robot updated"
+                response.content = "update en cours"
             
             else :
                 response.message = "Error"

@@ -1,9 +1,11 @@
 import os
 import json
 
+ROS_WS = "../ros_ws/src"
+
 node_counter = 0
 
-def build_file_tree(path="./", new_tree=False):
+def build_file_tree(path=ROS_WS, new_tree=False):
     """
     Function to build a file tree as a nested dictionary.
     """
@@ -29,7 +31,7 @@ def build_file_tree(path="./", new_tree=False):
 
     return file_tree
 
-def get_file_tree(path="./src"):
+def get_file_tree(path=ROS_WS):
     """
     Function to get a file tree as a string.
     """
@@ -49,7 +51,7 @@ def get_full_path_recursive(node_id, name, file_tree, path=""):
                 return full_path
     return None
 
-def get_full_path(node_id, name, path="./src"):
+def get_full_path(node_id, name, path=ROS_WS):
     """
     Function to get the full path of a file or directory.
     """

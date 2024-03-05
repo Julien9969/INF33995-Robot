@@ -1,6 +1,8 @@
 #!/bin/bash
 
 killall ros2
+apt update -y
+
 cd /home/nvidia/INF3995-Robot/ros_ws/ && rm -rf /home/nvidia/INF3995-Robot/ros_ws/build/ /home/nvidia/INF3995-Robot/ros_ws/install/ /home/nvidia/INF3995-Robot/ros_ws/log/
 colcon build
 source /home/nvidia/INF3995-Robot/ros_ws/install/setup.bash
@@ -11,3 +13,4 @@ ros2 launch limo_bringup limo_start.launch.py &
 
 source /home/nvidia/INF3995-Robot/file_transfer_ws/install/setup.bash
 ros2 launch file_server robot_bringup.launch.py &
+

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(simulation_bringup)
+project(files_server_simulation)
 
 find_package(ament_cmake REQUIRED)
 

@@ -55,7 +55,7 @@
       </link>
     </model>
 
-    <road>
+    <road name="road">
       <name>road</name>
       <width>10</width>
       <point>-5 0 0.01</point>

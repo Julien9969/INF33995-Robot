@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(robot_bringup)
+project(file_server_bringup)
 
 find_package(ament_cmake REQUIRED)
 

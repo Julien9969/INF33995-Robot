@@ -45,6 +45,7 @@ RUN chmod +x /root/deploy-simulation.sh
 RUN chmod +x /root/start-files-server.sh
 RUN export TERM=xterm-256color
 RUN echo "export ROS_DOMAIN_ID=62" >> /root/.bashrc
+RUN echo "export ROBOT_ENV=SIMULATION" >> /root/.bashrc
 # DISPLAY STUFF
 #RUN xauth add pop-os/unix:1 MIT-MAGIC-COOKIE-1 1a8a086b0cad131f229f8fe587d633ae
 #VOLUME /tmp/.X11-unix:/tmp/.X11-unix
