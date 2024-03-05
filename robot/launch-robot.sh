@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BRANCH="main"
+BRANCH="feature/automated-moving"
 ROBOTS=("192.168.0.102" "192.168.0.106")
 USERNAME=nvidia
 COMMAND="ros2 launch robot_bringup robot_bringup.launch.py"
