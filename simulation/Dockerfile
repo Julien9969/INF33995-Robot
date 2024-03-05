@@ -46,3 +46,6 @@ RUN echo "export ROS_DOMAIN_ID=62" >> /root/.bashrc
 # DISPLAY STUFF
 #RUN xauth add pop-os/unix:1 MIT-MAGIC-COOKIE-1 1a8a086b0cad131f229f8fe587d633ae
 #VOLUME /tmp/.X11-unix:/tmp/.X11-unix
+
+# extra commands pour nos dépendances
+RUN apt update && apt install ros-humble-cartographer-ros
