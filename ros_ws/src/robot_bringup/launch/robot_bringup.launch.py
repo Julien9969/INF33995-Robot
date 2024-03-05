@@ -54,6 +54,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         identify,
-        navigate,
         amcl,
+        navigate,
     ])
