@@ -29,7 +29,6 @@ class NavigateService(Node):
         super().__init__('navigate_service')
         self.srv = self.create_service(Navigate, 'navigate', self.navigate)
         self.nav = BasicNavigator()
-        self.nav.setInitialPose(self.initPose)
         self.publisher_ = self.create_publisher(Twist, f'/robot{os.environ["ROBOT_NUM"]}/cmd_vel', 10)
         
         rotate_msg = Twist()
@@ -38,6 +37,7 @@ class NavigateService(Node):
 
         # client = self.create_client(GetRobotState, '/amcl/get_state')
         self.nav.lifecycleStartup()
+        self.nav.setInitialPose(self.initPose)
         self.nav.waitUntilNav2Active() # if autostarted, else use lifecycleStartup()
         self.getPath()
         self.goToPosition()
