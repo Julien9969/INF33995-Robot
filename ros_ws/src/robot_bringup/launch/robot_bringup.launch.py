@@ -39,12 +39,12 @@ def generate_launch_description():
         output='screen',
         namespace=f'robot{os.environ["ROBOT_NUM"]}',
     ),
-    # amcl = Node(
-    #     package='nav2_amcl',
-    #     executable='amcl',
-    #     output='screen',
-    #     namespace=f'robot{os.environ["ROBOT_NUM"]}',
-    # ),
+    amcl = Node(
+        package='nav2_amcl',
+        executable='amcl',
+        output='screen',
+        namespace=f'robot{os.environ["ROBOT_NUM"]}',
+    ),
     navigate= Node(
         package='py_navigate_server',
         executable='navigate',
@@ -54,6 +54,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         identify,
-        # amcl,
+        amcl,
         navigate,
     ])
