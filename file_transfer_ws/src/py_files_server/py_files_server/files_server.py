@@ -15,10 +15,6 @@ class Commands(Enum):
     EDIT_FILE = "edit-file"
     UPDATE_ROBOT = "update-robot"
 
-
-
-
-
 class FileServer(Node):
 
     def __init__(self):
@@ -36,7 +32,6 @@ class FileServer(Node):
                 response.message = "Success"
             
             elif command == Commands.GET_FILE.value:
-                self.get_logger().info(request.content)
                 fileDict = json.loads(request.content)
                 file_path = get_full_path(fileDict["id"], fileDict["name"])
 
@@ -49,7 +44,6 @@ class FileServer(Node):
                     response.content = "File not found or moved"
             
             elif command == Commands.EDIT_FILE.value:
-                self.get_logger().info(request.content)
                 fileDict = json.loads(request.content)
                 file_path = get_full_path(fileDict["id"], fileDict["name"])
                 if os.path.exists(file_path):
@@ -66,7 +60,7 @@ class FileServer(Node):
                 self.get_logger().info(f'Update: {os.environ.get("ROBOT_ENV")}')
 
                 with open("./rebuild_scripts/stdout.txt", "w") as f:
-                    subprocess.run(["bash", "./rebuild_scripts/rebuild-robot.sh"], stdout=f, stderr=subprocess.STDOUT)
+                    subprocess.Popen(["bash", "./rebuild_scripts/rebuild-robot.sh"], stdout=f, stderr=subprocess.STDOUT)
     
                 response.message = "Success"
                 response.content = "update en cours"

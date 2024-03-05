@@ -1,8 +1,10 @@
 #!/bin/bash
 
+ps aux | awk '/files_server|parameter_bridg|robot_state_pub|mission_switch|identify/ {print $2}' | xargs -I {} pkill {}
 
 echo $ROBOT_ENV
 if [ "$ROBOT_ENV" = "SIMULATION" ]; then
+    pkill ruby
     bash /root/deploy-simulation.sh
     echo "SIMULATION REBUILD DONE"
 else

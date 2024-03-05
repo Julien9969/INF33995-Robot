@@ -19,9 +19,11 @@ source /home/nvidia/INF3995-Robot/ros_ws/install/setup.bash
 ros2 launch robot_bringup robot_bringup.launch.py &
 
 source /home/nvidia/agilex/install/setup.bash
+colcon build
 ros2 launch limo_bringup limo_start.launch.py &
 
 cd /home/nvidia/INF3995-Robot/file_transfer_ws 
+colcon build
 source /home/nvidia/INF3995-Robot/file_transfer_ws/install/setup.bash
 ros2 launch file_server robot_bringup.launch.py &
 
