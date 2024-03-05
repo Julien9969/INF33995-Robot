@@ -30,7 +30,7 @@ class NavigateService(Node):
         self.srv = self.create_service(Navigate, 'navigate', self.navigate)
         self.nav = BasicNavigator()
         self.nav.setInitialPose(self.initPose)
-        self.publisher_ = self.create_publisher(Twist, f'/robot2/cmd_vel', 10)
+        self.publisher_ = self.create_publisher(Twist, f'/robot{os.environ["ROBOT_NUM"]}/cmd_vel', 10)
         
         rotate_msg = Twist()
         rotate_msg.angular.z = 3.14
