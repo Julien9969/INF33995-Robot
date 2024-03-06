@@ -5,7 +5,7 @@ apt update -y
 
 echo "export ROBOT_ENV='ROBOT'" >> /home/nvidia/.bashrc
 
-rm /etc/ros/rosdep/sources.list.d/20-default.list
+# rm /etc/ros/rosdep/sources.list.d/20-default.list
 rosdep init
 rosdep update
 

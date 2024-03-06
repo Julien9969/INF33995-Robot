@@ -16,7 +16,9 @@ if [ "$ROBOT_ENV" = "SIMULATION" ]; then
     bash /root/deploy-simulation.sh
     echo "SIMULATION REBUILD DONE"
 else
-
+    unset AMENT_PREFIX_PATH
+    unset CMAKE_PREFIX_PATH
+    source /opt/ros/humble/setup.bash
     cd /home/nvidia/INF3995-Robot/ros_ws/ 
     rm -rf /home/nvidia/INF3995-Robot/ros_ws/build/ /home/nvidia/INF3995-Robot/ros_ws/install/ /home/nvidia/INF3995-Robot/ros_ws/log/
     rosdep install --from-paths /home/nvidia/INF3995-Robot/ros_ws/src --ignore-src -r -i -y --rosdistro humble
