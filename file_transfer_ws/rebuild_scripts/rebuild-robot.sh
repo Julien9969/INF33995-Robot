@@ -19,7 +19,7 @@ else
     ros2 launch limo_bringup limo_start.launch.py &
 
     source /home/nvidia/INF3995-Robot/file_transfer_ws/install/setup.bash
-    ros2 launch file_server robot_bringup.launch.py &
+    ros2 launch file_server_bringup robot_bringup.launch.py &
 
     echo "ROBOT REBUILD DONE"
 fi
