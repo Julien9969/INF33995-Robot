@@ -1,8 +1,5 @@
 #!/bin/bash
 
-pkill ros2
-pkill gazebo
-
 apt update -y
 rm /etc/ros/rosdep/sources.list.d/20-default.list
 rosdep init
