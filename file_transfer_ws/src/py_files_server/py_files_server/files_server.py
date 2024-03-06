@@ -60,9 +60,12 @@ class FileServer(Node):
                 self.get_logger().info(f'Update: {os.environ.get("ROBOT_ENV")}')
 
                 if os.environ.get("ROBOT_ENV") == "SIMULATION":
-                    path = "./"
+                    path = "./rebuild_scripts"
                 else:
-                    path = "/home/nvidia/INF3995-Robot/file_transfer_ws/rebuild_scripts/"
+                    path = "/home/nvidia/INF3995-Robot/file_transfer_ws/rebuild_scripts"
+                
+                self.get_logger().info(f'Update path: {path}')
+                self.get_logger().info(f'Update command: {os.listdir(path)}')
 
                 with open(os.path.join(path, "stdout.txt"), "w") as f:
                     subprocess.Popen(["bash", os.path.join(path, "rebuild-robot.sh")], stdout=f, stderr=subprocess.STDOUT)
