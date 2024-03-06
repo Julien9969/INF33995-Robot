@@ -1,7 +1,10 @@
 import os
 import json
 
-ROS_WS = "../ros_ws/src"
+if os.environ.get("ROBOT_ENV") == "SIMULATION":
+    ROS_WS = "../ros_ws/src"
+else:
+    ROS_WS = "/home/nvidia/INF3995-Robot/ros_ws/src"
 
 node_counter = 0
 
