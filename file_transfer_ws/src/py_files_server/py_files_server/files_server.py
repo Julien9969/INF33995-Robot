@@ -62,10 +62,10 @@ class FileServer(Node):
                 if os.environ.get("ROBOT_ENV") == "SIMULATION":
                     path = "./"
                 else:
-                    path = "/home/nvidia/INF3995-Robot/ros_ws/"
+                    path = "/home/nvidia/INF3995-Robot/file_transfer_ws/rebuild_scripts/"
 
                 with open(os.path.join(path, "stdout.txt"), "w") as f:
-                    subprocess.Popen(["bash", os.path.join(path, "rebuild_scripts/rebuild-robot.sh")], stdout=f, stderr=subprocess.STDOUT)
+                    subprocess.Popen(["bash", os.path.join(path, "rebuild-robot.sh")], stdout=f, stderr=subprocess.STDOUT)
     
                 response.message = "Success"
                 response.content = "update en cours"
