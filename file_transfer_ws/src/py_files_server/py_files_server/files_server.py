@@ -59,8 +59,13 @@ class FileServer(Node):
             elif command == Commands.UPDATE_ROBOT.value:
                 self.get_logger().info(f'Update: {os.environ.get("ROBOT_ENV")}')
 
-                with open("./rebuild_scripts/stdout.txt", "w") as f:
-                    subprocess.Popen(["bash", "./rebuild_scripts/rebuild-robot.sh"], stdout=f, stderr=subprocess.STDOUT)
+                if os.environ.get("ROBOT_ENV") == "SIMULATION":
+                    path = "./"
+                else:
+                    path = "/home/nvidia/INF3995-Robot/ros_ws/"
+
+                with open(os.path.join(path, "stdout.txt"), "w") as f:
+                    subprocess.Popen(["bash", os.path.join(path, "rebuild_scripts/rebuild-robot.sh")], stdout=f, stderr=subprocess.STDOUT)
     
                 response.message = "Success"
                 response.content = "update en cours"
