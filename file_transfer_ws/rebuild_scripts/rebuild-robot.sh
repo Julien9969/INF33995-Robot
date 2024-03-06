@@ -1,15 +1,21 @@
 #!/bin/bash
 
-ps aux | awk '/files_server|parameter_bridg|robot_state_pub|mission_switch|identify/ {print $2}' | xargs -I {} pkill {}
 # ps aux | grep -v 'bash' | awk '{print $2}' | xargs -r kill
 
 echo $ROBOT_ENV
+
+processes=("ros2" "files_server" "static_transfor" "ydlidar_ros2_dr" "limo_base" "mission_switch" "identify" "parameter_bridg" "robot_state_pub")
+
+for process in "${processes[@]}"; do
+    pkill $process
+done
+
+
 if [ "$ROBOT_ENV" = "SIMULATION" ]; then
     pkill ruby
     bash /root/deploy-simulation.sh
     echo "SIMULATION REBUILD DONE"
 else
-    ps aux | awk '/static_transfor|ydlidar_ros2_dr|limo_base/ {print $2}' | xargs -I {} pkill {}
     cd /home/nvidia/INF3995-Robot/ros_ws/ && rm -rf /home/nvidia/INF3995-Robot/ros_ws/build/ /home/nvidia/INF3995-Robot/ros_ws/install/ /home/nvidia/INF3995-Robot/ros_ws/log/
     colcon build
     source /home/nvidia/INF3995-Robot/ros_ws/install/setup.bash
