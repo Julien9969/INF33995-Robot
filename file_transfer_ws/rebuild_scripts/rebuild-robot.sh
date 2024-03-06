@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ps aux | grep -v 'bash' | awk '{print $2}' | xargs -r kill
-
+sleep 5
 echo $ROBOT_ENV
 
 processes=("ros2" "files_server" "static_transfor" "ydlidar_ros2_dr" "limo_base" "mission_switch" "identify" "parameter_bridg" "robot_state_pub")
