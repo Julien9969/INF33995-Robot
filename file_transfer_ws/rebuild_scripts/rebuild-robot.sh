@@ -10,6 +10,9 @@ for process in "${processes[@]}"; do
     pkill $process
 done
 
+apt update -y
+rosdep init
+rosdep update
 
 if [ "$ROBOT_ENV" = "SIMULATION" ]; then
     pkill ruby
