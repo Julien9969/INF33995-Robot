@@ -16,7 +16,10 @@ if [ "$ROBOT_ENV" = "SIMULATION" ]; then
     bash /root/deploy-simulation.sh
     echo "SIMULATION REBUILD DONE"
 else
-    cd /home/nvidia/INF3995-Robot/ros_ws/ && rm -rf /home/nvidia/INF3995-Robot/ros_ws/build/ /home/nvidia/INF3995-Robot/ros_ws/install/ /home/nvidia/INF3995-Robot/ros_ws/log/
+
+    cd /home/nvidia/INF3995-Robot/ros_ws/ 
+    rm -rf /home/nvidia/INF3995-Robot/ros_ws/build/ /home/nvidia/INF3995-Robot/ros_ws/install/ /home/nvidia/INF3995-Robot/ros_ws/log/
+    rosdep install --from-paths /home/nvidia/INF3995-Robot/ros_ws/src --ignore-src -r -i -y --rosdistro humble
     colcon build
     source /home/nvidia/INF3995-Robot/ros_ws/install/setup.bash
     ros2 launch robot_bringup robot_bringup.launch.py &
