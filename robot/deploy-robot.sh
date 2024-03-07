@@ -18,7 +18,6 @@ rosdep install --from-paths /home/nvidia/INF3995-Robot/file_transfer_ws/src --ig
 sleep 5
 
 cd /home/nvidia/INF3995-Robot/ros_ws
-# colcon build
 colcon build
 source /home/nvidia/INF3995-Robot/ros_ws/install/setup.bash
 ros2 launch robot_bringup robot_bringup.launch.py &
