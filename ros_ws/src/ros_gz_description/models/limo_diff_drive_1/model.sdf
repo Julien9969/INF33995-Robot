@@ -1,9 +1,14 @@
 <sdf version='1.9'>
-    <plugin filename="libignition-gazebo-sensors-system.so" name="ignition::gazebo::systems::Sensors">
-        <render_engine>ogre2</render_engine>
-    </plugin>
-    <plugin filename="libignition-gazebo-imu-system.so" name="ignition::gazebo::systems::Imu"/>
     <model name='limo_four_diff'>
+        <plugin filename="libignition-gazebo-imu-system.so" name="ignition::gazebo::systems::Imu"/>
+        <plugin filename="ignition-gazebo-joint-state-publisher-system" name="ignition::gazebo::systems::JointStatePublisher"/>
+        <plugin filename="ignition-gazebo-pose-publisher-system" name="ignition::gazebo::systems::PosePublisher">
+            <publish_link_pose>true</publish_link_pose>
+            <use_pose_vector_msg>true</use_pose_vector_msg>
+            <static_publisher>true</static_publisher>
+            <publish_sensor_pose>true</publish_sensor_pose>
+            <static_update_frequency>1</static_update_frequency>
+        </plugin>
         <link name='base_footprint'>
             <inertial>
                 <pose>0.007904637105296531 0 0.1494082089867692 0 0 0</pose>
@@ -97,12 +102,12 @@
                 </material>
             </visual>
             <sensor name='sensor_camera' type='depth_camera'>
-                <topic>/robot1/depth/image_raw</topic>
+                <topic>/limo/depth/image_raw</topic>
                 <always_on>true</always_on>
                 <visualize>true</visualize>
                 <update_rate>10</update_rate>
                 <camera name='head'>
-                    <cameraInfoTopic>/robot1/color/camera_info</cameraInfoTopic>
+                    <cameraInfoTopic>/limo/color/camera_info</cameraInfoTopic>
                     <horizontal_fov>1.3962634</horizontal_fov>
                     <image>
                         <width>640</width>
@@ -121,14 +126,14 @@
             </sensor>
             <gravity>true</gravity>
             <sensor name='imu_sensor' type='imu'>
-                <topic>/robot1/imu</topic>
+                <topic>/limo/imu</topic>
                 <always_on>true</always_on>
                 <update_rate>100</update_rate>
                 <visualize>true</visualize>
                 <pose relative_to="imu_link">0 0 0.05 0 -0 0</pose>
             </sensor>
             <sensor name='laser_sensor' type='gpu_lidar'>
-                <topic>/robot1/scan</topic>
+                <topic>/limo/scan</topic>
                 <visualize>false</visualize>
                 <update_rate>8</update_rate>
                 <ray>
@@ -383,8 +388,8 @@
             </visual>
         </link>
         <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
-            <topic>robot1/cmd_vel</topic>
-            <odom_topic>robot1/odom</odom_topic>
+            <topic>limo/cmd_vel</topic>
+            <odom_topic>limo/odom</odom_topic>
             <left_joint>front_left_wheel</left_joint>
             <left_joint>rear_left_wheel</left_joint>
             <right_joint>front_right_wheel</right_joint>

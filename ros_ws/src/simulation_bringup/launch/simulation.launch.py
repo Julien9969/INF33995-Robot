@@ -35,10 +35,10 @@ def generate_launch_description():
     pkg_project_description = get_package_share_directory('ros_gz_description')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
-    # Load the SDF files from "description" package
-    sdf_file_1 = os.path.join(pkg_project_description, 'models', 'limo_diff_drive_1', 'model.sdf')
-    with open(sdf_file_1, 'r') as infp:
-        robot_desc_1 = infp.read()
+    # # Load the SDF files from "description" package
+    # sdf_file_1 = os.path.join(pkg_project_description, 'models', 'limo_diff_drive_1', 'model.sdf')
+    # with open(sdf_file_1, 'r') as infp:
+    #     robot_desc_1 = infp.read()
 
     # Load the SDF files from "description" package
     sdf_file_2 = os.path.join(pkg_project_description, 'models', 'limo_diff_drive_2', 'model.sdf')
@@ -57,16 +57,16 @@ def generate_launch_description():
     )
 
     # Takes the description and joint angles as inputs and publishes the 3D poses of the robot links
-    robot_state_publisher_1 = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        name='robot_state_publisher_1',
-        output='both',
-        parameters=[
-            {'use_sim_time': True},
-            {'robot_description': robot_desc_1},
-        ]
-    )
+    # robot_state_publisher_1 = Node(
+    #     package='robot_state_publisher',
+    #     executable='robot_state_publisher',
+    #     name='robot_state_publisher_1',
+    #     output='both',
+    #     parameters=[
+    #         {'use_sim_time': True},
+    #         {'robot_description': robot_desc_1},
+    #     ]
+    # )
     robot_state_publisher_2 = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -82,7 +82,7 @@ def generate_launch_description():
     # rviz = Node(
     #    package='rviz2',
     #    executable='rviz2',
-    #    arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'diff_drive.rviz')],
+    #    arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'limo_diff_drive.rviz')],
     #    condition=IfCondition(LaunchConfiguration('rviz'))
     # )
 
@@ -97,18 +97,18 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Node pour identification:
-        # Bridge ROS topics and Gazebo messages for establishing communication
-    identify1 = Node(
-        package='py_identify_server',
-        executable='identify',
-        # parameters=[{
-        #     'config_file': os.path.join(pkg_project_bringup, 'config', 'simulation_bridge.yaml'),
-        #     'qos_overrides./tf_static.publisher.durability': 'transient_local',
-        # }],
-        namespace='robot1',
-        output='screen'
-    )
+    # # Node pour identification:
+    #     # Bridge ROS topics and Gazebo messages for establishing communication
+    # identify1 = Node(
+    #     package='py_identify_server',
+    #     executable='identify',
+    #     # parameters=[{
+    #     #     'config_file': os.path.join(pkg_project_bringup, 'config', 'simulation_bridge.yaml'),
+    #     #     'qos_overrides./tf_static.publisher.durability': 'transient_local',
+    #     # }],
+    #     namespace='robot1',
+    #     output='screen'
+    # )
     
     # Node pour identification:
         # Bridge ROS topics and Gazebo messages for establishing communication
@@ -122,13 +122,13 @@ def generate_launch_description():
         namespace='robot2',
         output='screen'
     )
-    # Node pour mission control (start et stop mission):
-    mission_switch1 = Node(
-        package='mission_control',
-        executable='mission_switch',
-        output='screen',
-        namespace='robot1',
-    )
+    # # Node pour mission control (start et stop mission):
+    # mission_switch1 = Node(
+    #     package='mission_control',
+    #     executable='mission_switch',
+    #     output='screen',
+    #     namespace='robot1',
+    # )
         # Node pour mission control (start et stop mission):
     mission_switch2 = Node(
         package='mission_control',
@@ -141,11 +141,11 @@ def generate_launch_description():
         gz_sim,
         # DeclareLaunchArgument('rviz', default_value='true', description='Open RViz.'),
         bridge,
-        robot_state_publisher_1,
+        # robot_state_publisher_1,
         robot_state_publisher_2,
         # rviz,
-        mission_switch1,
+        # mission_switch1,
         mission_switch2,
-        identify1,
+        # identify1,
         identify2
     ])
