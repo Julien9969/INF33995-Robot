@@ -15,7 +15,7 @@
         </plugin>
         <link name='base_footprint'>
             <inertial>
-                <pose>0.007904637105296531 0 0.1494082089867692 0 0 0</pose>
+                <pose>0 0 0 0 0 0</pose>
                 <mass>2.3656999999999999</mass>
                 <inertia>
                     <ixx>0.24030687149258151</ixx>
@@ -135,7 +135,7 @@
                 <always_on>true</always_on>
                 <update_rate>100</update_rate>
                 <visualize>true</visualize>
-                <pose relative_to="imu_link">0 0 0.05 0 -0 0</pose>
+                <pose relative_to="imu_link">0 0 0 0 -0 0</pose>
             </sensor>
             <sensor name='laser_sensor' type='gpu_lidar'>
                 <!-- <ignition_frame_id>laser_frame</ignition_frame_id> -->
@@ -422,7 +422,7 @@
         </frame>
         <frame name='depth_camera_link' attached_to='depth_camera_joint'/>
         <frame name='imu_joint' attached_to='base_link'>
-            <pose>0 0 -0.1 0 -0 0</pose>
+            <pose>0 0 0 0 -0 0</pose>
         </frame>
         <frame name='imu_link' attached_to='imu_joint'/>
         <frame name='inertial_joint' attached_to='base_link'>
@@ -434,8 +434,10 @@
         </frame>
         <frame name='laser_link' attached_to='laser_joint'/>
         <frame name='base_joint' attached_to='base_footprint'>
-            <pose>0 0 0.15 0 -0 0</pose>
+            <pose>0 0 0 0 -0 0</pose>
         </frame>
-        <frame name='base_link' attached_to='base_joint'/>
+        <frame name='base_link' attached_to='base_joint'>
+            <pose>0 0 0 0 -0 0</pose>
+        </frame>
     </model>
 </sdf>
