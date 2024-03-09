@@ -63,6 +63,25 @@
   ros_type_name: "sensor_msgs/msg/PointCloud2"
   gz_type_name: "gz.msgs.PointCloudPacked"
   direction: GZ_TO_ROS
+- ros_topic_name: "color/image"
+  gz_topic_name: "/robot2/color/image_raw"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+- ros_topic_name: "color/camera_info"
+  gz_topic_name: "/robot2/color/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+- ros_topic_name: "color/image/points"
+  gz_topic_name: "/robot2/color/image_raw/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
+- ros_topic_name: "/tf"
+  gz_topic_name: "/model/diff_drive_2/tf" # necessaire pour avoir le odom published par gazebo
+  ros_type_name: "tf2_msgs/msg/TFMessage"
+  gz_type_name: "gz.msgs.Pose_V"
+  direction: GZ_TO_ROS
 - ros_topic_name: "/tf"
   gz_topic_name: "/model/diff_drive_2/pose" # pas sur pr diff drive 2
   ros_type_name: "tf2_msgs/msg/TFMessage"
