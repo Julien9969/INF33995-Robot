@@ -1,5 +1,6 @@
 ros_ws/install
 ros_ws/build
 ros_ws/log
+*frames_2024*
 
 .vscode
