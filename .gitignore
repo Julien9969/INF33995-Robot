@@ -1,5 +1,8 @@
+ros_ws/src/ros_gz_gazebo/worlds/diff_drive.sdf
 ros_ws/install
 ros_ws/build
 ros_ws/log
+
+simulation/.venv
 
 .vscode
