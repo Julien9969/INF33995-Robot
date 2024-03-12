@@ -127,14 +127,14 @@ def generate_launch_description():
         package='mission_control',
         executable='mission_switch',
         output='screen',
-        namespace='robot1',
+        # namespace='robot1',
     )
         # Node pour mission control (start et stop mission):
     mission_switch2 = Node(
         package='mission_control',
         executable='mission_switch',
         output='screen',
-        namespace='robot2',
+        # namespace='robot2',
     )
 
 

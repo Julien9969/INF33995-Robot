@@ -30,8 +30,14 @@ class IdentifyService(Node):
 
     def trigger(self):
         rotate_msg = Twist()
-        rotate_msg.angular.z = -1.5
-        rotate_msg.linear.x = 0.0
+
+        if os.environ.get("ROBOT_ENV") == "SIMULATION":
+            rotate_msg.angular.z = -0.5
+            rotate_msg.linear.x = 4.5
+        else:
+            rotate_msg.angular.z = -1.5
+            rotate_msg.linear.x = 0.0
+                
         self.publisher_.publish(rotate_msg)
 
 
