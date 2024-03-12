@@ -30,8 +30,8 @@ class IdentifyService(Node):
 
     def trigger(self):
         rotate_msg = Twist()
-        rotate_msg.angular.z = -12.5
-        rotate_msg.linear.x = 0.5
+        rotate_msg.angular.z = -1.5
+        rotate_msg.linear.x = 0.0
         self.publisher_.publish(rotate_msg)
 
 
