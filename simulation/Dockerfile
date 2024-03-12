@@ -48,4 +48,4 @@ RUN echo "export ROS_DOMAIN_ID=62" >> /root/.bashrc
 #VOLUME /tmp/.X11-unix:/tmp/.X11-unix
 
 # extra commands pour nos dépendances
-RUN apt update && apt install ros-humble-cartographer-ros
+RUN apt update && apt install ros-humble-cartographer-ros -y
