@@ -68,7 +68,7 @@ class FileServer(Node):
                 self.get_logger().info(f'Update command: {os.listdir(path)}')
 
                 with open(os.path.join(path, "stdout.txt"), "w") as f:
-                    subprocess.Popen(["bash", os.path.join(path, "update.sh")], stdout=f, stderr=subprocess.STDOUT)
+                    subprocess.Popen(["bash", os.path.join(path, "update.sh")], shell=True, stdout=f, stderr=subprocess.STDOUT)
     
                 response.message = "Success"
                 response.content = "update en cours"
