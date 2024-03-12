@@ -466,8 +466,8 @@
             <pose>0 0 0.15 0 -0 0</pose>
         </frame>
         <frame name='base_link' attached_to='base_joint'/>
-        <plugin filename="gz-sim-odometry-publisher-system" name="gz::sim::systems::OdometryPublisher">
-            <!-- <odom_frame>odom</odom_frame> -->
+        <plugin filename="libignition-gazebo-odometry-publisher-system" name="ignition::gazebo::systems::OdometryPublisher">
+            <odom_frame>odom</odom_frame>
             <odom_topic>robot2/odom</odom_topic>
             <robot_base_frame>diff_drive_2</robot_base_frame>
         </plugin>
