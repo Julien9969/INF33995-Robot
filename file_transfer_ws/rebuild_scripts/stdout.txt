@@ -3,20 +3,18 @@ SIMULATION
 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
 
 Hit:1 http://packages.ros.org/ros2/ubuntu jammy InRelease
-Hit:2 http://security.ubuntu.com/ubuntu jammy-security InRelease
-Hit:3 http://packages.osrfoundation.org/gazebo/ubuntu-stable jammy InRelease
-Hit:4 http://repo.ros2.org/ubuntu/main jammy InRelease
-Hit:5 http://archive.ubuntu.com/ubuntu jammy InRelease
-Get:6 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [119 kB]
-Hit:7 http://archive.ubuntu.com/ubuntu jammy-backports InRelease
-Get:8 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [1994 kB]
-Get:9 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [1843 kB]
-Get:10 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1349 kB]
-Fetched 5305 kB in 2s (3428 kB/s)
+Hit:2 http://archive.ubuntu.com/ubuntu jammy InRelease
+Get:3 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [119 kB]
+Hit:4 http://packages.osrfoundation.org/gazebo/ubuntu-stable jammy InRelease
+Hit:5 http://repo.ros2.org/ubuntu/main jammy InRelease
+Get:6 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Get:7 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [109 kB]
+Get:8 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1350 kB]
+Fetched 1688 kB in 1s (1442 kB/s)
 Reading package lists...
 Building dependency tree...
 Reading state information...
-314 packages can be upgraded. Run 'apt list --upgradable' to see them.
+All packages are up to date.
 W: http://repo.ros2.org/ubuntu/main/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
 ERROR: default sources list file already exists:
 	/etc/ros/rosdep/sources.list.d/20-default.list
@@ -53,19 +51,36 @@ updated cache in /root/.ros/rosdep/sources.cache
 
 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
 
-Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease
-Hit:2 http://archive.ubuntu.com/ubuntu jammy-updates InRelease
-Hit:3 http://archive.ubuntu.com/ubuntu jammy-backports InRelease
-Hit:4 http://repo.ros2.org/ubuntu/main jammy InRelease
-Hit:5 http://packages.ros.org/ros2/ubuntu jammy InRelease
-Hit:6 http://packages.osrfoundation.org/gazebo/ubuntu-stable jammy InRelease
-Get:7 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
-Fetched 110 kB in 1s (186 kB/s)
+Hit:1 http://security.ubuntu.com/ubuntu jammy-security InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu jammy InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu jammy-backports InRelease
+Hit:5 http://packages.osrfoundation.org/gazebo/ubuntu-stable jammy InRelease
+Hit:6 http://repo.ros2.org/ubuntu/main jammy InRelease
+Hit:7 http://packages.ros.org/ros2/ubuntu jammy InRelease
 Reading package lists...
 Building dependency tree...
 Reading state information...
-314 packages can be upgraded. Run 'apt list --upgradable' to see them.
+All packages are up to date.
 W: http://repo.ros2.org/ubuntu/main/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 http://packages.ros.org/ros2/ubuntu jammy InRelease
+Hit:2 http://security.ubuntu.com/ubuntu jammy-security InRelease
+Hit:3 http://packages.osrfoundation.org/gazebo/ubuntu-stable jammy InRelease
+Hit:4 http://repo.ros2.org/ubuntu/main jammy InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu jammy InRelease
+Hit:6 http://archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:7 http://archive.ubuntu.com/ubuntu jammy-backports InRelease
+Reading package lists...
+Building dependency tree...
+Reading state information...
+All packages are up to date.
+W: http://repo.ros2.org/ubuntu/main/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+Requirement already satisfied: python-sdformat in /root/INF3995-Robot/simulation/.venv/lib/python3.10/site-packages (0.4.0)
+Requirement already satisfied: numpy<2.0,>=1.0 in /root/INF3995-Robot/simulation/.venv/lib/python3.10/site-packages (from python-sdformat) (1.26.4)
+Requirement already satisfied: lxml<5.0.0,>=4.8.0 in /root/INF3995-Robot/simulation/.venv/lib/python3.10/site-packages (from python-sdformat) (4.9.4)
 Wrote /etc/ros/rosdep/sources.list.d/20-default.list
 Recommended: please run
 
@@ -106,33 +121,33 @@ Starting >>> file_server_bringup
 Starting >>> files_server_simulation
 Starting >>> interfaces
 Starting >>> py_files_server
-Finished <<< file_server_bringup [0.89s]
-Finished <<< files_server_simulation [0.89s]
-Finished <<< interfaces [0.91s]
+Finished <<< files_server_simulation [1.17s]
+Finished <<< file_server_bringup [1.35s]
+Finished <<< interfaces [1.27s]
 --- stderr: py_files_server
 /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
   warnings.warn(
 /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
   warnings.warn(
 ---
-Finished <<< py_files_server [1.35s]
+Finished <<< py_files_server [2.03s]
 
-Summary: 4 packages finished [2.43s]
+Summary: 4 packages finished [3.47s]
   1 package had stderr output: py_files_server
-[INFO] [launch]: All log files can be found below /root/.ros/log/2024-03-07-13-57-10-704978-ebaa480be6af-6618
+[INFO] [launch]: All log files can be found below /root/.ros/log/2024-03-12-15-51-51-775720-6a54e199ca2e-3793
 [INFO] [launch]: Default logging verbosity is set to INFO
-[INFO] [files_server-1]: process started with pid [6620]
-[INFO] [files_server-2]: process started with pid [6622]
+[INFO] [files_server-1]: process started with pid [3795]
+[INFO] [files_server-2]: process started with pid [3797]
 Starting >>> ros_gz_description
 Starting >>> interfaces
 Starting >>> mission_control
 Starting >>> py_identify_server
 Starting >>> robot_bringup
-Finished <<< ros_gz_description [1.65s]
+Finished <<< ros_gz_description [1.81s]
 Starting >>> ros_gz_gazebo
-Finished <<< robot_bringup [1.53s]
-Finished <<< interfaces [1.83s]
-Finished <<< ros_gz_gazebo [0.50s]
+Finished <<< interfaces [2.30s]
+Finished <<< robot_bringup [2.14s]
+Finished <<< ros_gz_gazebo [0.83s]
 Starting >>> simulation_bringup
 --- stderr: py_identify_server
 /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
@@ -140,60 +155,140 @@ Starting >>> simulation_bringup
 /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
   warnings.warn(
 ---
-Finished <<< py_identify_server [2.30s]
-Finished <<< simulation_bringup [0.42s]
+Finished <<< py_identify_server [2.73s]
 --- stderr: mission_control
 /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
   warnings.warn(
 /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
   warnings.warn(
 ---
-Finished <<< mission_control [2.53s]
+Finished <<< mission_control [2.91s]
+Finished <<< simulation_bringup [0.47s]
 
-Summary: 7 packages finished [3.61s]
+Summary: 7 packages finished [4.26s]
   2 packages had stderr output: mission_control py_identify_server
-[INFO] [launch]: All log files can be found below /root/.ros/log/2024-03-07-13-57-16-201567-ebaa480be6af-7157
+[INFO] [launch]: All log files can be found below /root/.ros/log/2024-03-12-15-51-58-745265-6a54e199ca2e-4332
 [INFO] [launch]: Default logging verbosity is set to INFO
-[INFO] [ruby $(which ign) gazebo-1]: process started with pid [7158]
-[INFO] [parameter_bridge-2]: process started with pid [7161]
-[INFO] [robot_state_publisher-3]: process started with pid [7163]
-[INFO] [robot_state_publisher-4]: process started with pid [7166]
-[INFO] [mission_switch-5]: process started with pid [7168]
-[INFO] [mission_switch-6]: process started with pid [7170]
-[INFO] [identify-7]: process started with pid [7172]
-[INFO] [identify-8]: process started with pid [7174]
-[robot_state_publisher-3] [WARN] [1709837836.641547626] [sdformat_urdf]: SDFormat link [base_footprint] has a <sensor>, but URDF does not support this
-[robot_state_publisher-3] [WARN] [1709837836.652001272] [kdl_parser]: The root link base_footprint has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
-[robot_state_publisher-3] [INFO] [1709837836.652744023] [robot_state_publisher_1]: got segment base_footprint
-[robot_state_publisher-3] [INFO] [1709837836.652815514] [robot_state_publisher_1]: got segment front_left_wheel_link
-[robot_state_publisher-3] [INFO] [1709837836.652829608] [robot_state_publisher_1]: got segment front_right_wheel_link
-[robot_state_publisher-3] [INFO] [1709837836.652837055] [robot_state_publisher_1]: got segment rear_left_wheel_link
-[robot_state_publisher-3] [INFO] [1709837836.652843938] [robot_state_publisher_1]: got segment rear_right_wheel_link
-[robot_state_publisher-4] [WARN] [1709837836.682903893] [sdformat_urdf]: SDFormat link [base_footprint] has a <sensor>, but URDF does not support this
-[robot_state_publisher-4] [WARN] [1709837836.696565506] [kdl_parser]: The root link base_footprint has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
-[robot_state_publisher-4] [INFO] [1709837836.696664306] [robot_state_publisher_2]: got segment base_footprint
-[robot_state_publisher-4] [INFO] [1709837836.696747891] [robot_state_publisher_2]: got segment front_left_wheel_link
-[robot_state_publisher-4] [INFO] [1709837836.696761066] [robot_state_publisher_2]: got segment front_right_wheel_link
-[robot_state_publisher-4] [INFO] [1709837836.696768233] [robot_state_publisher_2]: got segment rear_left_wheel_link
-[robot_state_publisher-4] [INFO] [1709837836.696774934] [robot_state_publisher_2]: got segment rear_right_wheel_link
+[INFO] [ruby $(which ign) gazebo-1]: process started with pid [4333]
+[INFO] [parameter_bridge-2]: process started with pid [4335]
+[INFO] [robot_state_publisher-3]: process started with pid [4338]
+[INFO] [robot_state_publisher-4]: process started with pid [4341]
+[INFO] [mission_switch-5]: process started with pid [4343]
+[INFO] [mission_switch-6]: process started with pid [4345]
+[INFO] [identify-7]: process started with pid [4347]
+[INFO] [identify-8]: process started with pid [4349]
+[robot_state_publisher-3] [WARN] [1710273119.178179305] [sdformat_urdf]: SDFormat link [base_footprint] has a <sensor>, but URDF does not support this
+[robot_state_publisher-3] [WARN] [1710273119.184713966] [kdl_parser]: The root link base_footprint has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-3] [INFO] [1710273119.184810881] [robot_state_publisher_1]: got segment base_footprint
+[robot_state_publisher-3] [INFO] [1710273119.184875780] [robot_state_publisher_1]: got segment front_left_wheel_link
+[robot_state_publisher-3] [INFO] [1710273119.184886142] [robot_state_publisher_1]: got segment front_right_wheel_link
+[robot_state_publisher-3] [INFO] [1710273119.184892519] [robot_state_publisher_1]: got segment rear_left_wheel_link
+[robot_state_publisher-3] [INFO] [1710273119.184898134] [robot_state_publisher_1]: got segment rear_right_wheel_link
+[robot_state_publisher-4] [WARN] [1710273119.276473726] [sdformat_urdf]: SDFormat link [base_footprint] has a <sensor>, but URDF does not support this
+[robot_state_publisher-4] [WARN] [1710273119.285412586] [kdl_parser]: The root link base_footprint has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-4] [INFO] [1710273119.285503162] [robot_state_publisher_2]: got segment base_footprint
+[robot_state_publisher-4] [INFO] [1710273119.285581830] [robot_state_publisher_2]: got segment front_left_wheel_link
+[robot_state_publisher-4] [INFO] [1710273119.285597411] [robot_state_publisher_2]: got segment front_right_wheel_link
+[robot_state_publisher-4] [INFO] [1710273119.285608154] [robot_state_publisher_2]: got segment rear_left_wheel_link
+[robot_state_publisher-4] [INFO] [1710273119.285617333] [robot_state_publisher_2]: got segment rear_right_wheel_link
 [ruby $(which ign) gazebo-1] QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
-[parameter_bridge-2] [INFO] [1709837837.563328180] [ros_gz_bridge]: Creating ROS->GZ Bridge: [robot1/cmd_vel (geometry_msgs/msg/Twist) -> robot1/cmd_vel (gz.msgs.Twist)] (Lazy 0)
-[parameter_bridge-2] [INFO] [1709837837.565261244] [ros_gz_bridge]: Creating ROS->GZ Bridge: [robot2/cmd_vel (geometry_msgs/msg/Twist) -> robot2/cmd_vel (gz.msgs.Twist)] (Lazy 0)
-[parameter_bridge-2] [INFO] [1709837837.565721166] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
-[parameter_bridge-2] [INFO] [1709837837.566355012] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot1/odom (gz.msgs.Odometry) -> robot1/odom (nav_msgs/msg/Odometry)] (Lazy 0)
-[parameter_bridge-2] [INFO] [1709837837.567661535] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot1/scan (gz.msgs.LaserScan) -> robot1/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
-[parameter_bridge-2] [INFO] [1709837837.569621527] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot2/odom (gz.msgs.Odometry) -> robot2/odom (nav_msgs/msg/Odometry)] (Lazy 0)
-[parameter_bridge-2] [INFO] [1709837837.570229254] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot2/scan (gz.msgs.LaserScan) -> robot2/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
-[parameter_bridge-2] [INFO] [1709837837.570810281] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/clock)] (Lazy 0)
-[parameter_bridge-2] [WARN] [1709837837.570882259] [ros_gz_bridge]: Failed to create a bridge for topic [/clock] with ROS2 type [rosgraph_msgs/msg/clock] to topic [/clock] with Gazebo Transport type [gz.msgs.Clock]
+[parameter_bridge-2] [INFO] [1710273120.482691994] [ros_gz_bridge]: Creating ROS->GZ Bridge: [robot1/cmd_vel (geometry_msgs/msg/Twist) -> robot1/cmd_vel (gz.msgs.Twist)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710273120.487723270] [ros_gz_bridge]: Creating ROS->GZ Bridge: [robot2/cmd_vel (geometry_msgs/msg/Twist) -> robot2/cmd_vel (gz.msgs.Twist)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710273120.489368029] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710273120.492161856] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot1/odom (gz.msgs.Odometry) -> robot1/odom (nav_msgs/msg/Odometry)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710273120.496602951] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot1/scan (gz.msgs.LaserScan) -> robot1/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710273120.500666761] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot2/odom (gz.msgs.Odometry) -> robot2/odom (nav_msgs/msg/Odometry)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710273120.502391436] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot2/scan (gz.msgs.LaserScan) -> robot2/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710273120.503986519] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/clock)] (Lazy 0)
+[parameter_bridge-2] [WARN] [1710273120.504247388] [ros_gz_bridge]: Failed to create a bridge for topic [/clock] with ROS2 type [rosgraph_msgs/msg/clock] to topic [/clock] with Gazebo Transport type [gz.msgs.Clock]
 [ruby $(which ign) gazebo-1] libEGL warning: egl: failed to create dri2 screen
 [ruby $(which ign) gazebo-1] libEGL warning: egl: failed to create dri2 screen
 [ruby $(which ign) gazebo-1] libEGL warning: egl: failed to create dri2 screen
 [ruby $(which ign) gazebo-1] libEGL warning: egl: failed to create dri2 screen
-[identify-7] [INFO] [1709837994.213389101] [robot1.identify_service]: Incoming request, a: 4
-[parameter_bridge-2] [INFO] [1709837994.214950375] [ros_gz_bridge]: Passing message from ROS geometry_msgs/msg/Twist to Gazebo gz.msgs.Twist (showing msg only once per type)
-[identify-8] [INFO] [1709837999.367452046] [robot2.identify_service]: Incoming request, a: 4
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       [files_server-1] [INFO] [1709837792.834882344] [robot1.files_service]: Update command: ['update.sh', 'stdout.txt']
-[files_server-1] [INFO] [1709837792.835895783] [robot1.files_service]: response: Success 
-Terminated
+[identify-7] [INFO] [1710273417.707698143] [robot1.identify_service]: Incoming request, a: 4
+[parameter_bridge-2] [INFO] [1710273417.708409946] [ros_gz_bridge]: Passing message from ROS geometry_msgs/msg/Twist to Gazebo gz.msgs.Twist (showing msg only once per type)
+[identify-7] [INFO] [1710273436.470907485] [robot1.identify_service]: Incoming request, a: 4
+[INFO] [ruby $(which ign) gazebo-1]: process has finished cleanly [pid 4333]
+[INFO] [launch]: process[ruby $(which ign) gazebo-1] was required: shutting down launched system
+[INFO] [identify-8]: sending signal 'SIGINT' to process[identify-8]
+[INFO] [identify-7]: sending signal 'SIGINT' to process[identify-7]
+[INFO] [mission_switch-6]: sending signal 'SIGINT' to process[mission_switch-6]
+[INFO] [mission_switch-5]: sending signal 'SIGINT' to process[mission_switch-5]
+[INFO] [robot_state_publisher-4]: sending signal 'SIGINT' to process[robot_state_publisher-4]
+[INFO] [robot_state_publisher-3]: sending signal 'SIGINT' to process[robot_state_publisher-3]
+[INFO] [parameter_bridge-2]: sending signal 'SIGINT' to process[parameter_bridge-2]
+[identify-8] Traceback (most recent call last):
+[identify-8]   File "/root/INF3995-Robot/ros_ws/install/py_identify_server/lib/py_identify_server/identify", line 33, in <module>
+[identify-8]     sys.exit(load_entry_point('py-identify-server', 'console_scripts', 'identify')())
+[identify-8]   File "/root/INF3995-Robot/ros_ws/build/py_identify_server/py_identify_server/identify.py", line 43, in main
+[identify-8]     rclpy.spin(identify_service)
+[identify-8]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 222, in spin
+[identify-8]     executor.spin_once()
+[identify-8]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 739, in spin_once
+[identify-8]     self._spin_once_impl(timeout_sec)
+[identify-8]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 728, in _spin_once_impl
+[identify-8]     handler, entity, node = self.wait_for_ready_callbacks(timeout_sec=timeout_sec)
+[identify-8]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 711, in wait_for_ready_callbacks
+[identify-8]     return next(self._cb_iter)
+[identify-8]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 608, in _wait_for_ready_callbacks
+[identify-8]     wait_set.wait(timeout_nsec)
+[identify-8] KeyboardInterrupt
+[identify-7] Traceback (most recent call last):
+[identify-7]   File "/root/INF3995-Robot/ros_ws/install/py_identify_server/lib/py_identify_server/identify", line 33, in <module>
+[identify-7]     sys.exit(load_entry_point('py-identify-server', 'console_scripts', 'identify')())
+[identify-7]   File "/root/INF3995-Robot/ros_ws/build/py_identify_server/py_identify_server/identify.py", line 43, in main
+[identify-7]     rclpy.spin(identify_service)
+[identify-7]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 222, in spin
+[identify-7]     executor.spin_once()
+[identify-7]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 739, in spin_once
+[identify-7]     self._spin_once_impl(timeout_sec)
+[identify-7]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 728, in _spin_once_impl
+[identify-7]     handler, entity, node = self.wait_for_ready_callbacks(timeout_sec=timeout_sec)
+[identify-7]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 711, in wait_for_ready_callbacks
+[identify-7]     return next(self._cb_iter)
+[identify-7]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 608, in _wait_for_ready_callbacks
+[identify-7]     wait_set.wait(timeout_nsec)
+[identify-7] KeyboardInterrupt
+[mission_switch-6] Traceback (most recent call last):
+[mission_switch-6]   File "/root/INF3995-Robot/ros_ws/install/mission_control/lib/mission_control/mission_switch", line 33, in <module>
+[mission_switch-6]     sys.exit(load_entry_point('mission-control', 'console_scripts', 'mission_switch')())
+[mission_switch-6]   File "/root/INF3995-Robot/ros_ws/build/mission_control/mission_control/mission_switch_server.py", line 59, in main
+[mission_switch-6]     rclpy.spin(identify_service)
+[mission_switch-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 222, in spin
+[mission_switch-6]     executor.spin_once()
+[mission_switch-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 739, in spin_once
+[mission_switch-6]     self._spin_once_impl(timeout_sec)
+[mission_switch-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 728, in _spin_once_impl
+[mission_switch-6]     handler, entity, node = self.wait_for_ready_callbacks(timeout_sec=timeout_sec)
+[mission_switch-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 711, in wait_for_ready_callbacks
+[mission_switch-6]     return next(self._cb_iter)
+[mission_switch-6]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 608, in _wait_for_ready_callbacks
+[mission_switch-6]     wait_set.wait(timeout_nsec)
+[mission_switch-6] KeyboardInterrupt
+[mission_switch-5] Traceback (most recent call last):
+[mission_switch-5]   File "/root/INF3995-Robot/ros_ws/install/mission_control/lib/mission_control/mission_switch", line 33, in <module>
+[mission_switch-5]     sys.exit(load_entry_point('mission-control', 'console_scripts', 'mission_switch')())
+[mission_switch-5]   File "/root/INF3995-Robot/ros_ws/build/mission_control/mission_control/mission_switch_server.py", line 59, in main
+[mission_switch-5]     rclpy.spin(identify_service)
+[mission_switch-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 222, in spin
+[mission_switch-5]     executor.spin_once()
+[mission_switch-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 739, in spin_once
+[mission_switch-5]     self._spin_once_impl(timeout_sec)
+[mission_switch-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 728, in _spin_once_impl
+[mission_switch-5]     handler, entity, node = self.wait_for_ready_callbacks(timeout_sec=timeout_sec)
+[mission_switch-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 711, in wait_for_ready_callbacks
+[mission_switch-5]     return next(self._cb_iter)
+[mission_switch-5]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 608, in _wait_for_ready_callbacks
+[mission_switch-5]     wait_set.wait(timeout_nsec)
+[mission_switch-5] KeyboardInterrupt
+[robot_state_publisher-4] [INFO] [1710273663.744535506] [rclcpp]: signal_handler(signum=2)
+[robot_state_publisher-3] [INFO] [1710273663.746970100] [rclcpp]: signal_handler(signum=2)
+[parameter_bridge-2] [INFO] [1710273663.750285491] [rclcpp]: signal_handler(signum=2)
+[INFO] [parameter_bridge-2]: process has finished cleanly [pid 4335]
+[INFO] [robot_state_publisher-4]: process has finished cleanly [pid 4341]
+[INFO] [robot_state_publisher-3]: process has finished cleanly [pid 4338]
+[ERROR] [identify-8]: process has died [pid 4349, exit code -2, cmd '/root/INF3995-Robot/ros_ws/install/py_identify_server/lib/py_identify_server/identify --ros-args -r __ns:=/robot2'].
+[ERROR] [identify-7]: process has died [pid 4347, exit code -2, cmd '/root/INF3995-Robot/ros_ws/install/py_identify_server/lib/py_identify_server/identify --ros-args -r __ns:=/robot1'].
+[ERROR] [mission_switch-6]: process has died [pid 4345, exit code -2, cmd '/root/INF3995-Robot/ros_ws/install/mission_control/lib/mission_control/mission_switch --ros-args -r __ns:=/robot2'].
+[ERROR] [mission_switch-5]: process has died [pid 4343, exit code -2, cmd '/root/INF3995-Robot/ros_ws/install/mission_control/lib/mission_control/mission_switch --ros-args -r __ns:=/robot1'].
 SIMULATION REBUILD DONE

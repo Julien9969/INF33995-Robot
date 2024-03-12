@@ -1,6 +1,15 @@
 #!/bin/bash
 
 apt update -y
+mkdir -p "/usr/local/include/" && cp /opt/ros/humble/include/tf2_geometry_msgs/tf2_geometry_msgs/ /usr/local/include/ -r
+apt update
+if ! [ -d /root/INF3995-Robot/simulation/.venv ]; then
+    apt install python3.10-venv -y
+    cd /root/INF3995-Robot/simulation && python3 -m venv .venv
+fi
+source /root/INF3995-Robot/simulation/.venv/bin/activate && pip install python-sdformat && python3 /root/INF3995-Robot/simulation/random_map_generator.py
+
+cd /root/INF3995-Robot/ros_ws
 rm /etc/ros/rosdep/sources.list.d/20-default.list
 rosdep init
 rosdep update

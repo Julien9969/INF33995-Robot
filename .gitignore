@@ -1,3 +1,4 @@
+ros_ws/src/ros_gz_gazebo/worlds/diff_drive.sdf
 ros_ws/install
 ros_ws/build
 ros_ws/log
@@ -10,5 +11,6 @@ robot/log
 robot/update_queue
 
 __pycache__/
+simulation/.venv
 
 .vscode
