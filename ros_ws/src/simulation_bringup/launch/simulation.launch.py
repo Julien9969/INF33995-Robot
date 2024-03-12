@@ -130,14 +130,25 @@ def generate_launch_description():
     #     namespace='robot1',
     # )
         # Node pour mission control (start et stop mission):
-    mission_switch2 = Node(
-        package='mission_control',
-        executable='mission_switch',
-        output='screen',
-        namespace='robot2',
-    )
+    # mission_switch2 = Node(
+    #     package='mission_control',
+    #     executable='mission_switch',
+    #     output='screen',
+    #     namespace='robot2',
+    # )
+
+    # robot_localization_node = Node(
+    #    package='robot_localization',
+    #    executable='ekf_node',
+    #    name='ekf_filter_node',
+    #    output='screen',
+    #    parameters=[os.path.join(pkg_project_bringup, 'config', 'ekf.yaml'), {'use_sim_time': LaunchConfiguration('use_sim_time')}]
+    # )
 
     return LaunchDescription([
+        # DeclareLaunchArgument(name='use_sim_time', default_value='True',
+        #                                     description='Flag to enable use_sim_time'),
+        # robot_localization_node,
         gz_sim,
         # DeclareLaunchArgument('rviz', default_value='true', description='Open RViz.'),
         bridge,

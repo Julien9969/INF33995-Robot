@@ -77,11 +77,11 @@
   ros_type_name: "sensor_msgs/msg/PointCloud2"
   gz_type_name: "gz.msgs.PointCloudPacked"
   direction: GZ_TO_ROS
-- ros_topic_name: "/tf"
-  gz_topic_name: "/model/diff_drive_2/tf" # necessaire pour avoir le odom published par gazebo
-  ros_type_name: "tf2_msgs/msg/TFMessage"
-  gz_type_name: "gz.msgs.Pose_V"
-  direction: GZ_TO_ROS
+# - ros_topic_name: "/tf"
+#   gz_topic_name: "/model/diff_drive_2/tf" # necessaire pour avoir le odom published par gazebo
+#   ros_type_name: "tf2_msgs/msg/TFMessage"
+#   gz_type_name: "gz.msgs.Pose_V"
+#   direction: GZ_TO_ROS
 - ros_topic_name: "/tf"
   gz_topic_name: "/model/diff_drive_2/pose" # pas sur pr diff drive 2
   ros_type_name: "tf2_msgs/msg/TFMessage"
