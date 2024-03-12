@@ -19,6 +19,7 @@ if [ "$ROBOT_ENV" = "SIMULATION" ]; then
     bash /root/deploy-simulation.sh
     echo "SIMULATION REBUILD DONE"
 else
-    bash /home/nvidia/INF3995-Robot/robot/rebuild-robot.sh
+    # bash /home/nvidia/INF3995-Robot/robot/rebuild-robot.sh
+    bash /home/nvidia/INF3995-Robot/robot/deploy-robot.sh
     echo "ROBOT REBUILD DONE"
 fi
