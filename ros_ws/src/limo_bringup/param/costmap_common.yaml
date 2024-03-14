@@ -1,7 +1,7 @@
 footprint: [[-0.16, -0.11], [-0.16, 0.11], [0.16, 0.11], [0.16, -0.11]]
 footprint_padding: 0.02
 
-robot_base_frame: base_link
+robot_base_frame: diff_drive_2
 update_frequency: 4.0
 publish_frequency: 3.0
 transform_tolerance: 0.5
@@ -14,12 +14,12 @@ raytrace_range: 6.0
 
 #layer definitions
 static:
-    map_topic: /map
+    map_topic: /rtabmap/map # TODOOOOOOOOOOOOOOO to /rtabmap/map
     subscribe_to_updates: true
 
 obstacles_laser:
     observation_sources: scan
-    scan: {sensor_frame: laser_frame,  data_type: LaserScan, clearing: true, marking: true, topic: scan, inf_is_valid: true}
+    scan: {sensor_frame: diff_drive_2/base_footprint/laser_sensor,  data_type: LaserScan, clearing: true, marking: true, topic: scan, inf_is_valid: true}
 
 inflation:
     inflation_radius: 0.2
