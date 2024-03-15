@@ -105,7 +105,7 @@
                     <ambient>0 0 0 1</ambient>
                 </material>
             </visual>
-            <sensor name='color_camera' type='camera'>
+            <!-- <sensor name='color_camera' type='camera'>
                 <topic>/robot2/color/image_raw</topic>
                 <always_on>true</always_on>
                 <visualize>true</visualize>
@@ -126,17 +126,21 @@
 
                     </lens>
                 </camera>
+                <plugin filename="ignition-sensors-camera" name="ignition::sensors::CameraSensor">
+                    <frame_name>camera_link_optical</frame_name>
+                </plugin>
                 <pose relative_to="depth_link">0.084 0 0.18 0 -0 0</pose>
-            </sensor>
+            </sensor> -->
+                <!-- ou ros-camera ou camera-sensor OU camera-controller -->
 
-            <sensor name='sensor_camera' type='depth_camera'>
+            <sensor name='rgbd_camera' type='rgbd_camera'>
             <!-- TODO 2: depth a la place de depth_camera? -->
-                <topic>/robot2/depth/image_raw</topic>
+                <topic>/robot2/rgbd/image_raw</topic>
                 <always_on>true</always_on>
                 <visualize>true</visualize>
                 <update_rate>10</update_rate>
                 <camera name='head'>
-                    <cameraInfoTopic>/robot2/depth/camera_info</cameraInfoTopic>
+                    <cameraInfoTopic>/robot2/rgbd/camera_info</cameraInfoTopic>
                     <horizontal_fov>1.3962634</horizontal_fov>
                     <image>
                         <width>640</width>
@@ -446,6 +450,19 @@
             <pose>0 0 0 0 -0 0</pose>
         </frame>
         <frame name='depth_link' attached_to='depth_camera_to_camera_joint'/>
+        <joint name='camera_optical' type='revolute'>
+            <pose relative_to='base_footprint'>0 0 0 0 0 0</pose>
+            <parent>base_footprint</parent>
+            <child>depth_camera_joint_optical_link</child>
+        </joint>
+
+        <link name='depth_camera_joint_optical_link'>
+            <pose relative_to='base_link'>0 0 -0.1 1.5708 0 0</pose>
+        </link>
+        <!-- <frame name='depth_camera_joint_optical' attached_to='base_link'>
+            <pose>0 0 -0.1 -1.5708 0 -1.5708</pose>
+        </frame> -->
+            <!-- <pose>0.084 0 0.03 0 -0 0</pose> -->
         <frame name='depth_camera_joint' attached_to='base_link'>
             <pose>0.084 0 0.03 0 -0 0</pose>
         </frame>
@@ -453,6 +470,10 @@
         <frame name='imu_joint' attached_to='base_link'>
             <pose>0 0 -0.1 0 -0 0</pose>
         </frame>
+        <!-- <frame name='camera_link_optical' attached_to='depth_camera_link'>
+            <pose>0 0 -0.1 -1.5708 0 -1.5708</pose>
+        </frame> -->
+            <!-- <pose>0 0 -0.1 ${-pi/2} 0 ${-pi/2}</pose> -->
         <frame name='imu_link' attached_to='imu_joint'/>
         <frame name='inertial_joint' attached_to='base_link'>
             <pose>0 0 0 0 -0 0</pose>
