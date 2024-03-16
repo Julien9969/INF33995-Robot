@@ -141,6 +141,7 @@
                 <update_rate>10</update_rate>
                 <camera name='head'>
                     <cameraInfoTopic>/robot2/rgbd/camera_info</cameraInfoTopic>
+                    <optical_frame_id>diff_drive_2/depth_camera_joint_optical_link</optical_frame_id>
                     <horizontal_fov>1.3962634</horizontal_fov>
                     <image>
                         <width>640</width>
@@ -450,6 +451,43 @@
             <pose>0 0 0 0 -0 0</pose>
         </frame>
         <frame name='depth_link' attached_to='depth_camera_to_camera_joint'/>
+        
+
+
+        <!-- TODO NEXT TO TRY -->
+
+        <!-- <joint name='camera_optical' type='revolute'>
+            <pose relative_to='base_footprint'>0.1 0.065 0.04999999999999999 0 0 0</pose>
+            <parent>base_footprint</parent>
+            <child>depth_camera_joint_optical_link</child>
+            <axis>
+                <xyz>-0.5, -0.5, -0.5</xyz>
+                <limit>
+                    <lower>-10000000000000000</lower>
+                    <upper>10000000000000000</upper>
+                </limit>
+            </axis>
+        </joint> 
+        
+        <link name='depth_camera_joint_optical_link'>
+            <pose relative_to='camera_optical'>0 0 0 0 0 0</pose>
+        </link>
+        -->
+       
+
+
+
+        
+        <!-- <joint name="camera_optical_joint" type="fixed">
+            <parent link="base_footprint"/>
+            <child link="camera_link_optical"/>
+            <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+        </joint>
+
+        <link name="camera_link_optical"></link> -->
+
+
+
         <joint name='camera_optical' type='revolute'>
             <pose relative_to='base_footprint'>0 0 0 0 0 0</pose>
             <parent>base_footprint</parent>
@@ -457,7 +495,7 @@
         </joint>
 
         <link name='depth_camera_joint_optical_link'>
-            <pose relative_to='base_link'>0 0 -0.1 1.5708 0 0</pose>
+            <pose relative_to='base_link'>0 0 0 -1.5707963 0 -1.5707963</pose>
         </link>
         <!-- <frame name='depth_camera_joint_optical' attached_to='base_link'>
             <pose>0 0 -0.1 -1.5708 0 -1.5708</pose>
