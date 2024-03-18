@@ -16,8 +16,15 @@ install(
 # Install project configuration files
 install(
   DIRECTORY
-    config/
-  DESTINATION share/${PROJECT_NAME}/config
+    config1/
+  DESTINATION share/${PROJECT_NAME}/config1
+)
+
+# Install project configuration files
+install(
+  DIRECTORY
+    config2/
+  DESTINATION share/${PROJECT_NAME}/config2
 )
 
 if(BUILD_TESTING)
