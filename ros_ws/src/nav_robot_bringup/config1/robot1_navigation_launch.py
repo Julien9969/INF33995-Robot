@@ -55,12 +55,13 @@ def generate_launch_description():
     # TODO(orduno) Substitute with `PushNodeRemapping`
     #              https://github.com/ros2/launch_ros/issues/56
     remappings = [('/tf', 'tf'),
+                  ('/tf_static', 'tf_static'),
                   ('/cmd_vel','/robot1/cmd_vel'),
-                  ('/tf_static', 'tf_static')]
+                  ('/odom','/robot1/odom')]
 
     # Create our own temporary YAML files that include substitutions
     param_substitutions = {
-        'use_sim_time': False,
+        'use_sim_time': use_sim_time,
         'autostart': autostart}
 
     configured_params = ParameterFile(
@@ -86,7 +87,7 @@ def generate_launch_description():
 
     declare_params_file_cmd = DeclareLaunchArgument(
         'params_file',
-        default_value=os.path.join(bringup_dir, 'config1','robot1_nav2_params.yaml'), #TODO: Changer le path des shits
+        default_value=os.path.join(bringup_dir, 'config2','nav2_params.yaml'), #TODO: Changer le path des shits
         description='Full path to the ROS2 parameters file to use for all launched nodes')
 
     declare_autostart_cmd = DeclareLaunchArgument(
@@ -120,7 +121,7 @@ def generate_launch_description():
                 respawn_delay=2.0,
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings + [('cmd_vel', 'cmd_vel_nav')]),
+                remappings=remappings ), #+ [('cmd_vel', 'cmd_vel_nav')]
             Node(
                 package='nav2_smoother',
                 executable='smoother_server',
@@ -181,7 +182,7 @@ def generate_launch_description():
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings +
-                        [('cmd_vel', 'cmd_vel_nav'), ('cmd_vel_smoothed', 'cmd_vel')]),
+                        [('cmd_vel_smoothed', '/robot1/cmd_vel')]), #('cmd_vel', 'cmd_vel_nav'), 
             Node(
                 package='nav2_lifecycle_manager',
                 executable='lifecycle_manager',
@@ -203,7 +204,7 @@ def generate_launch_description():
                 plugin='nav2_controller::ControllerServer',
                 name='controller_server',
                 parameters=[configured_params],
-                remappings=remappings + [('cmd_vel', 'cmd_vel_nav')]),
+                remappings=remappings), #+ [('cmd_vel', 'robot1/cmd_vel_nav')]
             ComposableNode(
                 package='nav2_smoother',
                 plugin='nav2_smoother::SmootherServer',
@@ -240,7 +241,7 @@ def generate_launch_description():
                 name='velocity_smoother',
                 parameters=[configured_params],
                 remappings=remappings +
-                           [('cmd_vel', 'cmd_vel_nav'), ('cmd_vel_smoothed', 'cmd_vel')]),
+                           [ ('cmd_vel_smoothed', '/robot1/cmd_vel')]), #('cmd_vel', 'cmd_vel_nav'),
             ComposableNode(
                 package='nav2_lifecycle_manager',
                 plugin='nav2_lifecycle_manager::LifecycleManager',
