@@ -83,7 +83,7 @@ def generate_launch_description():
         description='Use simulation (Gazebo) clock if true')
 
     declare_params_file_cmd = DeclareLaunchArgument(
-        'params_file',
+        'pa/home/nvidiarams_file',
         default_value=os.path.join(bringup_dir, 'config1', 'robot1_nav2_params.yaml'), #TODO: changer architecture des shits
         description='Full path to the ROS2 parameters file to use for all launched nodes')
 
