@@ -86,7 +86,7 @@ def generate_launch_description():
 
     declare_params_file_cmd = DeclareLaunchArgument(
         'params_file',
-        default_value=os.path.join(bringup_dir, f'config{os.environ["ROBOT_NUM"]}','amcl_params.yaml'), #TODO: Changer le path des shits
+        default_value=os.path.join(bringup_dir, f'config{os.environ["ROBOT_NUM"]}','nav2_params.yaml'), #TODO: Changer le path des shits
         description='Full path to the ROS2 parameters file to use for all launched nodes')
 
     declare_autostart_cmd = DeclareLaunchArgument(
