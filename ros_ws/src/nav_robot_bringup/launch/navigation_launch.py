@@ -56,8 +56,8 @@ def generate_launch_description():
     #              https://github.com/ros2/launch_ros/issues/56
     remappings = [('/tf', 'tf'),
                   ('/tf_static', 'tf_static'),
-                  ('/cmd_vel','/robot1/cmd_vel'),
-                  ('/odom','/robot1/odom')]
+                  ('/cmd_vel',f'/robot{os.environ["ROBOT_NUM"]}/cmd_vel'),
+                  ('/odom',f'/robot{os.environ["ROBOT_NUM"]}/odom')]
 
     # Create our own temporary YAML files that include substitutions
     param_substitutions = {
@@ -87,7 +87,7 @@ def generate_launch_description():
 
     declare_params_file_cmd = DeclareLaunchArgument(
         'params_file',
-        default_value=os.path.join(bringup_dir, 'config2','nav2_params.yaml'), #TODO: Changer le path des shits
+        default_value=os.path.join(bringup_dir, f'config{os.environ["ROBOT_NUM"]}','nav2_params.yaml'), #TODO: Changer le path des shits
         description='Full path to the ROS2 parameters file to use for all launched nodes')
 
     declare_autostart_cmd = DeclareLaunchArgument(
@@ -182,7 +182,7 @@ def generate_launch_description():
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings +
-                        [('cmd_vel_smoothed', '/robot1/cmd_vel')]), #('cmd_vel', 'cmd_vel_nav'), 
+                        [('cmd_vel_smoothed', f'/robot{os.environ["ROBOT_NUM"]}/cmd_vel')]), #('cmd_vel', 'cmd_vel_nav'), 
             Node(
                 package='nav2_lifecycle_manager',
                 executable='lifecycle_manager',
@@ -241,7 +241,7 @@ def generate_launch_description():
                 name='velocity_smoother',
                 parameters=[configured_params],
                 remappings=remappings +
-                           [ ('cmd_vel_smoothed', '/robot1/cmd_vel')]), #('cmd_vel', 'cmd_vel_nav'),
+                           [ ('cmd_vel_smoothed', f'/robot{os.environ["ROBOT_NUM"]}/cmd_vel')]), #('cmd_vel', 'cmd_vel_nav'),
             ComposableNode(
                 package='nav2_lifecycle_manager',
                 plugin='nav2_lifecycle_manager::LifecycleManager',
