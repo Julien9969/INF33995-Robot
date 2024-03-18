@@ -31,7 +31,7 @@ def generate_launch_description():
     bringup_dir = get_package_share_directory('nav_robot_bringup')
 
     namespace = LaunchConfiguration('namespace')
-    map_yaml_file = LaunchConfiguration('map')
+    map_yaml_file = bringup_dir + f'/config{os.environ["ROBOT_NUM"]}/my_map_save.yaml'
     use_sim_time = LaunchConfiguration('use_sim_time')
     autostart = LaunchConfiguration('autostart')
     params_file = LaunchConfiguration('params_file')
