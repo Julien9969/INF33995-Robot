@@ -31,7 +31,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   # "msg/Num.msg"
   # "msg/Sphere.msg"
   # "srv/AddThreeInts.srv"
-  "msg/LimoInfo.msg"
+  # "msg/LimoInfo.msg"
   "msg/LimoStatus.msg"
   "srv/Identify.srv"
   "srv/MissionSwitch.srv"

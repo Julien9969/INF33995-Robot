@@ -1,1 +1,0 @@
-int64 battery_level_percentage
