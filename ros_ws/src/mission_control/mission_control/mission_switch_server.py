@@ -1,12 +1,14 @@
 from enum import Enum
 import time
 from interfaces.srv import MissionSwitch
+import os
 
 import sys
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
+from std_srvs.srv import Empty
 
 class State(Enum):
     ON = "ON" 
@@ -15,6 +17,7 @@ class State(Enum):
 
 START = "start"
 STOP = "stop"
+ROBOT_ID = {os.environ["ROBOT_NUM"]}
 
 class MissionSwitchService(Node):
 
@@ -24,20 +27,18 @@ class MissionSwitchService(Node):
         self.timer= self.create_timer(0.5, self.timer_callback)
         self.srv = self.create_service(MissionSwitch, 'mission_switch', self.serve)
         self.state = State.OFF
-    
+        self.cli = self.create_client(Empty, ros_route = f"robot{ROBOT_ID}/explore")
+
     def timer_callback(self):
         if(self.state == State.ON ):
-            rotate_msg = Twist()
-            rotate_msg.linear.x = 1.0
-            rotate_msg.angular.z = 0.5
-            self.publisher_.publish(rotate_msg)
-
+            if self.cli.wait_for_service(timeout_sec=5.0):
+                self.req = Empty.Request()
+            else:    
+                self.get_logger().info(f'service not available (robot id {ROBOT_ID}), waiting again...')
 
     def serve(self, request, response):
         command:str = str(request.command)
-
         self.get_logger().info(f'Incoming request, command: {command}, current state: {self.state}')
-
         if command == START and self.state == State.OFF:
             self.state = State.ON
             response.answer = f'{command} executed'
@@ -47,7 +48,6 @@ class MissionSwitchService(Node):
             self.publisher_.publish(Twist())
         else:
             response.answer = 'unknown '
-
         return response
 
 
