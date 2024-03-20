@@ -17,26 +17,40 @@ from geometry_msgs.msg import PoseStamped
 from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
 import rclpy
 from rclpy.duration import Duration
+import sys
 
 """
 Basic navigation demo to go to pose.
 """
 
+# INIT_X_POS_IN_ARGS = 0
+# INIT_Y_POS_IN_ARGS = 1
+# INIT_Z_ORIENTATION_IN_ARGS = 2
+
+GOAL_X_POS_IN_ARGS = 0
+GOAL_Y_POS_IN_ARGS = 1
+GOAL_W_ORIENTATION_IN_ARGS = 2
+
+argumentsPassedToScript = sys.argv
 
 def main():
+    print(argumentsPassedToScript)
+    argumentsPassedToScript.pop(0)
+    print(argumentsPassedToScript)
+
     rclpy.init()
 
     navigator = BasicNavigator()
 
     # Set our demo's initial pose
-    initial_pose = PoseStamped()
-    initial_pose.header.frame_id = 'map'
-    initial_pose.header.stamp = navigator.get_clock().now().to_msg()
-    initial_pose.pose.position.x = 3.45
-    initial_pose.pose.position.y = 2.15
-    initial_pose.pose.orientation.z = 1.0
-    initial_pose.pose.orientation.w = 0.0
-    navigator.setInitialPose(initial_pose)
+    # initial_pose = PoseStamped()
+    # initial_pose.header.frame_id = 'map'
+    # initial_pose.header.stamp = navigator.get_clock().now().to_msg()
+    # initial_pose.pose.position.x = float(argumentsPassedToScript[INIT_X_POS_IN_ARGS])
+    # initial_pose.pose.position.y = float(argumentsPassedToScript[INIT_Y_POS_IN_ARGS])
+    # initial_pose.pose.orientation.z = float(argumentsPassedToScript[INIT_Z_ORIENTATION_IN_ARGS])
+    # initial_pose.pose.orientation.w = 0.5 #que es?
+    # navigator.setInitialPose(initial_pose)
 
     # Activate navigation, if not autostarted. This should be called after setInitialPose()
     # or this will initialize at the origin of the map and update the costmap with bogus readings.
@@ -44,7 +58,7 @@ def main():
     # navigator.lifecycleStartup()
 
     # Wait for navigation to fully activate, since autostarting nav2
-    navigator.waitUntilNav2Active()
+    # navigator.waitUntilNav2Active()
 
     # If desired, you can change or load the map as well
     # navigator.changeMap('/path/to/map.yaml')
@@ -58,9 +72,9 @@ def main():
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = 'map'
     goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-    goal_pose.pose.position.x = -2.0
-    goal_pose.pose.position.y = -0.5
-    goal_pose.pose.orientation.w = 1.0
+    goal_pose.pose.position.x = float(argumentsPassedToScript[GOAL_X_POS_IN_ARGS])
+    goal_pose.pose.position.y = float(argumentsPassedToScript[GOAL_Y_POS_IN_ARGS])
+    goal_pose.pose.orientation.w = float(argumentsPassedToScript[GOAL_W_ORIENTATION_IN_ARGS])
 
     # sanity check a valid path exists
     # path = navigator.getPath(initial_pose, goal_pose)
@@ -84,7 +98,7 @@ def main():
                   + ' seconds.')
 
             # Some navigation timeout to demo cancellation
-            if Duration.from_msg(feedback.navigation_time) > Duration(seconds=600.0):
+            if Duration.from_msg(feedback.navigation_time) > Duration(seconds=40.0):
                 navigator.cancelTask()
 
             # Some navigation request change to demo preemption
