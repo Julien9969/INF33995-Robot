@@ -32,7 +32,7 @@ def generate_launch_description():
 
     params_declare = DeclareLaunchArgument(
         'params_file',
-        default_value=os.path.join(share_dir, 'param', 'ydlidar.yaml'),
+        default_value=os.path.join(share_dir, 'param', f'ydlidar{os.environ["ROBOT_NUM"]}.yaml'),
         description='FPath to the ROS2 parameters file to use.')
 
     driver_node = LifecycleNode(
