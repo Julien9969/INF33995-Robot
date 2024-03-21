@@ -34,15 +34,15 @@ def generate_launch_description():
     return LaunchDescription([
         GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
             actions=[
-                # TODO: test if remap makes robot actually move
-                SetRemap(src='/cmd_vel',dst=f'/robot2/cmd_vel'),
-                SetRemap(src='cmd_vel',dst=f'/robot2/cmd_vel'),
-                SetRemap(src='/odom',dst=f'/robot2/odom'),
-                SetRemap(src='odom',dst=f'/robot2/odom'),
-                SetRemap(src='/scan',dst=f'/robot2/scan'),
-                SetRemap(src='scan',dst=f'/robot2/scan'),
-                SetRemap(src='/imu',dst=f'/robot2/imu'),
-                SetRemap(src='imu',dst=f'/robot2/imu'),
+                # TODO: test if robot actually moves / why not?? (is there a robot2/... somewhere?)
+                # SetRemap(src='/cmd_vel',dst=f'/robot2/cmd_vel'),
+                # SetRemap(src='cmd_vel',dst=f'/robot2/cmd_vel'),
+                # SetRemap(src='/odom',dst=f'/robot2/odom'),
+                # SetRemap(src='odom',dst=f'/robot2/odom'),
+                # SetRemap(src='/scan',dst=f'/robot2/scan'),
+                # SetRemap(src='scan',dst=f'/robot2/scan'),
+                # SetRemap(src='/imu',dst=f'/robot2/imu'),
+                # SetRemap(src='imu',dst=f'/robot2/imu'),
 
                 IncludeLaunchDescription(
                     PythonLaunchDescriptionSource([launch_dir, '/slam_toolbox_launch.py']),
