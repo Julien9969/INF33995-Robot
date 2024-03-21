@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
 import random
-from nav_to_pos import navigateToPos
+from py_exploration_server.nav_to_pos import navigateToPos
 
 RANGE_VALUES_POS = 3.4
 VALUE_TO_SIMULATE_RANGE = RANGE_VALUES_POS/2
