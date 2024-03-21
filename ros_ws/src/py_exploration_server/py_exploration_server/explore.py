@@ -1,4 +1,4 @@
-from scripts.random_walk import navigateToRandomLocation
+from py_exploration_server.random_walk import navigateToRandomLocation
 from rclpy.node import Node
 from std_srvs.srv import Empty
 import rclpy
@@ -6,14 +6,16 @@ import rclpy
 class ExplorationService(Node):
     onGoingNavigation = False
     def __init__(self):
-        super().__init__('exploration service')
-        self.srv = self.create_service(Empty, 'exploration', self.explore)
+        super().__init__('exploration_service')
+        self.srv = self.create_service(Empty, '/explore', self.explore)
     
-    def explore(self):
+    def explore(self, req, res):
+        self.get_logger().info(f'Incoming request EXPLORE')
         if not self.onGoingNavigation:
             self.onGoingNavigation = True
-            # result = navigateToRandomLocation()
+            result = navigateToRandomLocation()
             self.onGoingNavigation = False
+            return res # TODO: test if this was what was missing, made service crash when returning from service call
         
 
 

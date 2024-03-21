@@ -17,24 +17,34 @@ class State(Enum):
 
 START = "start"
 STOP = "stop"
-ROBOT_ID = {os.environ["ROBOT_NUM"]}
+# ROBOT_ID = os.environ["ROBOT_NUM"]
 
 class MissionSwitchService(Node):
 
     def __init__(self):
         super().__init__('mission_switch')
         self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 10)
-        self.timer= self.create_timer(0.5, self.timer_callback)
+        self.timer= self.create_timer(2, self.timer_callback)
         self.srv = self.create_service(MissionSwitch, 'mission_switch', self.serve)
         self.state = State.OFF
-        self.cli = self.create_client(Empty, ros_route = f"robot{ROBOT_ID}/explore")
+        # self.onGoingNavigation = False
+        self.cli = self.create_client(Empty, "/explore")
+        while not self.cli.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('explore service not available, waiting again...')
+        self.req = Empty.Request()
 
     def timer_callback(self):
         if(self.state == State.ON ):
-            if self.cli.wait_for_service(timeout_sec=5.0):
-                self.req = Empty.Request()
-            else:    
-                self.get_logger().info(f'service not available (robot id {ROBOT_ID}), waiting again...')
+            self.get_logger().info(f'state ON, sending explore')
+            response = self.send_request(int(sys.argv[1]), int(sys.argv[2]))
+        # if(self.state == State.OFF):
+        #     return
+        # if(not self.onGoingNavigation):
+        #     self.onGoingNavigation = True
+        #     result = navigateToRandomLocation()
+        #     self.onGoingNavigation = False
+        # else:
+        #     self.get_logger().info(f'random walk ongoing, waiting again...')
 
     def serve(self, request, response):
         command:str = str(request.command)
@@ -50,6 +60,11 @@ class MissionSwitchService(Node):
             response.answer = 'unknown '
         return response
 
+# TODO: test send request from mission to make sure ok / doesn't block mission from stopping for example
+    def send_request(self):
+        self.future = self.cli.call_async(self.req)
+        rclpy.spin_until_future_complete(self, self.future)
+        return self.future.result()
 
 def main():
     rclpy.init()

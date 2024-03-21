@@ -130,12 +130,19 @@ def generate_launch_description():
     #     namespace='robot1',
     # )
         # Node pour mission control (start et stop mission):
-    # mission_switch2 = Node(
-    #     package='mission_control',
-    #     executable='mission_switch',
-    #     output='screen',
-    #     namespace='robot2',
-    # )
+    mission_switch2 = Node(
+        package='mission_control',
+        executable='mission_switch',
+        output='screen',
+        namespace='robot2',
+    )
+
+    explore_2 = Node(
+        package='py_exploration_server',
+        executable='explore',
+        output='screen',
+        # namespace='robot2',
+    )
 
     # robot_localization_node = Node(
     #    package='robot_localization',
@@ -156,7 +163,8 @@ def generate_launch_description():
         robot_state_publisher_2,
         # rviz,
         # mission_switch1,
-        # mission_switch2,
+        mission_switch2,
+        explore_2,
         # identify1,
         # identify2
     ])

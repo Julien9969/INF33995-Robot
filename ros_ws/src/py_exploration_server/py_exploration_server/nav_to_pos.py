@@ -42,8 +42,10 @@ def setGoalPos(navigator, goalPosInfo):
     goal_pose.pose.position.y = float(goalPosInfo[GOAL_Y_POS_IN_ARGS])
     goal_pose.pose.orientation.w = float(goalPosInfo[GOAL_W_ORIENTATION_IN_ARGS])
 
+    return goal_pose
+
 def navigateToPos(goalPosInfo):
-    rclpy.init()
+    # rclpy.init()
     navigator = BasicNavigator()
 
     # Set our demo's initial pose
