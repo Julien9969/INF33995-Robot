@@ -19,7 +19,8 @@ class LimoInfoPublisher(Node):
             self.timer = self.create_timer(timer_period, self.robot_timer_callback)
 
     def limo_status_listener_callback(self, msg):
-        self.battery_level_percentage_ = int((msg.battery_voltage - 9) / 3 * 100)
+        new_percentage = int((msg.battery_voltage - 9) / 3 * 100)
+        self.battery_level_percentage_ = new_percentage if new_percentage < self.battery_level_percentage_ else self.battery_level_percentage_
 
     def simulation_timer_callback(self):
         self.battery_level_percentage_ -= 1
