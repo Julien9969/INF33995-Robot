@@ -129,10 +129,24 @@ def generate_launch_description():
         output='screen',
         namespace='robot1',
     )
-        # Node pour mission control (start et stop mission):
+    # Node pour mission control (start et stop mission):
     mission_switch2 = Node(
         package='mission_control',
         executable='mission_switch',
+        output='screen',
+        namespace='robot2',
+    )        
+    
+    battery_robot1 = Node(
+        package='limo_info',
+        executable='publisher',
+        output='screen',
+        namespace='robot1',
+    )
+    
+    battery_robot2 = Node(
+        package='limo_info',
+        executable='publisher',
         output='screen',
         namespace='robot2',
     )
@@ -147,5 +161,7 @@ def generate_launch_description():
         mission_switch1,
         mission_switch2,
         identify1,
-        identify2
+        identify2,
+        battery_robot1,
+        battery_robot2
     ])
