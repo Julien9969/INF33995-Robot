@@ -8,4 +8,4 @@ sleep 5
 mkdir -p "/usr/local/include/" && cp /opt/ros/humble/include/tf2_geometry_msgs/tf2_geometry_msgs/ /usr/local/include/ -r
 colcon build --cmake-args -DBUILD_TESTING=ON
 source install/setup.sh
-ros2 launch simulation_bringup simulation.launch.py
+ros2 launch simulation_bringup simulation_slam.launch.py
