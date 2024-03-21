@@ -47,8 +47,6 @@ RUN update-alternatives --set x-terminal-emulator /usr/bin/terminator
 # INSTALL LIMO'S GAZEBO FILES AND STUFF
 WORKDIR /root
 RUN mkdir /root/INF3995-Robot/ros_ws -p
-COPY deploy-simulation.sh .
-RUN chmod +x /root/deploy-simulation.sh
 RUN export TERM=xterm-256color
 RUN echo "export ROS_DOMAIN_ID=62" >> /root/.bashrc
 # DISPLAY STUFF
@@ -56,4 +54,7 @@ RUN echo "export ROS_DOMAIN_ID=62" >> /root/.bashrc
 #VOLUME /tmp/.X11-unix:/tmp/.X11-unix
 
 # extra commands pour nos dépendances
-RUN apt update && apt install ros-humble-cartographer-ros apt install ros-humble-nav2* apt install ros-humble-rtabmap-launch -y
+RUN apt update && apt install ros-humble-nav2* ros-humble-slam-toolbox -y
+
+COPY deploy-simulation.sh .
+RUN chmod +x /root/deploy-simulation.sh
