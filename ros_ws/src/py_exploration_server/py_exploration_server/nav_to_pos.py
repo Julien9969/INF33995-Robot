@@ -87,7 +87,7 @@ def navigateToPos(goalPosInfo):
         # Do something with the feedback
         feedback = navigator.getFeedback()
 
-        print('Estimated time of arrival: ' + '{0:.0f}'.format(Duration.from_msg(feedback.estimated_time_remaining).nanoseconds / 1e9) + ' seconds.')
+        # print('Estimated time of arrival: ' + '{0:.0f}'.format(Duration.from_msg(feedback.estimated_time_remaining).nanoseconds / 1e9) + ' seconds.')
 
             # Some navigation timeout to demo cancellation
         if Duration.from_msg(feedback.navigation_time) > Duration(seconds=30.0):
@@ -101,12 +101,16 @@ def navigateToPos(goalPosInfo):
     # Do something depending on the return code
     result = navigator.getResult()
     if result == TaskResult.SUCCEEDED:
+        result = 'success'
         print('Goal succeeded!')
     elif result == TaskResult.CANCELED:
+        result = "canceled"
         print('Goal was canceled!')
     elif result == TaskResult.FAILED:
+        result = 'failed'
         print('Goal failed!')
     else:
+        result = 'invalid return status'
         print('Goal has an invalid return status!')
 
     # navigator.lifecycleShutdown()
