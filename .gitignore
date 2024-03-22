@@ -1,8 +1,12 @@
+ros_ws/src/ros_gz_gazebo/worlds/diff_drive.sdf
 ros_ws/install
 ros_ws/build
 ros_ws/log
 *frames_2024*
 maps_saved/
+
+simulation/.venv
+
 .vscode
 
 .venv/
