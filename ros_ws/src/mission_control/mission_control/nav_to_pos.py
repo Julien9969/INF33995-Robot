@@ -32,7 +32,7 @@ GOAL_X_POS_IN_ARGS = 0
 GOAL_Y_POS_IN_ARGS = 1
 GOAL_W_ORIENTATION_IN_ARGS = 2
 
-TIMEOUT_TO_CANCEL = 20.0
+TIMEOUT_TO_CANCEL = 10.0
 
 def go_to_poses():
     navigator = BasicNavigator()

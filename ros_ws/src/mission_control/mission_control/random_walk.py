@@ -6,7 +6,7 @@ import sys
 import time, rclpy
 from nav_to_pos import navigateToPos, go_to_poses
 
-RANGE_VALUES_POS = 2
+RANGE_VALUES_POS = 5
 VALUE_TO_SIMULATE_RANGE = RANGE_VALUES_POS/2
 NOT_IMPORTANT_VALUE = 0.0
 PROTECTED_ZONE = 0.75
