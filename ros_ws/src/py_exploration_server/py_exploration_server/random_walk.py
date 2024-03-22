@@ -22,3 +22,8 @@ def navigateToRandomLocation():
     return navigateToPos([new_x_goal, new_y_goal, new_w_goal])
 while True:
     navigateToRandomLocation()
+# 
+#      x: 0.0004669085003282022
+#       y: 0.0035518087427087244
+    
+    

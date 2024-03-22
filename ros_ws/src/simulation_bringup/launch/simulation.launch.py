@@ -137,12 +137,12 @@ def generate_launch_description():
         namespace='robot2',
     )
 
-    explore_2 = Node(
-        package='py_exploration_server',
-        executable='explore',
-        output='screen',
-        # namespace='robot2',
-    )
+    # explore_2 = Node(
+    #     package='py_exploration_server',
+    #     executable='explore',
+    #     output='screen',
+    #     # namespace='robot2',
+    # )
 
     # robot_localization_node = Node(
     #    package='robot_localization',
@@ -164,7 +164,7 @@ def generate_launch_description():
         # rviz,
         # mission_switch1,
         mission_switch2,
-        explore_2,
+        # explore_2,
         # identify1,
         # identify2
     ])
