@@ -1,13 +1,13 @@
 ## Lancer la simulation Gazebo sur Windows
 
 ### Build docker
-Dans le répertoire windows:
+Dans la base du répertoire INF3995-Robot:
 
 ```sh
-docker build -t simulation-docker .
+docker build -t simulation-docker ./simulation/windows
 ```
 ### Run docker
-Puis, **dans la base du répertoire!!** INF3995-Robot: (`cd ../..` pour y arriver depuis le dossier windows)
+Puis, **dans la base du répertoire!!** INF3995-Robot: (et non dans le dossier windows)
 ```sh
 docker run --rm -p 5901:5901 -v  .:/root/INF3995-Robot -it simulation-docker bash -c "TVNC_WM=xfce /opt/TurboVNC/bin/vncserver -securitytypes None; /bin/bash"
 ```
