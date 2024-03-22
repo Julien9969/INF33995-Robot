@@ -4,3 +4,6 @@ ros_ws/log
 *frames_2024*
 maps_saved/
 .vscode
+
+.venv/
+```
