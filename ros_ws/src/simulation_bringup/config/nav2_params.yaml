@@ -196,7 +196,7 @@ local_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.40
+        inflation_radius: 0.75
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -226,7 +226,7 @@ global_costmap:
   global_costmap:
     ros__parameters:
       update_frequency: 1.0
-      publish_frequency: 1.0
+      publish_frequency: 2.0
       global_frame: map
       robot_base_frame: diff_drive_2
       use_sim_time: True
@@ -331,13 +331,15 @@ robot_state_publisher:
 waypoint_follower:
   ros__parameters:
     use_sim_time: True
+    tolerance: 0.5
+    velocity_smoother_plugin: "velocity_smoother"
     loop_rate: 20
     stop_on_failure: false
     waypoint_task_executor_plugin: "wait_at_waypoint"
     wait_at_waypoint:
       plugin: "nav2_waypoint_follower::WaitAtWaypoint"
       enabled: True
-      waypoint_pause_duration: 200
+      waypoint_pause_duration: 10
 
 velocity_smoother:
   ros__parameters:
