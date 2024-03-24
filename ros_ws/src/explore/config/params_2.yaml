@@ -1,7 +1,7 @@
 /**:
   ros__parameters:
     robot_base_frame: diff_drive_2
-    costmap_topic: map
+    costmap_topic: map_2
     costmap_updates_topic: map_updates
     visualize: true
     planner_frequency: 0.25
