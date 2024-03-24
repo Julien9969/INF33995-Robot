@@ -62,6 +62,7 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='robot_state_publisher_1',
         output='both',
+        namespace='robot1',
         parameters=[
             {'use_sim_time': True},
             {'robot_description': robot_desc_1},
@@ -72,6 +73,7 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='robot_state_publisher_2',
         output='both',
+        namespace='robot2',
         parameters=[
             {'use_sim_time': True},
             {'robot_description': robot_desc_2},
