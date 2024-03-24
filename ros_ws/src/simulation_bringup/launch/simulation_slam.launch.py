@@ -72,6 +72,7 @@ def generate_launch_description():
                         'namespace':'robot1',
                         'use_sim_time': use_sim_time,
                         'map_subscribe_transient_local' : map_subscribe_transient_local,
+                        'params_file': os.path.join(get_package_share_directory('simulation_bringup'), 'config','nav2_params_1.yaml'),
                     }.items(),
                 ),
             ]
@@ -116,6 +117,9 @@ def generate_launch_description():
                         # 'map': map_dir,
                         'use_sim_time': use_sim_time,
                         'map_subscribe_transient_local' : map_subscribe_transient_local,
+                        'slam_params_file': os.path.join(get_package_share_directory("simulation_bringup"), #TODO:Changer le src pour un vrai setup
+                                   'config','slam_toolbox_params_1.yaml'),
+
                     }.items(),
                 ),
             ]
@@ -160,6 +164,7 @@ def generate_launch_description():
                         'namespace':'robot2',
                         'use_sim_time': use_sim_time,
                         'map_subscribe_transient_local' : map_subscribe_transient_local,
+                        'params_file': os.path.join(get_package_share_directory('simulation_bringup'), 'config','nav2_params_2.yaml'),
                     }.items(),
                 ),
             ]
@@ -204,6 +209,8 @@ def generate_launch_description():
                         # 'map': map_dir,
                         'use_sim_time': use_sim_time,
                         'map_subscribe_transient_local' : map_subscribe_transient_local,
+                        'slam_params_file': os.path.join(get_package_share_directory("simulation_bringup"), #TODO:Changer le src pour un vrai setup
+                                   'config','slam_toolbox_params_2.yaml'),
                     }.items(),
                 ),
             ]
