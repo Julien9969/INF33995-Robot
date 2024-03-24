@@ -10,8 +10,12 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
     ld = LaunchDescription()
-    config = os.path.join(
-        get_package_share_directory("explore_lite"), "config", "params.yaml"
+    config1 = os.path.join(
+        get_package_share_directory("explore_lite"), "config", "params_1.yaml"
+    )
+
+    config2 = os.path.join(
+        get_package_share_directory("explore_lite"), "config", "params_2.yaml"
     )
     use_sim_time = LaunchConfiguration("use_sim_time")
     # namespace = LaunchConfiguration("namespace")
@@ -27,7 +31,7 @@ def generate_launch_description():
     # )
 
     declare_namespace_argument = DeclareLaunchArgument(
-        "",
+        "namespace",
         default_value="",
         description="Namespace for the explore node",
     )
@@ -36,19 +40,32 @@ def generate_launch_description():
     # In case of the transforms (tf), currently, there doesn't seem to be a better alternative
     # https://github.com/ros/geometry2/issues/32
     # https://github.com/ros/robot_state_publisher/pull/30
-    remappings = [("/tf", "tf"), ("/tf_static", "tf_static")]
+    remappings = [("/tf", "/tf"), ("/tf_static", "/tf_static")]
 
-    node = Node(
+    node1 = Node(
         package="explore_lite",
         name="explore_node",
-        namespace=namespace,
+        namespace='robot1',
         executable="explore",
-        parameters=[config, {"use_sim_time": use_sim_time}],
+        parameters=[config1, {"use_sim_time": use_sim_time}],
         output="screen",
         remappings=remappings,
         # arguments=['--ros-args', '--log-level', 'DEBUG' ]
     )
+
+    node2 = Node(
+        package="explore_lite",
+        name="explore_node",
+        namespace='robot2',
+        executable="explore",
+        parameters=[config2, {"use_sim_time": use_sim_time}],
+        output="screen",
+        remappings=remappings,
+        # arguments=['--ros-args', '--log-level', 'DEBUG' ]
+    )
+
     ld.add_action(declare_use_sim_time_argument)
     ld.add_action(declare_namespace_argument)
-    ld.add_action(node)
+    ld.add_action(node1)
+    ld.add_action(node2)
     return ld

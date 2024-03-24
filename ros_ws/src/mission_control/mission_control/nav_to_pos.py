@@ -32,10 +32,10 @@ GOAL_X_POS_IN_ARGS = 0
 GOAL_Y_POS_IN_ARGS = 1
 GOAL_W_ORIENTATION_IN_ARGS = 2
 
-TIMEOUT_TO_CANCEL = 20.0
+TIMEOUT_TO_CANCEL = 10.0
 
-def go_to_poses():
-    navigator = BasicNavigator()
+def go_to_poses(name_space):
+    navigator = BasicNavigator(namespace=name_space)
     try:
 
         # Security route, probably read in from a file for a real application
@@ -93,12 +93,12 @@ def go_to_poses():
 
 
 
-def setGoalPos(navigator, goalPosInfo):
+def setGoalPos(navigator, goalPosInfo, name_space):
     # Go to our demos first goal pose
     # sanity check a valid path exists
     # path = navigator.getPath(initial_pose, goal_pose)
     goal_pose = PoseStamped()
-    goal_pose.header.frame_id = 'map'
+    goal_pose.header.frame_id = 'map_' + name_space[-1]
     goal_pose.header.stamp = navigator.get_clock().now().to_msg()
     goal_pose.pose.position.x = float(goalPosInfo[GOAL_X_POS_IN_ARGS])
     goal_pose.pose.position.y = float(goalPosInfo[GOAL_Y_POS_IN_ARGS])
@@ -106,8 +106,8 @@ def setGoalPos(navigator, goalPosInfo):
 
     return goal_pose
 
-def navigateToPos(goalPosInfo):
-    navigator = BasicNavigator()
+def navigateToPos(goalPosInfo, name_space):
+    navigator = BasicNavigator(namespace=name_space)
     try:
 
         # Set our demo's initial pose
@@ -136,7 +136,7 @@ def navigateToPos(goalPosInfo):
         # global_costmap = navigator.getGlobalCostmap()
         # local_costmap = navigator.getLocalCostmap()
 
-        goal_pose = setGoalPos(navigator, goalPosInfo)
+        goal_pose = setGoalPos(navigator, goalPosInfo, name_space)
         navigator.goToPose(goal_pose)
 
         while not navigator.isTaskComplete():
