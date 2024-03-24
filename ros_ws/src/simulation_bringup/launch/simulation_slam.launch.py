@@ -35,6 +35,94 @@ def generate_launch_description():
     return LaunchDescription([
         GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
             actions=[
+                PushRosNamespace(namespace='robot1'),
+                SetRemap(src='/cmd_vel',dst='cmd_vel'),
+                SetRemap(src='/odom',dst='odom'),
+                SetRemap(src='/scan',dst='scan'),
+                SetRemap(src='/imu',dst='imu'),
+                # SetRemap(src='tf',dst='/tf'),
+                # SetRemap(src='tf_static',dst='/tf_static'),
+
+                # SetRemap(src='/scan',dst='/robot1/scan'),
+
+                # TODO 2: mb try pose --> /pose or smthng, OR remap everything manually
+                # SetRemap(src='/clock',dst='/robot1/clock'),
+                SetRemap(src='/parameter_events',dst='/robot1/parameter_events'),
+                SetRemap(src='/map',dst='/robot1/map'),
+                SetRemap(src='/map_metadata',dst='/robot1/map_metadata'),
+                SetRemap(src='/slam_toolbox/feedback',dst='/robot1/slam_toolbox/feedback'),
+                SetRemap(src='/slam_toolbox/graph_visualization',dst='/robot1/slam_toolbox/graph_visualization'),
+                SetRemap(src='/slam_toolbox/scan_visualization',dst='/robot1/slam_toolbox/scan_visualization'),
+                SetRemap(src='/slam_toolbox/update',dst='/robot1/slam_toolbox/update'),
+
+                # TODO: test if robot actually moves / why not?? (is there a robot1/... somewhere?)
+                # SetRemap(src='/cmd_vel',dst=f'/robot1/cmd_vel'),
+                # SetRemap(src='cmd_vel',dst=f'/robot1/cmd_vel'),
+                # SetRemap(src='/odom',dst=f'/robot1/odom'),
+                # SetRemap(src='odom',dst=f'/robot1/odom'),
+                # SetRemap(src='/scan',dst=f'/robot1/scan'),
+                # SetRemap(src='scan',dst=f'/robot1/scan'),
+                # SetRemap(src='/imu',dst=f'/robot1/imu'),
+                # SetRemap(src='imu',dst=f'/robot1/imu'),
+
+                IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource([launch_dir, '/navigation_launch.py']),
+                    launch_arguments={
+                        # 'map': map_dir,
+                        'namespace':'robot1',
+                        'use_sim_time': use_sim_time,
+                        'map_subscribe_transient_local' : map_subscribe_transient_local,
+                    }.items(),
+                ),
+            ]
+        ),
+        GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
+            actions=[
+                # PushRosNamespace('robot1'),
+                # SetRemap(src='/cmd_vel',dst='cmd_vel'),
+                # SetRemap(src='/odom',dst='odom'),
+                SetRemap(src='/scan',dst='/robot1/scan'),
+
+                # TODO 2: mb try pose --> /pose or smthng, OR remap everything manually
+                SetRemap(src='/clock',dst='/robot1/clock'),
+                SetRemap(src='/parameter_events',dst='/robot1/parameter_events'),
+                SetRemap(src='/map',dst='/robot1/map'),
+                SetRemap(src='/map_metadata',dst='/robot1/map_metadata'),
+                SetRemap(src='/slam_toolbox/feedback',dst='/robot1/slam_toolbox/feedback'),
+                SetRemap(src='/slam_toolbox/graph_visualization',dst='/robot1/slam_toolbox/graph_visualization'),
+                SetRemap(src='/slam_toolbox/scan_visualization',dst='/robot1/slam_toolbox/scan_visualization'),
+                SetRemap(src='/slam_toolbox/update',dst='/robot1/slam_toolbox/update'),
+
+
+
+
+                # SetRemap(src='/imu',dst='imu'),
+                # SetRemap(src='tf',dst='/tf'),
+                # SetRemap(src='tf_static',dst='/tf_static'),
+
+                # TODO: test if robot actually moves / why not?? (is there a robot1/... somewhere?)
+                # SetRemap(src='/cmd_vel',dst=f'/robot1/cmd_vel'),
+                # SetRemap(src='cmd_vel',dst=f'/robot1/cmd_vel'),
+                # SetRemap(src='/odom',dst=f'/robot1/odom'),
+                # SetRemap(src='odom',dst=f'/robot1/odom'),
+                # SetRemap(src='/scan',dst=f'/robot1/scan'),
+                # SetRemap(src='scan',dst=f'/robot1/scan'),
+                # SetRemap(src='/imu',dst=f'/robot1/imu'),
+                # SetRemap(src='imu',dst=f'/robot1/imu'),
+
+                IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource([launch_dir, '/slam_toolbox_launch.py']),
+                    launch_arguments={
+                        # 'map': map_dir,
+                        'use_sim_time': use_sim_time,
+                        'map_subscribe_transient_local' : map_subscribe_transient_local,
+                    }.items(),
+                ),
+            ]
+        ),
+
+        GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
+            actions=[
                 PushRosNamespace(namespace='robot2'),
                 SetRemap(src='/cmd_vel',dst='cmd_vel'),
                 SetRemap(src='/odom',dst='odom'),
