@@ -10,10 +10,9 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
     ld = LaunchDescription()
-    config1 = os.path.join(
-        get_package_share_directory("explore_lite"), "config", "params_1.yaml"
+    config2 = os.path.join(
+        get_package_share_directory("explore_lite"), "config", "params_2.yaml"
     )
-
     use_sim_time = LaunchConfiguration("use_sim_time")
     # namespace = LaunchConfiguration("namespace")
     namespace = ""
@@ -39,12 +38,12 @@ def generate_launch_description():
     # https://github.com/ros/robot_state_publisher/pull/30
     remappings = [("/tf", "/tf"), ("/tf_static", "/tf_static")]
 
-    node1 = Node(
+    node2 = Node(
         package="explore_lite",
         name="explore_node",
-        namespace='robot1',
+        namespace='robot2',
         executable="explore",
-        parameters=[config1, {"use_sim_time": use_sim_time}],
+        parameters=[config2, {"use_sim_time": use_sim_time}],
         output="screen",
         remappings=remappings,
         # arguments=['--ros-args', '--log-level', 'DEBUG' ]
@@ -52,5 +51,5 @@ def generate_launch_description():
 
     ld.add_action(declare_use_sim_time_argument)
     ld.add_action(declare_namespace_argument)
-    ld.add_action(node1)
+    ld.add_action(node2)
     return ld

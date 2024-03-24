@@ -35,6 +35,7 @@ class MissionSwitchService(Node):
     def start_process(self):
         # self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py'])
         self.navProcess = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch.py'])
+        self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py'])
         
         self.get_logger().info('Started random walk')
 
@@ -49,9 +50,12 @@ class MissionSwitchService(Node):
             response.answer = f'{command} executed'
         elif command == STOP and self.state == State.ON:
             self.state = State.OFF
-            self.navProcess.terminate()
+
             self.navProcess.send_signal(signal.SIGINT)
+            self.navProcess2.send_signal(signal.SIGINT)
+
             self.navProcess.send_signal(signal.SIGKILL)
+            self.navProcess2.send_signal(signal.SIGKILL)
 
             response.answer = f'{command} executed'
             # self.publisher_.publish(Twist())
