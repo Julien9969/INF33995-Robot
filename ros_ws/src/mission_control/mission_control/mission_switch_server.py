@@ -54,8 +54,8 @@ class MissionSwitchService(Node):
             self.navProcess.send_signal(signal.SIGINT)
             self.navProcess2.send_signal(signal.SIGINT)
 
-            self.navProcess.send_signal(signal.SIGKILL)
-            self.navProcess2.send_signal(signal.SIGKILL)
+            # self.navProcess.send_signal(signal.SIGKILL)
+            # self.navProcess2.send_signal(signal.SIGKILL)
 
             response.answer = f'{command} executed'
             # self.publisher_.publish(Twist())
