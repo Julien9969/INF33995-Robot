@@ -199,7 +199,7 @@ void Explore::makePlan()
   }
 
   if (frontiers.empty()) {
-    stop();
+    // stop();
     return;
   }
 
@@ -215,7 +215,7 @@ void Explore::makePlan()
                          return goalOnBlacklist(f.centroid);
                        });
   if (frontier == frontiers.end()) {
-    stop();
+    // stop();
     return;
   }
   geometry_msgs::msg::Point target_position = frontier->centroid;

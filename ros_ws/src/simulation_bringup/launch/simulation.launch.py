@@ -125,12 +125,12 @@ def generate_launch_description():
         output='screen'
     )
     # Node pour mission control (start et stop mission):
-    mission_switch1 = Node(
-        package='mission_control',
-        executable='mission_switch',
-        output='screen',
-        namespace='robot1',
-    )
+    # mission_switch1 = Node(
+    #     package='mission_control',
+    #     executable='mission_switch',
+    #     output='screen',
+    #     namespace='robot1',
+    # )
     # Node pour mission control (start et stop mission):
     mission_switch2 = Node(
         package='mission_control',
@@ -178,7 +178,7 @@ def generate_launch_description():
         robot_state_publisher_1,
         robot_state_publisher_2,
         # rviz,
-        mission_switch1,
+        # mission_switch1,
         mission_switch2,
         identify1,
         identify2,

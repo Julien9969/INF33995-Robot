@@ -41,7 +41,7 @@ if __name__ == "__main__":
     parser.add_argument("-n", "--name_space", type=str, help="Namespace for the robot", required=True)
     args = parser.parse_args()
     # navProcess = subprocess.Popen(['/bin/bash', 'cd', '../../../', '&&', 'source', 'install/setup.bash', '&&', 'ros2', 'launch', 'explore_lite', 'explore.launch.py'])
-    navProcess = subprocess.Popen(['/bin/bash', '-c', 'cd ../../../ && source install/setup.bash && ros2 launch explore_lite explore.launch.py'])
+    # navProcess = subprocess.Popen(['/bin/bash', '-c', 'cd ../../../ && source install/setup.bash && ros2 launch explore_lite explore.launch.py'])
 
     while True:
         pass
