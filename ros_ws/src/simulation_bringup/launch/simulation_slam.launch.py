@@ -47,7 +47,7 @@ def generate_launch_description():
 
                 # TODO 2: mb try pose --> /pose or smthng, OR remap everything manually
                 # SetRemap(src='/clock',dst='/robot1/clock'),
-                SetRemap(src='/parameter_events',dst='/robot1/parameter_events'),
+                # SetRemap(src='/parameter_events',dst='/robot1/parameter_events'),
                 SetRemap(src='/map',dst='/robot1/map'),
                 SetRemap(src='/map_metadata',dst='/robot1/map_metadata'),
                 SetRemap(src='/slam_toolbox/feedback',dst='/robot1/slam_toolbox/feedback'),
@@ -85,8 +85,8 @@ def generate_launch_description():
                 SetRemap(src='/scan',dst='/robot1/scan'),
 
                 # TODO 2: mb try pose --> /pose or smthng, OR remap everything manually
-                SetRemap(src='/clock',dst='/robot1/clock'),
-                SetRemap(src='/parameter_events',dst='/robot1/parameter_events'),
+                # SetRemap(src='/clock',dst='/robot1/clock'),
+                # SetRemap(src='/parameter_events',dst='/robot1/parameter_events'),
                 SetRemap(src='/map',dst='/robot1/map'),
                 SetRemap(src='/map_metadata',dst='/robot1/map_metadata'),
                 SetRemap(src='/slam_toolbox/feedback',dst='/robot1/slam_toolbox/feedback'),
@@ -139,7 +139,7 @@ def generate_launch_description():
 
                 # TODO 2: mb try pose --> /pose or smthng, OR remap everything manually
                 # SetRemap(src='/clock',dst='/robot2/clock'),
-                SetRemap(src='/parameter_events',dst='/robot2/parameter_events'),
+                # SetRemap(src='/parameter_events',dst='/robot2/parameter_events'),
                 SetRemap(src='/map',dst='/robot2/map'),
                 SetRemap(src='/map_metadata',dst='/robot2/map_metadata'),
                 SetRemap(src='/slam_toolbox/feedback',dst='/robot2/slam_toolbox/feedback'),
@@ -177,8 +177,8 @@ def generate_launch_description():
                 SetRemap(src='/scan',dst='/robot2/scan'),
 
                 # TODO 2: mb try pose --> /pose or smthng, OR remap everything manually
-                SetRemap(src='/clock',dst='/robot2/clock'),
-                SetRemap(src='/parameter_events',dst='/robot2/parameter_events'),
+                # SetRemap(src='/clock',dst='/robot2/clock'),
+                # SetRemap(src='/parameter_events',dst='/robot2/parameter_events'),
                 SetRemap(src='/map',dst='/robot2/map'),
                 SetRemap(src='/map_metadata',dst='/robot2/map_metadata'),
                 SetRemap(src='/slam_toolbox/feedback',dst='/robot2/slam_toolbox/feedback'),
