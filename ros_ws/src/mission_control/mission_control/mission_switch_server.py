@@ -66,13 +66,19 @@ class MissionSwitchService(Node):
 
 
 def main():
-    rclpy.init()
+    try:
+        rclpy.init()
 
-    identify_service = MissionSwitchService()
+        identify_service = MissionSwitchService()
 
-    rclpy.spin(identify_service)
+        rclpy.spin(identify_service)
 
-    rclpy.shutdown()
+        rclpy.shutdown()
+    except:
+        if identify_service is not None and identify_service.navProcess is not None:
+            identify_service.navProcess.send_signal(signal.SIGINT)
+            identify_service.navProcess2.send_signal(signal.SIGINT)
+
 
 
 if __name__ == '__main__':
