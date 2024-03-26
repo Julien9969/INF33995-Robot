@@ -178,5 +178,5 @@ def navigateToPos(goalPosInfo, name_space):
         navigator.cancelTask()
         rclpy.shutdown()
         sys.exit()
-    # navigator.lifecycleShutdown()
+    navigator.destroy_node()
     return result
