@@ -60,7 +60,7 @@ class MissionSwitchService(Node):
             response.answer = f'{command} executed'
             # self.publisher_.publish(Twist())
         else:
-            response.answer = 'unknown '
+            response.answer = 'unknown'
 
         return response
 
