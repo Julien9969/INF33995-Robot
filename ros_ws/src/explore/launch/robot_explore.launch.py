@@ -42,7 +42,7 @@ def generate_launch_description():
     node1 = Node(
         package="explore_lite",
         name="explore_node",
-        namespace=f'/robot{os.environ["ROBOT_NUM"]}',
+        namespace=f'robot{os.environ["ROBOT_NUM"]}',
         executable="explore",
         parameters=[config1, {"use_sim_time": use_sim_time}],
         output="screen",
