@@ -11,6 +11,15 @@ def read_sdf(destination_sdf_path):
         gazebo_map_string = f.read()
     return SDF.from_xml(gazebo_map_string)
 
+def is_permitted_obstacle_position(x, y):
+    return not (
+                    (y < POSITION_ROBOT_1['y'] + 2 and y > POSITION_ROBOT_1['y'] - 2) \
+                    and (x < POSITION_ROBOT_1['x'] + 2 and x > POSITION_ROBOT_1['x'] - 2)
+                    ) and not (
+                    (y < POSITION_ROBOT_2['y'] + 2 and y > POSITION_ROBOT_2['y'] - 2) \
+                    and (x < POSITION_ROBOT_2['x'] + 2 and x > POSITION_ROBOT_2['x'] - 2)
+                )
+
 def generate_obstacles():
     obstacles = Model(
         Link(name="link"),
@@ -21,15 +30,7 @@ def generate_obstacles():
         while True:
             x = random.randrange(-4, 4)
             y = random.randrange(-3, 3)
-            # If the obstacle is too close to the robot, we generate a new one
-            if not (
-                    (y < POSITION_ROBOT_1['y'] + 2 and y > POSITION_ROBOT_1['y'] - 2) \
-                    and (x < POSITION_ROBOT_1['x'] + 2 and x > POSITION_ROBOT_1['x'] - 2)
-                    ) and not (
-                    (y < POSITION_ROBOT_2['y'] + 2 and y > POSITION_ROBOT_2['y'] - 2) \
-                    and (x < POSITION_ROBOT_2['x'] + 2 and x > POSITION_ROBOT_2['x'] - 2)
-                ):
-                break
+            if is_permitted_obstacle_position(x, y): break
 
         obstacles.links[0].add(
             Visual(
