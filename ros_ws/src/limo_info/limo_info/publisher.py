@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 from limo_msgs.msg import LimoStatus
 import os
-from random import random
+from random import randint
 
 class LimoInfoPublisher(Node):
 
