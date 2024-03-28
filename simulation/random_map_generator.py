@@ -3,8 +3,7 @@ from pysdf import SDF, Link, Model, Visual, Geometry, Pose, Collision
 import os
 import random
 
-POSITION_ROBOT_1 = {'x': 4, 'y': 0, 'z': 0}
-POSITION_ROBOT_2 = {'x': -4, 'y': 0, 'z': 0}
+ROBOTS_POSITION = {'x': 4, 'y': 0, 'z': 0}
 
 def read_sdf(destination_sdf_path):
     with open(destination_sdf_path, "r") as f:
@@ -13,12 +12,9 @@ def read_sdf(destination_sdf_path):
 
 def is_permitted_obstacle_position(x, y):
     return not (
-                    (y < POSITION_ROBOT_1['y'] + 2 and y > POSITION_ROBOT_1['y'] - 2) \
-                    and (x < POSITION_ROBOT_1['x'] + 2 and x > POSITION_ROBOT_1['x'] - 2)
-                    ) and not (
-                    (y < POSITION_ROBOT_2['y'] + 2 and y > POSITION_ROBOT_2['y'] - 2) \
-                    and (x < POSITION_ROBOT_2['x'] + 2 and x > POSITION_ROBOT_2['x'] - 2)
-                )
+                    (ROBOTS_POSITION['y'] - 2 < y and y < ROBOTS_POSITION['y'] + 2) \
+                    and (ROBOTS_POSITION['x'] - 2 < x and x < ROBOTS_POSITION['x'] + 2)
+                )                
 
 def generate_obstacles():
     obstacles = Model(
