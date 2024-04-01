@@ -31,6 +31,7 @@ def generate_launch_description():
 
     # Setup project paths
     launch_dir = os.path.join(get_package_share_directory('simulation_bringup'), 'launch')
+    map_merge_dir = os.path.join(get_package_share_directory('map_merge'), 'launch') #ou multirobot_map_merge
 
     return LaunchDescription([
         GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
@@ -220,4 +221,38 @@ def generate_launch_description():
             launch_arguments={
             }.items(),
         ),
+
+        #############################
+        # Map Merge Nodes and utils!
+        #############################
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([map_merge_dir, '/map_merge.launch.py']),
+            launch_arguments={
+                "slam_toolbox": "True",
+                "known_init_poses": "True",
+                "use_sim_time": "true",
+            }.items(),
+        ),
+        
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            name='static_tf_pub_laser',
+            arguments=[
+                '0', '0', '0', '0', '0', '0', '1', 'world', 'map_1'
+            ],
+        ),
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            name='static_tf_pub_laser',
+            arguments=[
+                '0', '0', '0', '0', '0', '0', '1', 'world', 'map_2'
+            ],
+        ),
+
+
+
+
     ])
