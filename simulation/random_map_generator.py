@@ -17,8 +17,6 @@ def is_permitted_obstacle_position(x, obstacles_x=[]):
     ])
     return not is_in_robot_startup_zone and not is_in_obstacle_zone
 
-# TODO : randint is not defined
-
 def generate_obstacles():
     obstacles = Model(
         Link(name="link"),
