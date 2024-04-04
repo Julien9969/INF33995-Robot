@@ -233,23 +233,23 @@ geometry_msgs::msg::Pose Costmap2DClient::getRobotPose() const
     robot_pose = tf_->transform(robot_pose, global_frame_,
                                 tf2::durationFromSec(transform_tolerance_));
   } catch (tf2::LookupException& ex) {
-    RCLCPP_ERROR_THROTTLE(node_.get_logger(), clk, 1000,
+    RCLCPP_WARN(node_.get_logger(),
                           "No Transform available Error looking up robot pose: "
                           "%s\n",
                           ex.what());
     return empty_pose;
   } catch (tf2::ConnectivityException& ex) {
-    RCLCPP_ERROR_THROTTLE(node_.get_logger(), clk, 1000,
+    RCLCPP_WARN(node_.get_logger(),
                           "Connectivity Error looking up robot pose: %s\n",
                           ex.what());
     return empty_pose;
   } catch (tf2::ExtrapolationException& ex) {
-    RCLCPP_ERROR_THROTTLE(node_.get_logger(), clk, 1000,
+    RCLCPP_WARN(node_.get_logger(),
                           "Extrapolation Error looking up robot pose: %s\n",
                           ex.what());
     return empty_pose;
   } catch (tf2::TransformException& ex) {
-    RCLCPP_ERROR_THROTTLE(node_.get_logger(), clk, 1000, "Other error: %s\n",
+    RCLCPP_WARN(node_.get_logger(), "Other error: %s\n",
                           ex.what());
     return empty_pose;
   }

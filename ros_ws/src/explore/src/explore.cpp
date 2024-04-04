@@ -149,7 +149,7 @@ void Explore::visualizeFrontiers(
   for (auto& frontier : frontiers) {
     m.type = visualization_msgs::msg::Marker::POINTS;
     m.id = int(id);
-    m.pose.position = {};
+    // m.pose.position = {};
     m.scale.x = 0.1;
     m.scale.y = 0.1;
     m.scale.z = 0.1;
@@ -190,7 +190,12 @@ void Explore::visualizeFrontiers(
 void Explore::makePlan()
 {
   // find frontiers
-  auto pose = costmap_client_.getRobotPose();
+  // geometry_msgs::msg::PoseStamped robot_pose;
+  geometry_msgs::msg::Pose pose;
+  geometry_msgs::msg::Pose empty_pose;
+  do{
+  pose = costmap_client_.getRobotPose();
+  } while(pose == empty_pose);
   // get frontiers sorted according to cost
   auto frontiers = search_.searchFrom(pose.position);
   RCLCPP_DEBUG(logger_, "found %lu frontiers", frontiers.size());
