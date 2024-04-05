@@ -55,7 +55,7 @@ def go_to_poses(name_space):
             # Send our route
             route_poses = []
             pose = PoseStamped()
-            pose.header.frame_id = 'odom'
+            pose.header.frame_id = f'robot{name_space[-1]}/odom'
             pose.header.stamp = navigator.get_clock().now().to_msg()
             pose.pose.orientation.w = 1.0
             for pt in security_route:
@@ -98,7 +98,7 @@ def setGoalPos(navigator, goalPosInfo, name_space):
     # sanity check a valid path exists
     # path = navigator.getPath(initial_pose, goal_pose)
     goal_pose = PoseStamped()
-    goal_pose.header.frame_id = 'map_' + name_space[-1]
+    goal_pose.header.frame_id = f'robot{name_space[-1]}/map'
     goal_pose.header.stamp = navigator.get_clock().now().to_msg()
     goal_pose.pose.position.x = float(goalPosInfo[GOAL_X_POS_IN_ARGS])
     goal_pose.pose.position.y = float(goalPosInfo[GOAL_Y_POS_IN_ARGS])
