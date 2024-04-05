@@ -46,7 +46,7 @@ def generate_launch_description():
         output='screen',
         namespace=f'robot{os.environ["ROBOT_NUM"]}',
     )
-    mission_switch = Node(
+    info_publisher = Node(
         package='limo_info',
         executable='publisher',
         output='screen',
@@ -57,5 +57,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         identify,
-        mission_switch
+        mission_switch,
+        info_publisher
     ])
