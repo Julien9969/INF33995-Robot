@@ -11,6 +11,11 @@ def generate_launch_description():
     use_sim_time = False
     slam_params_file = LaunchConfiguration('slam_params_file')
 
+    declare_namespace_argument = DeclareLaunchArgument(
+        'namespace',
+        default_value='',
+        description='Robot namespace for slam toolbox')
+
     declare_use_sim_time_argument = DeclareLaunchArgument(
         'use_sim_time',
         default_value='false',
@@ -29,6 +34,7 @@ def generate_launch_description():
         package='slam_toolbox',
         executable='async_slam_toolbox_node',
         name='slam_toolbox',
+        namespace='',
         output='screen')
 
     ld = LaunchDescription()
@@ -36,5 +42,6 @@ def generate_launch_description():
     ld.add_action(declare_use_sim_time_argument)
     ld.add_action(declare_slam_params_file_cmd)
     ld.add_action(start_async_slam_toolbox_node)
+    ld.add_action(declare_namespace_argument)
 
     return ld
