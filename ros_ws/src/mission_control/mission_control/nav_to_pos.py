@@ -38,9 +38,9 @@ TIMEOUT_TO_CANCEL = 20.0
 
 INCREMENT = [
     [1.0, 1.0],
-    [-1.0, 1.0]
+    [-1.0, 1.0],
     [1.0, -1.0],
-    [-1.0, -1.0],
+    [-1.0, -1.0]
 ]
 
 def go_to_poses(name_space):
