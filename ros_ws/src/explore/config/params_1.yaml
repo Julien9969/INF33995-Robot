@@ -1,8 +1,8 @@
 /**:
   ros__parameters:
     robot_base_frame: robot1/base_link
-    costmap_topic: global_costmap/costmap
-    costmap_updates_topic: global_costmap/costmap_updates
+    costmap_topic: local_costmap/costmap
+    costmap_updates_topic: local_costmap/costmap_updates
     visualize: true
     planner_frequency: 0.25
     progress_timeout: 30.0
