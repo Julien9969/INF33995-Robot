@@ -142,24 +142,30 @@ def square_nav(name_space):
 
     while True:
         goals_results = []
+        not_far_from_goal = False
         try:
             for pt in square:
+                not_far_from_goal = False
+                    
                 goal_pose = setGoalPos(navigator, pt, name_space)
                 navigator.goToPose(goal_pose)
 
                 while not navigator.isTaskComplete():
                     feedback = navigator.getFeedback()
-                    print(feedback)
+                    # print(feedback)
 
                     if Duration.from_msg(feedback.navigation_time) > Duration(seconds=25.0):
                         navigator.cancelTask()
                         break
-
-                    time.sleep(5)
+                    elif feedback.distance_remaining < 0.25:
+                        navigator.cancelTask()
+                        not_far_from_goal = True
+                        break
+                    time.sleep(2)
 
                 result = navigator.getResult()
                 goals_results.append(result)
-                if result == TaskResult.SUCCEEDED:
+                if result == TaskResult.SUCCEEDED or not_far_from_goal:
                     print('Goal succeeded!')
                 elif result == TaskResult.CANCELED:
                     print('Goal was canceled!')
