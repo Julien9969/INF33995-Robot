@@ -37,10 +37,10 @@ GOAL_W_ORIENTATION_IN_ARGS = 2
 TIMEOUT_TO_CANCEL = 20.0
 
 INCREMENT = [
-    [0.5, 0.5],
-    [0.5, -0.5],
-    [-0.5, -0.5],
-    [-0.5, 0.5]
+    [1.0, 1.0],
+    [-1.0, 1.0]
+    [1.0, -1.0],
+    [-1.0, -1.0],
 ]
 
 def go_to_poses(name_space):
@@ -130,7 +130,6 @@ def compute_new_square(square, goals_results):
 def new_square_from_poses(pose): 
     new_square = []
     for i in range(len(INCREMENT)):
-        print(pose)
         new_square.append([pose.position.x + INCREMENT[i][0], pose.position.y + INCREMENT[i][1]])
 
     random.shuffle(new_square)
@@ -159,11 +158,10 @@ def square_nav(name_space):
                     if Duration.from_msg(feedback.navigation_time) > Duration(seconds=20.0):
                         navigator.cancelTask()
                         break
-                    elif feedback.distance_remaining < 0.20:
+                    elif feedback.distance_remaining < 0.50:
                         navigator.cancelTask()
                         not_far_from_goal = True
-                        print(feedback)
-
+                        print('Not far from goal!')
                         break
                     time.sleep(0.5)
 
@@ -181,7 +179,6 @@ def square_nav(name_space):
                     print('Goal has an invalid return status!')
 
             # square = compute_new_square(square, goals_results)
-            print(navigator.getFeedback().current_pose.pose)
             square = new_square_from_poses(navigator.getFeedback().current_pose.pose)
 
         except:
