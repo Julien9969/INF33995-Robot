@@ -14,6 +14,7 @@
 # limitations under the License.
 
 from copy import deepcopy
+import random
 import time
 from geometry_msgs.msg import PoseStamped
 from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
@@ -125,10 +126,14 @@ def compute_new_square(square, goals_results):
             new_square.append([square[i][0] - INCREMENT[i][0], square[i][1] - INCREMENT[i][1]])
     return new_square
 
-def new_square_from_poses(poses):
+# pose=geometry_msgs.msg.Pose(position=geometry_msgs.msg.Point(x=0.15159579452578884, y=-0.11735794085747109, z=0.0)
+def new_square_from_poses(pose): 
     new_square = []
-    for i in range(len(poses)):
-        new_square.append([poses[i].pose.position.x, poses[i].pose.position.y])
+    for i in range(len(INCREMENT)):
+        new_square.append([pose.position.x + INCREMENT[i][0], pose.position.y + INCREMENT[i][1]])
+
+    random.shuffle(new_square)
+    print(new_square)
     return new_square
 
 def square_nav(name_space):
@@ -150,7 +155,7 @@ def square_nav(name_space):
                     feedback = navigator.getFeedback()
                     # print(feedback)
 
-                    if Duration.from_msg(feedback.navigation_time) > Duration(seconds=25.0):
+                    if Duration.from_msg(feedback.navigation_time) > Duration(seconds=20.0):
                         navigator.cancelTask()
                         break
                     elif feedback.distance_remaining < 0.20:
@@ -159,12 +164,12 @@ def square_nav(name_space):
                         print(feedback)
 
                         break
-                    time.sleep(2)
+                    time.sleep(0.5)
 
 
                 result = navigator.getResult()
                 goals_results.append(result if not not_far_from_goal else TaskResult.SUCCEEDED)
-                
+
                 if result == TaskResult.SUCCEEDED or not_far_from_goal:
                     print('Goal succeeded!')
                 elif result == TaskResult.CANCELED:
@@ -174,7 +179,9 @@ def square_nav(name_space):
                 else:
                     print('Goal has an invalid return status!')
 
-            square = compute_new_square(square, goals_results)
+            # square = compute_new_square(square, goals_results)
+            square = new_square_from_poses(navigator.getFeedback().pose)
+
         except:
             navigator.cancelTask()
 
