@@ -14,6 +14,7 @@
 # limitations under the License.
 
 from copy import deepcopy
+import time
 from geometry_msgs.msg import PoseStamped
 from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
 import rclpy
@@ -32,7 +33,21 @@ GOAL_X_POS_IN_ARGS = 0
 GOAL_Y_POS_IN_ARGS = 1
 GOAL_W_ORIENTATION_IN_ARGS = 2
 
-TIMEOUT_TO_CANCEL = 10.0
+TIMEOUT_TO_CANCEL = 20.0
+
+SUCCES_INCREMENT = [
+    [0.2, 0.2],
+    [0.2, -0.2],
+    [-0.2, -0.2],
+    [-0.2, 0.2]
+]
+
+FAILED_INCREMENT = [
+    [0.5, 0.5],
+    [0.5, -0.5],
+    [-0.5, -0.5],
+    [-0.5, 0.5]
+]
 
 def go_to_poses(name_space):
     navigator = BasicNavigator(namespace=name_space)
@@ -102,9 +117,62 @@ def setGoalPos(navigator, goalPosInfo, name_space):
     goal_pose.header.stamp = navigator.get_clock().now().to_msg()
     goal_pose.pose.position.x = float(goalPosInfo[GOAL_X_POS_IN_ARGS])
     goal_pose.pose.position.y = float(goalPosInfo[GOAL_Y_POS_IN_ARGS])
-    goal_pose.pose.orientation.w = float(goalPosInfo[GOAL_W_ORIENTATION_IN_ARGS])
+    # goal_pose.pose.orientation.w = float(goalPosInfo[GOAL_W_ORIENTATION_IN_ARGS])
 
     return goal_pose
+
+def compute_new_square(square, goals_results):
+    new_square = []
+    for i in range(len(square)):
+        if goals_results[i] == TaskResult.SUCCEEDED:
+            new_square.append([square[i][0] + SUCCES_INCREMENT[i][0], square[i][1] + SUCCES_INCREMENT[i][1]])
+        else:
+            new_square.append([square[i][0] + FAILED_INCREMENT[i][0], square[i][1] + FAILED_INCREMENT[i][1]])
+    return new_square
+
+def square_nav(name_space):
+    navigator = BasicNavigator(namespace=name_space)
+
+    square = [
+        [0.2, 0.2],
+        [0.2, -0.2],
+        [-0.2, -0.2],
+        [-0.2, 0.2]
+    ]
+
+    while True:
+        goals_results = []
+        try:
+            for pt in square:
+                goal_pose = setGoalPos(navigator, pt, name_space)
+                navigator.goToPose(goal_pose)
+
+                while not navigator.isTaskComplete():
+                    feedback = navigator.getFeedback()
+                    print(feedback)
+
+                    if Duration.from_msg(feedback.navigation_time) > Duration(seconds=10.0):
+                        navigator.cancelTask()
+                        break
+
+                    time.sleep(1)
+
+                result = navigator.getResult()
+                goals_results.append(result)
+                if result == TaskResult.SUCCEEDED:
+                    print('Goal succeeded!')
+                elif result == TaskResult.CANCELED:
+                    print('Goal was canceled!')
+                elif result == TaskResult.FAILED:
+                    print('Goal failed!')
+                else:
+                    print('Goal has an invalid return status!')
+
+            square = compute_new_square(square, goals_results)
+        except:
+            navigator.cancelTask()
+
+
 
 def navigateToPos(goalPosInfo, name_space):
     navigator = BasicNavigator(namespace=name_space)

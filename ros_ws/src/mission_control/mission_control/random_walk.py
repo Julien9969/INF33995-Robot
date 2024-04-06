@@ -6,7 +6,7 @@ import random
 import subprocess
 import sys
 import time, rclpy
-from nav_to_pos import navigateToPos, go_to_poses
+from nav_to_pos import navigateToPos, go_to_poses, square_nav
 
 RANGE_VALUES_POS = 2
 VALUE_TO_SIMULATE_RANGE = RANGE_VALUES_POS/2
@@ -38,9 +38,11 @@ def navigateToRandomLocation(name_space):
 
 def main(name_space):
     rclpy.init()
-    while True:
-        navigateToRandomLocation(name_space)
-        time.sleep(5)
+
+    square_nav(name_space)
+    # while True:
+    #     navigateToRandomLocation(name_space)
+    #     time.sleep(5)
     rclpy.shutdown()
 
 if __name__ == "__main__":
