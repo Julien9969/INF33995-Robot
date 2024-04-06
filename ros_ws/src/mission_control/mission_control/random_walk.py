@@ -26,7 +26,13 @@ def navigateToRandomLocation(name_space):
 
     # print(new_x_goal, new_y_goal, new_w_goal)
     # return navigateToPos([new_x_goal, new_y_goal, new_w_goal], name_space)
-    return navigateToPos([10, 0, new_w_goal], name_space)
+
+    pos = [(4, 4), (4, -4), (-4, -4), (-4, 4)]
+    while True:
+        for p in pos:
+            navigateToPos([p[0], p[1], 0], name_space)
+        
+    return 
     return go_to_poses()
 
 
