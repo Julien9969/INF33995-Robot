@@ -130,6 +130,7 @@ def compute_new_square(square, goals_results):
 def new_square_from_poses(pose): 
     new_square = []
     for i in range(len(INCREMENT)):
+        print(pose.position.x)
         new_square.append([pose.position.x + INCREMENT[i][0], pose.position.y + INCREMENT[i][1]])
 
     random.shuffle(new_square)
