@@ -130,7 +130,7 @@ def compute_new_square(square, goals_results):
 def new_square_from_poses(pose): 
     new_square = []
     for i in range(len(INCREMENT)):
-        print(pose.position.x)
+        print(pose)
         new_square.append([pose.position.x + INCREMENT[i][0], pose.position.y + INCREMENT[i][1]])
 
     random.shuffle(new_square)
@@ -181,6 +181,7 @@ def square_nav(name_space):
                     print('Goal has an invalid return status!')
 
             # square = compute_new_square(square, goals_results)
+            print(navigator.getFeedback())
             square = new_square_from_poses(navigator.getFeedback().pose)
 
         except:
