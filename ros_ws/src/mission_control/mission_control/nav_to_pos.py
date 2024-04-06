@@ -35,14 +35,7 @@ GOAL_W_ORIENTATION_IN_ARGS = 2
 
 TIMEOUT_TO_CANCEL = 20.0
 
-SUCCES_INCREMENT = [
-    [0.2, 0.2],
-    [0.2, -0.2],
-    [-0.2, -0.2],
-    [-0.2, 0.2]
-]
-
-FAILED_INCREMENT = [
+INCREMENT = [
     [0.5, 0.5],
     [0.5, -0.5],
     [-0.5, -0.5],
@@ -125,20 +118,23 @@ def compute_new_square(square, goals_results):
     new_square = []
     for i in range(len(square)):
         if goals_results[i] == TaskResult.SUCCEEDED:
-            new_square.append([square[i][0] + SUCCES_INCREMENT[i][0], square[i][1] + SUCCES_INCREMENT[i][1]])
+            print('adddddddddd')
+            new_square.append([square[i][0] + INCREMENT[i][0], square[i][1] + INCREMENT[i][1]])
         else:
-            new_square.append([square[i][0] - FAILED_INCREMENT[i][0], square[i][1] - FAILED_INCREMENT[i][1]])
+            print('subbbbbbbbb')
+            new_square.append([square[i][0] - INCREMENT[i][0], square[i][1] - INCREMENT[i][1]])
+    return new_square
+
+def new_square_from_poses(poses):
+    new_square = []
+    for i in range(len(poses)):
+        new_square.append([poses[i].pose.position.x, poses[i].pose.position.y])
     return new_square
 
 def square_nav(name_space):
     navigator = BasicNavigator(namespace=name_space)
 
-    square = [
-        [0.2, 0.2],
-        [0.2, -0.2],
-        [-0.2, -0.2],
-        [-0.2, 0.2]
-    ]
+    square = deepcopy(INCREMENT)
 
     while True:
         goals_results = []
@@ -157,14 +153,18 @@ def square_nav(name_space):
                     if Duration.from_msg(feedback.navigation_time) > Duration(seconds=25.0):
                         navigator.cancelTask()
                         break
-                    elif feedback.distance_remaining < 0.25:
+                    elif feedback.distance_remaining < 0.20:
                         navigator.cancelTask()
                         not_far_from_goal = True
+                        print(feedback)
+
                         break
                     time.sleep(2)
 
+
                 result = navigator.getResult()
-                goals_results.append(result)
+                goals_results.append(result if not not_far_from_goal else TaskResult.SUCCEEDED)
+                
                 if result == TaskResult.SUCCEEDED or not_far_from_goal:
                     print('Goal succeeded!')
                 elif result == TaskResult.CANCELED:
