@@ -127,7 +127,7 @@ def compute_new_square(square, goals_results):
         if goals_results[i] == TaskResult.SUCCEEDED:
             new_square.append([square[i][0] + SUCCES_INCREMENT[i][0], square[i][1] + SUCCES_INCREMENT[i][1]])
         else:
-            new_square.append([square[i][0] + FAILED_INCREMENT[i][0], square[i][1] + FAILED_INCREMENT[i][1]])
+            new_square.append([square[i][0] - FAILED_INCREMENT[i][0], square[i][1] - FAILED_INCREMENT[i][1]])
     return new_square
 
 def square_nav(name_space):
@@ -151,11 +151,11 @@ def square_nav(name_space):
                     feedback = navigator.getFeedback()
                     print(feedback)
 
-                    if Duration.from_msg(feedback.navigation_time) > Duration(seconds=10.0):
+                    if Duration.from_msg(feedback.navigation_time) > Duration(seconds=25.0):
                         navigator.cancelTask()
                         break
 
-                    time.sleep(1)
+                    time.sleep(5)
 
                 result = navigator.getResult()
                 goals_results.append(result)
