@@ -1,5 +1,6 @@
 from enum import Enum
 import time
+import os
 from interfaces.srv import MissionSwitch
 
 import sys
@@ -32,6 +33,8 @@ class MissionSwitchService(Node):
             rotate_msg.angular.z = 0.5
             self.publisher_.publish(rotate_msg)
 
+    def get_environment(self):
+        return 'simulated' if 'ROBOT_NUM' not in os.environ else 'real'
 
     def serve(self, request, response):
         command:str = str(request.command)
@@ -47,6 +50,8 @@ class MissionSwitchService(Node):
             self.publisher_.publish(Twist())
         else:
             response.answer = 'unknown '
+
+        response.environment = self.get_environment()
 
         return response
 
