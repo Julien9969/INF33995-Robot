@@ -7,7 +7,20 @@ maps_saved/
 
 simulation/.venv
 
+file_transfer_ws/install
+file_transfer_ws/build
+file_transfer_ws/log
+
+robot/log
+robot/update_queue
+
+__pycache__/
+simulation/.venv
+
 .vscode
 
 .venv/
-```
+
+maps_saved/
+my_debugging
+pcl_ws
