@@ -44,9 +44,9 @@ def generate_launch_description():
         package='mission_control',
         executable='mission_switch',
         output='screen',
-        # namespace=f'robot{os.environ["ROBOT_NUM"]}',
+        namespace=f'robot{os.environ["ROBOT_NUM"]}',
     )
-    mission_switch = Node(
+    info_publisher = Node(
         package='limo_info',
         executable='publisher',
         output='screen',
@@ -65,5 +65,5 @@ def generate_launch_description():
     return LaunchDescription([
         identify,
         mission_switch,
-        # info_publisher
+        info_publisher
     ])

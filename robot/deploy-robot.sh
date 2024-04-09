@@ -1,5 +1,13 @@
 #!/bin/bash
 
+stop_ros_launches() {
+    processes=("ros2" "files_server" "static_transfor" "ydlidar_ros2_dr" "limo_base" "mission_switch" "identify" "parameter_bridg" "robot_state_pub" "cartographer_oc" "publisher" "static_transfor")
+    for process in "${processes[@]}"; do
+        pkill -f $process
+    done
+    exit 0
+}
+
 pkill ros2
 apt update -y
 
@@ -7,7 +15,6 @@ echo "export ROBOT_ENV='ROBOT'" >> /home/nvidia/.bashrc
 
 rm -rf /home/nvidia/INF3995-Robot/file_transfer_ws/build/ /home/nvidia/INF3995-Robot/file_transfer_ws/install/ /home/nvidia/INF3995-Robot/file_transfer_ws/log/
 rm -rf /home/nvidia/INF3995-Robot/ros_ws/build/ /home/nvidia/INF3995-Robot/ros_ws/install/ /home/nvidia/INF3995-Robot/ros_ws/log/
-
 
 # rm /etc/ros/rosdep/sources.list.d/20-default.list
 rosdep init
