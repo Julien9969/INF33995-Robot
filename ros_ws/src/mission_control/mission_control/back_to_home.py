@@ -21,11 +21,13 @@ def back_to_home(name_space):
 
     while not navigator.isTaskComplete():
         feedback = navigator.getFeedback()
-
-        if feedback.distance_remaining < 0.25:
-            navigator.cancelTask()
-            break
-        time.sleep(0.5)
+        try:
+            if Duration.from_msg(feedback.navigation_time) > Duration(seconds=60.0) or feedback.distance_remaining < 0.10:
+                navigator.cancelTask()
+                break
+            time.sleep(0.5)
+        except:
+            print("distance remaining has not been calculated yet")
 
     rclpy.shutdown()
     return
