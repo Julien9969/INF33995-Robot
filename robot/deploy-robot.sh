@@ -1,7 +1,7 @@
 #!/bin/bash
 
-processes=("ros2" "files_server" "static_transfor" "ydlidar_ros2_dr" "limo_base" "mission_switch" "identify" "parameter_bridg" "robot_state_pub" "cartographer_oc" "publisher" "static_transfor")
 stop_ros_launches() {
+    processes=("ros2" "files_server" "static_transfor" "ydlidar_ros2_dr" "limo_base" "mission_switch" "identify" "parameter_bridg" "robot_state_pub" "cartographer_oc" "publisher" "static_transfor")
     for process in "${processes[@]}"; do
         pkill -f $process
     done
@@ -42,5 +42,3 @@ ros2 launch file_server_bringup robot_bringup.launch.py &
 sleep 1
 
 export ROBOT_ENV="ROBOT"
-
-trap stop_ros_launches SIGINT
