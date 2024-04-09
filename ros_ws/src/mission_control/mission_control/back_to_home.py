@@ -15,8 +15,8 @@ def back_to_home(name_space):
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = f'{name_space}/map'
     goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-    goal_pose.pose.position.x = 0
-    goal_pose.pose.position.y = 0
+    goal_pose.pose.position.x = 0.0
+    goal_pose.pose.position.y = 0.0
     navigator.goToPose(goal_pose)
 
     while not navigator.isTaskComplete():
