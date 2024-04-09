@@ -12,18 +12,15 @@ import sys
 def back_to_home(name_space):
     rclpy.init()
     navigator = BasicNavigator(name_space)
-    navigator.start()
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = f'{name_space}/map'
     goal_pose.header.stamp = navigator.get_clock().now().to_msg()
     goal_pose.pose.position.x = 0
     goal_pose.pose.position.y = 0
-    goal_pose.pose.orientation.w = 0
     navigator.goToPose(goal_pose)
 
     while not navigator.isTaskComplete():
         feedback = navigator.getFeedback()
-
 
         if feedback.distance_remaining < 0.25:
             navigator.cancelTask()
