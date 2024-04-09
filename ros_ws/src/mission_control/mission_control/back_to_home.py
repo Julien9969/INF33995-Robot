@@ -11,7 +11,7 @@ import sys
 
 def back_to_home(name_space):
     rclpy.init()
-    navigator = BasicNavigator(name_space)
+    navigator = BasicNavigator(namespace=name_space)
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = f'{name_space}/map'
     goal_pose.header.stamp = navigator.get_clock().now().to_msg()
