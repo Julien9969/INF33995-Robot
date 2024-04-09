@@ -16,6 +16,7 @@ class State(Enum):
 
 START = "start"
 STOP = "stop"
+HOME = "home"
 
 class MissionSwitchService(Node):
 
@@ -57,13 +58,24 @@ class MissionSwitchService(Node):
             self.state = State.OFF
 
             self.navProcess.send_signal(signal.SIGINT)
-            self.navProcess2.send_signal(signal.SIGINT)
+            # self.navProcess2.send_signal(signal.SIGINT)
 
             # self.navProcess.send_signal(signal.SIGKILL)
             # self.navProcess2.send_signal(signal.SIGKILL)
 
             response.answer = f'{command} executed'
             # self.publisher_.publish(Twist())
+        elif command == HOME:
+            self.state = State.OFF
+            try:
+                self.navProcess.send_signal(signal.SIGINT)
+                time.sleep(3)
+                self.navProcess.send_signal(signal.SIGKILL)
+            except:
+                pass
+
+            self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot{os.environ.get("ROBOT_NAME_SPACE")}'])
+            response.answer = f'{command} executed'
         else:
             response.answer = 'unknown'
 
@@ -82,7 +94,7 @@ def main():
     except:
         if identify_service is not None and identify_service.navProcess is not None:
             identify_service.navProcess.send_signal(signal.SIGINT)
-            identify_service.navProcess2.send_signal(signal.SIGINT)
+            # identify_service.navProcess2.send_signal(signal.SIGINT)
 
 
 
