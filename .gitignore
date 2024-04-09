@@ -20,4 +20,7 @@ simulation/.venv
 .vscode
 
 .venv/
-```
+
+maps_saved/
+my_debugging
+pcl_ws
