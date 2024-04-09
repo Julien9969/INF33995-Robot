@@ -201,6 +201,10 @@ nav_msgs::msg::OccupancyGrid::SharedPtr MergingPipeline::composeGrids()
   std::vector<cv::Rect> rois;
   rois.reserve(images_.size());
 
+  // Majeed testing origin change
+  // TODO: create float vars for x, y, z taken from biggest map width/height, then set result origin pose as this pose
+  // float 
+
   for (size_t i = 0; i < images_.size(); ++i) {
     if (!transforms_[i].empty() && !images_[i].empty()) {
       imgs_warped.emplace_back();
@@ -237,6 +241,9 @@ nav_msgs::msg::OccupancyGrid::SharedPtr MergingPipeline::composeGrids()
   }
 
   // set grid origin to its centre
+  // TODO: NOOOOOO use vars x, y, z taken from biggest map width/height, 
+  // then set result origin pose as this pose
+
   result->info.origin.position.x =
       -(result->info.width / 2.0) * double(result->info.resolution);
   result->info.origin.position.y =
