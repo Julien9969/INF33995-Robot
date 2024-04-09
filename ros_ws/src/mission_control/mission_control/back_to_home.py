@@ -1,3 +1,4 @@
+import argparse
 from copy import deepcopy
 import random
 import time
@@ -31,3 +32,10 @@ def back_to_home(name_space):
 
     rclpy.shutdown()
     return
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-n", "--name_space", type=str, help="Namespace for the robot", required=True)
+    args = parser.parse_args()
+    back_to_home(args.name_space)
