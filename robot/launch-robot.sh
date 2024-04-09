@@ -78,6 +78,8 @@ do
             git clone git@gitlab.com:polytechnique-montr-al/inf3995/20241/equipe-102/INF3995-Robot.git -b $BRANCH;
         fi
 
+        mkdir /home/nvidia/INF3995-Robot/robot/update_queue
+
         export ROBOT_NUM=$i
         sudo /home/nvidia/INF3995-Robot/robot/clean_workspace.sh && source /opt/ros/humble/setup.bash && /home/nvidia/INF3995-Robot/robot/deploy-robot.sh && source /home/nvidia/INF3995-Robot/ros_ws/install/setup.bash && $COMMAND
         """

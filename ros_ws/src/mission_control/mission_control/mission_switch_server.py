@@ -21,7 +21,9 @@ class MissionSwitchService(Node):
 
     def __init__(self):
         super().__init__('mission_switch')
-        self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 10)
+        # TODO change the topic name
+
+        self.publisher_ = self.create_publisher(Twist, f'cmd_vel', 10)
         self.timer= self.create_timer(0.5, self.timer_callback)
         self.srv = self.create_service(MissionSwitch, 'mission_switch', self.serve)
         self.state = State.OFF

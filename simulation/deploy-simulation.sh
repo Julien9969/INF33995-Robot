@@ -1,3 +1,6 @@
+#!/bin/bash
+
+apt update -y
 mkdir -p "/usr/local/include/" && cp /opt/ros/humble/include/tf2_geometry_msgs/tf2_geometry_msgs/ /usr/local/include/ -r
 apt update
 rm -r /root/INF3995-Robot/simulation/.venv
@@ -10,7 +13,16 @@ rm /etc/ros/rosdep/sources.list.d/20-default.list
 rosdep init
 rosdep update
 rosdep install --from-paths /root/INF3995-Robot/ros_ws/src --ignore-src -r -i -y --rosdistro humble
+rosdep install --from-paths /root/INF3995-Robot/file_transfer_ws/src --ignore-src -r -i -y --rosdistro humble
 sleep 5
-colcon build --cmake-args -DBUILD_TESTING=ON
+cd /root/INF3995-Robot/file_transfer_ws
+colcon build --symlink-install --cmake-args -DBUILD_TESTING=ON
 source install/setup.sh
+ros2 launch files_server_simulation simulation.launch.py &
+
+sleep 1
+cd /root/INF3995-Robot/ros_ws
+colcon build --symlink-install --cmake-args -DBUILD_TESTING=ON
+source install/setup.sh
+
 ros2 launch simulation_bringup simulation.launch.py
