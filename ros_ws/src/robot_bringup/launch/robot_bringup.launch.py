@@ -40,12 +40,12 @@ def generate_launch_description():
         namespace=f'robot{os.environ["ROBOT_NUM"]}',
     )
     # Node pour mission control (start et stop mission):
-    mission_switch = Node(
-        package='mission_control',
-        executable='mission_switch',
-        output='screen',
-        # namespace=f'robot{os.environ["ROBOT_NUM"]}',
-    )
+    # mission_switch = Node(
+    #     package='mission_control',
+    #     executable='mission_switch',
+    #     output='screen',
+    #     # namespace=f'robot{os.environ["ROBOT_NUM"]}',
+    # )
     mission_switch = Node(
         package='limo_info',
         executable='publisher',
