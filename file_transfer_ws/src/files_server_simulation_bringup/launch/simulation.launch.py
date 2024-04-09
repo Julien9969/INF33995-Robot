@@ -29,41 +29,21 @@ from launch_ros.actions import Node
 def generate_launch_description():
     # Configure ROS nodes for launch
 
-    # Setup project paths
-
-    # Node pour identification:
-        # Bridge ROS topics and Gazebo messages for establishing communication
-    identify = Node(
-        package='py_identify_server',
-        executable='identify',
+    files_server1 = Node(
+        package='py_files_server',
+        executable='files_server',
         output='screen',
-        namespace=f'robot{os.environ["ROBOT_NUM"]}',
+        namespace='robot1',
     )
-    # Node pour mission control (start et stop mission):
-    mission_switch = Node(
-        package='mission_control',
-        executable='mission_switch',
+
+    files_server2 = Node(
+        package='py_files_server',
+        executable='files_server',
         output='screen',
-        # namespace=f'robot{os.environ["ROBOT_NUM"]}',
+        namespace='robot2',
     )
-    mission_switch = Node(
-        package='limo_info',
-        executable='publisher',
-        output='screen',
-        namespace=f'robot{os.environ["ROBOT_NUM"]}',
-    )
-    # info_publisher = Node(
-    #     package='limo_info',
-    #     executable='publisher',
-    #     output='screen',
-    #     namespace=f'robot{os.environ["ROBOT_NUM"]}',
-    # )
-
-
-
 
     return LaunchDescription([
-        identify,
-        mission_switch,
-        # info_publisher
+        files_server1,
+        files_server2
     ])

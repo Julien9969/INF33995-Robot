@@ -1,6 +1,5 @@
 from enum import Enum
-import os
-import time
+import time, os
 from interfaces.srv import MissionSwitch
 
 import sys, subprocess, signal
