@@ -1,4 +1,5 @@
 from enum import Enum
+import os
 import time
 from interfaces.srv import MissionSwitch
 
@@ -34,8 +35,12 @@ class MissionSwitchService(Node):
 
     def start_process(self):
         # self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py'])
-        self.navProcess = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch.py use_sim_time:=false'])
-        # self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py use_sim_time:=false'])
+        if os.environ.get("ROBOT_ENV") == "SIMULATION":
+            self.navProcess = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch.py use_sim_time:=false'])
+            # self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py use_sim_time:=false'])
+        else:
+            self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot{os.environ.get("ROBOT_NAME_SPACE")}'])
+            # self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py use_sim_time:=false'])
         
         self.get_logger().info('Started random walk')
 

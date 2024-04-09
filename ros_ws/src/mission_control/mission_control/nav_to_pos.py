@@ -37,69 +37,13 @@ GOAL_W_ORIENTATION_IN_ARGS = 2
 TIMEOUT_TO_CANCEL = 20.0
 
 INCREMENT = [
-    [1.0, 1.0],
-    [-1.0, 1.0],
-    [1.0, -1.0],
-    [-1.0, -1.0]
+    [0.7, 0.7],
+    [-0.7, 0.7],
+    [0.7, -0.7],
+    [-0.7, -0.7]
 ]
 
-def go_to_poses(name_space):
-    navigator = BasicNavigator(namespace=name_space)
-    try:
-
-        # Security route, probably read in from a file for a real application
-        # from either a map or drive and repeat.
-        security_route = [
-            [1.792, 2.144],
-            [1.792, -5.44],
-            [1.792, -9.427],
-            [-3.665, -9.427],
-            [-3.665, -4.303],
-            [-3.665, 2.330],
-            [-3.665, 9.283]]
-
-
-        # Do security route until dead
-        while rclpy.ok():
-            # Send our route
-            route_poses = []
-            pose = PoseStamped()
-            pose.header.frame_id = f'{name_space}/odom'
-            pose.header.stamp = navigator.get_clock().now().to_msg()
-            pose.pose.orientation.w = 1.0
-            for pt in security_route:
-                pose.pose.position.x = pt[0]
-                pose.pose.position.y = pt[1]
-                route_poses.append(deepcopy(pose))
-            navigator.goThroughPoses(route_poses)
-
-            # Do something during our route (e.x. AI detection on camera images for anomalies)
-            # Simply print ETA for the demonstation
-            i = 0
-            while not navigator.isTaskComplete():
-                i += 1
-                feedback = navigator.getFeedback()
-                    # Some failure mode, must stop since the robot is clearly stuck
-                if Duration.from_msg(feedback.navigation_time) > Duration(seconds=90.0):
-                    navigator.cancelTask()
-
-            # If at end of route, reverse the route to restart
-            security_route.reverse()
-
-            result = navigator.getResult()
-            if result == TaskResult.SUCCEEDED:
-                print('Route complete! Restarting...')
-            elif result == TaskResult.CANCELED:
-                print('Security route was canceled, exiting.')
-                exit(1)
-            elif result == TaskResult.FAILED:
-                print('Security route failed! Restarting from other side...')
-        return result
-    except:
-        navigator.cancelTask()
-        rclpy.shutdown()
-        sys.exit()
-
+navigator = None
 
 
 def setGoalPos(navigator, goalPosInfo, name_space):
@@ -137,8 +81,9 @@ def new_square_from_poses(pose):
     return new_square
 
 def square_nav(name_space):
+    global navigator
     navigator = BasicNavigator(namespace=name_space)
-
+    
     square = deepcopy(INCREMENT)
 
     while True:
@@ -158,7 +103,7 @@ def square_nav(name_space):
                     if Duration.from_msg(feedback.navigation_time) > Duration(seconds=15.0):
                         navigator.cancelTask()
                         break
-                    elif feedback.distance_remaining < 0.50:
+                    elif feedback.distance_remaining < 0.40:
                         navigator.cancelTask()
                         not_far_from_goal = True
                         print('Not far from goal!')

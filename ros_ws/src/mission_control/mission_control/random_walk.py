@@ -1,12 +1,14 @@
 #! /usr/bin/env python3
 
+import signal
+import sys
 import argparse
 import os
 import random
 import subprocess
 import sys
 import time, rclpy
-from nav_to_pos import navigateToPos, go_to_poses, square_nav
+from nav_to_pos import navigateToPos, square_nav, navigator
 
 RANGE_VALUES_POS = 2
 VALUE_TO_SIMULATE_RANGE = RANGE_VALUES_POS/2
@@ -14,6 +16,7 @@ NOT_IMPORTANT_VALUE = 0.0
 PROTECTED_ZONE = 0.75
 
 sys.path.append('.')
+
 
 def navigateToRandomLocation(name_space):
     new_x_goal = 0
@@ -45,14 +48,20 @@ def main(name_space):
     #     time.sleep(5)
     rclpy.shutdown()
 
+
+def signal_handler(sig, frame):
+    print('You pressed Ctrl+C!')
+    navigator.cancelTask()
+    sys.exit(0)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", "--name_space", type=str, help="Namespace for the robot", required=True)
     args = parser.parse_args()
     # navProcess = subprocess.Popen(['/bin/bash', 'cd', '../../../', '&&', 'source', 'install/setup.bash', '&&', 'ros2', 'launch', 'explore_lite', 'explore.launch.py'])
     # navProcess = subprocess.Popen(['/bin/bash', '-c', 'cd ../../../ && source install/setup.bash && ros2 launch explore_lite explore.launch.py'])
-
+    signal.signal(signal.SIGINT, signal_handler)
     main(args.name_space)
-    while True:
-        pass
+
     # main(args.name_space)
