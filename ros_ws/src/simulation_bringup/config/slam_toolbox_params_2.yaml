@@ -10,8 +10,8 @@ slam_toolbox:
     ceres_loss_function: None
 
     # ROS Parameters
-    odom_frame: odom_2
-    map_frame: map_2
+    odom_frame: robot2/odom
+    map_frame: robot2/map
     base_frame: diff_drive_2
     scan_topic: /scan
     use_map_saver: false

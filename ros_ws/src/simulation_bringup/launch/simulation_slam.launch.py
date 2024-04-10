@@ -231,7 +231,7 @@ def generate_launch_description():
             executable='static_transform_publisher',
             name='static_tf_pub_laser',
             arguments=[
-                '0', '0', '0', '0', '0', '0', '1', 'world', 'map_1'
+                '0', '0', '0', '0', '0', '0', '1', 'world', 'robot1/map'
             ],
         ),
         Node(
@@ -239,7 +239,7 @@ def generate_launch_description():
             executable='static_transform_publisher',
             name='static_tf_pub_laser',
             arguments=[
-                '0', '0', '0', '0', '0', '0', '1', 'world', 'map_2'
+                '0', '0', '0', '0', '0', '0', '1', 'world', 'robot2/map'
             ],
         ),
 

@@ -526,7 +526,7 @@
         </frame>
         <frame name='base_link' attached_to='base_joint'/>
         <plugin filename="libignition-gazebo-odometry-publisher-system" name="ignition::gazebo::systems::OdometryPublisher">
-            <odom_frame>odom_2</odom_frame>
+            <odom_frame>robot2/odom</odom_frame>
             <odom_topic>robot2/odom</odom_topic>
             <robot_base_frame>diff_drive_2</robot_base_frame>
         </plugin>
