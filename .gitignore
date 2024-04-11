@@ -11,6 +11,6 @@ robot/log
 robot/update_queue
 
 **/__pycache__
-simulation/.venv
+**/.venv
 
 .vscode
