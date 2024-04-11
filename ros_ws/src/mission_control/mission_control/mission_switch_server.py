@@ -1,5 +1,6 @@
 from enum import Enum
-import time, os
+import time
+import os
 from interfaces.srv import MissionSwitch
 
 import sys, subprocess, signal
@@ -83,10 +84,12 @@ class MissionSwitchService(Node):
                 self.navProcess2 = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot2'])
             else:
                 self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot{os.environ.get("ROBOT_NUM")}'])
-
             self.get_logger().info('Going back home')
         except Exception as e:
             self.get_logger().info(f'Error going back home : {e}')
+
+    def get_environment(self):
+        return 'simulated' if 'ROBOT_NUM' not in os.environ else 'real'
 
     def serve(self, request, response):
         command:str = str(request.command)
@@ -109,6 +112,8 @@ class MissionSwitchService(Node):
             response.answer = f'{command} executed'
         else:
             response.answer = 'unknown'
+
+        response.environment = self.get_environment()
 
         return response
 
