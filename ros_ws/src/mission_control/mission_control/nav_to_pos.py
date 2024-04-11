@@ -15,7 +15,7 @@
 
 from copy import deepcopy
 import random
-import time
+import time, os
 from geometry_msgs.msg import PoseStamped
 from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
 import rclpy
@@ -36,15 +36,23 @@ GOAL_W_ORIENTATION_IN_ARGS = 2
 
 TIMEOUT_TO_CANCEL = 20.0
 
-INCREMENT = [
-    [0.7, 0.7],
-    [-0.7, 0.7],
-    [0.7, -0.7],
-    [-0.7, -0.7]
+if os.environ.get("ROBOT_ENV") == "SIMULATION":
+    INCREMENT = 1.5
+    NOT_FAR = 0.80
+    print('Simulation')
+else:
+    INCREMENT = 0.7
+    NOT_FAR = 0.40
+    print('Real')
+
+INCREMENT_POINTS = [
+    [INCREMENT, INCREMENT],
+    [-INCREMENT, INCREMENT],
+    [INCREMENT, -INCREMENT],
+    [-INCREMENT, -INCREMENT]
 ]
 
-navigator = None
-
+end_nav = False
 
 def setGoalPos(navigator, goalPosInfo, name_space):
     # Go to our demos first goal pose
@@ -64,17 +72,21 @@ def compute_new_square(square, goals_results):
     for i in range(len(square)):
         if goals_results[i] == TaskResult.SUCCEEDED:
             print('adddddddddd')
-            new_square.append([square[i][0] + INCREMENT[i][0], square[i][1] + INCREMENT[i][1]])
+            new_square.append([square[i][0] + INCREMENT_POINTS[i][0], square[i][1] + INCREMENT_POINTS[i][1]])
         else:
             print('subbbbbbbbb')
-            new_square.append([square[i][0] - INCREMENT[i][0], square[i][1] - INCREMENT[i][1]])
+            new_square.append([square[i][0] - INCREMENT_POINTS[i][0], square[i][1] - INCREMENT_POINTS[i][1]])
     return new_square
+
+def set_end_nav():
+    global end_nav
+    end_nav = True
 
 # pose=geometry_msgs.msg.Pose(position=geometry_msgs.msg.Point(x=0.15159579452578884, y=-0.11735794085747109, z=0.0)
 def new_square_from_poses(pose): 
     new_square = []
-    for i in range(len(INCREMENT)):
-        new_square.append([pose.position.x + INCREMENT[i][0], pose.position.y + INCREMENT[i][1]])
+    for i in range(len(INCREMENT_POINTS)):
+        new_square.append([pose.position.x + INCREMENT_POINTS[i][0], pose.position.y + INCREMENT_POINTS[i][1]])
 
     random.shuffle(new_square)
     print(new_square)
@@ -84,7 +96,7 @@ def square_nav(name_space):
     global navigator
     navigator = BasicNavigator(namespace=name_space)
     
-    square = deepcopy(INCREMENT)
+    square = deepcopy(INCREMENT_POINTS)
 
     while True:
         goals_results = []
@@ -98,18 +110,22 @@ def square_nav(name_space):
 
                 while not navigator.isTaskComplete():
                     feedback = navigator.getFeedback()
-                    # print(feedback)
 
                     if Duration.from_msg(feedback.navigation_time) > Duration(seconds=15.0):
+                        print(feedback)
                         navigator.cancelTask()
                         break
-                    elif feedback.distance_remaining < 0.40:
+                    elif feedback.distance_remaining < NOT_FAR:
                         navigator.cancelTask()
                         not_far_from_goal = True
                         print('Not far from goal!')
                         break
+                    elif end_nav:
+                        navigator.cancelTask()
+                        navigator.destroy_node()
+                        return
+                    
                     time.sleep(0.5)
-
 
                 result = navigator.getResult()
                 goals_results.append(result if not not_far_from_goal else TaskResult.SUCCEEDED)
@@ -125,7 +141,6 @@ def square_nav(name_space):
 
             # square = compute_new_square(square, goals_results)
             square = new_square_from_poses(navigator.getFeedback().current_pose.pose)
-
         except:
             navigator.cancelTask()
 

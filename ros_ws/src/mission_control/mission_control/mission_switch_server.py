@@ -7,6 +7,7 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
+# from mission_control.random_walk import main as random_walk_main
 
 class State(Enum):
     ON = "ON" 
@@ -18,6 +19,8 @@ STOP = "stop"
 HOME = "home"
 
 class MissionSwitchService(Node):
+    navProcess = None
+    navProcess2 = None
 
     def __init__(self):
         super().__init__('mission_switch')
@@ -36,13 +39,53 @@ class MissionSwitchService(Node):
     def start_process(self):
         # self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py'])
         if os.environ.get("ROBOT_ENV") == "SIMULATION":
-            self.navProcess = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch.py use_sim_time:=false'])
+            # self.navProcess = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch.py use_sim_time:=false'])
+            self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot1'])
+            self.navProcess2 = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot2'])
             # self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py use_sim_time:=false'])
         else:
             self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot{os.environ.get("ROBOT_NAME_SPACE")}'])
             # self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py use_sim_time:=false'])
         
         self.get_logger().info('Started random walk')
+
+    def stop_process(self):
+        try:
+            self.navProcess.send_signal(signal.SIGINT)
+            time.sleep(0.1)
+            self.navProcess.send_signal(signal.SIGINT)
+            time.sleep(2)
+            self.navProcess.send_signal(signal.SIGKILL)
+            self.navProcess = None
+            
+            if os.environ.get("ROBOT_ENV") == "SIMULATION":
+                self.navProcess2.send_signal(signal.SIGINT)
+                time.sleep(0.1)
+                self.navProcess2.send_signal(signal.SIGINT)
+                time.sleep(2)
+                self.navProcess2.send_signal(signal.SIGKILL)
+                self.navProcess2 = None
+
+            self.get_logger().info('Stopped random walk')
+        except Exception as e:
+            self.get_logger().info(f'Error stopping random walk : {e}')
+
+    def call_back_home(self):
+        self.state = State.OFF
+        try:
+            if self.navProcess is not None:
+                self.stop_process()
+
+            if os.environ.get("ROBOT_ENV") == "SIMULATION":
+                self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot1'])
+                time.sleep(2)
+                self.navProcess2 = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot2'])
+            else:
+                self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot{os.environ.get("ROBOT_NAME_SPACE")}'])
+            
+            self.get_logger().info('Going back home')
+        except Exception as e:
+            self.get_logger().info(f'Error going back home : {e}')
 
     def serve(self, request, response):
         command:str = str(request.command)
@@ -56,24 +99,12 @@ class MissionSwitchService(Node):
         elif command == STOP and self.state == State.ON:
             self.state = State.OFF
 
-            self.navProcess.send_signal(signal.SIGINT)
-            # self.navProcess2.send_signal(signal.SIGINT)
-
-            # self.navProcess.send_signal(signal.SIGKILL)
-            # self.navProcess2.send_signal(signal.SIGKILL)
-
+            self.stop_process()
             response.answer = f'{command} executed'
             # self.publisher_.publish(Twist())
         elif command == HOME:
             self.state = State.OFF
-            try:
-                self.navProcess.send_signal(signal.SIGINT)
-                time.sleep(3)
-                self.navProcess.send_signal(signal.SIGKILL)
-            except:
-                pass
-
-            self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot{os.environ.get("ROBOT_NAME_SPACE")}'])
+            self.call_back_home()
             response.answer = f'{command} executed'
         else:
             response.answer = 'unknown'
@@ -91,9 +122,7 @@ def main():
 
         rclpy.shutdown()
     except:
-        if identify_service is not None and identify_service.navProcess is not None:
-            identify_service.navProcess.send_signal(signal.SIGINT)
-            # identify_service.navProcess2.send_signal(signal.SIGINT)
+        pass
 
 
 

@@ -8,7 +8,7 @@ import random
 import subprocess
 import sys
 import time, rclpy
-from nav_to_pos import navigateToPos, square_nav, navigator
+from nav_to_pos import navigateToPos, square_nav, set_end_nav
 
 RANGE_VALUES_POS = 2
 VALUE_TO_SIMULATE_RANGE = RANGE_VALUES_POS/2
@@ -51,7 +51,8 @@ def main(name_space):
 
 def signal_handler(sig, frame):
     print('You pressed Ctrl+C!')
-    navigator.cancelTask()
+    # navigator.cancelTask()
+    # set_end_nav()
     sys.exit(0)
 
 
