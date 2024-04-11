@@ -204,12 +204,29 @@ nav_msgs::msg::OccupancyGrid::SharedPtr MergingPipeline::composeGrids()
   // Majeed testing origin change
   // TODO: create float vars for x, y, z taken from biggest map width/height, then set result origin pose as this pose
   // float 
+  float max_w = -1;
+  float max_h = -1;
+  float origin_x = 0;
+  float origin_y = 0;
 
   for (size_t i = 0; i < images_.size(); ++i) {
     if (!transforms_[i].empty() && !images_[i].empty()) {
       imgs_warped.emplace_back();
       rois.emplace_back(
           warper.warp(images_[i], transforms_[i], imgs_warped.back()));
+    }
+  }
+  
+  // CODE POUR ESSAYER DE REGLER ORIGIN OF MERGED MAP
+  // RCLCPP_INFO(logger, "===== NB OF GRIDS %d", grids_.size());
+  for(nav_msgs::msg::OccupancyGrid::ConstSharedPtr grid : grids_) {
+    if(grid->info.width > max_w) {
+      max_w = grid->info.width;
+      origin_x = grid->info.origin.position.x;
+    }
+    if(grid->info.height > max_h) {
+      max_h = grid->info.height;
+      origin_y = grid->info.origin.position.y;
     }
   }
 
@@ -245,9 +262,11 @@ nav_msgs::msg::OccupancyGrid::SharedPtr MergingPipeline::composeGrids()
   // then set result origin pose as this pose
 
   result->info.origin.position.x =
-      -(result->info.width / 2.0) * double(result->info.resolution);
+      origin_x;
+      // -(result->info.width / 2.0) * double(result->info.resolution);
   result->info.origin.position.y =
-      -(result->info.height / 2.0) * double(result->info.resolution);
+      origin_y;
+      // -(result->info.height / 2.0) * double(result->info.resolution);
   result->info.origin.orientation.w = 1.0;
 
   return result;
