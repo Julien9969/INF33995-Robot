@@ -45,7 +45,7 @@ class MissionSwitchService(Node):
             # self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py use_sim_time:=false'])
         else:
             print(f'robot{os.environ.get("ROBOT_NAME_SPACE")}')
-            self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot{os.environ.get("ROBOT_NAME_SPACE")}'])
+            self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot{os.environ.get("ROBOT_NUM")}'])
             # self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py use_sim_time:=false'])
         
         self.get_logger().info('Started random walk')
@@ -82,8 +82,8 @@ class MissionSwitchService(Node):
                 time.sleep(2)
                 self.navProcess2 = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot2'])
             else:
-                self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot{os.environ.get("ROBOT_NAME_SPACE")}'])
-            
+                self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot{os.environ.get("ROBOT_NUM")}'])
+
             self.get_logger().info('Going back home')
         except Exception as e:
             self.get_logger().info(f'Error going back home : {e}')
