@@ -44,6 +44,7 @@ class MissionSwitchService(Node):
             self.navProcess2 = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot2'])
             # self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py use_sim_time:=false'])
         else:
+            print(f'robot{os.environ.get("ROBOT_NAME_SPACE")}')
             self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot{os.environ.get("ROBOT_NAME_SPACE")}'])
             # self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py use_sim_time:=false'])
         

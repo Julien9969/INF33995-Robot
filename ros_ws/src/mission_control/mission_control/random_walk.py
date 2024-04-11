@@ -62,6 +62,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     # navProcess = subprocess.Popen(['/bin/bash', 'cd', '../../../', '&&', 'source', 'install/setup.bash', '&&', 'ros2', 'launch', 'explore_lite', 'explore.launch.py'])
     # navProcess = subprocess.Popen(['/bin/bash', '-c', 'cd ../../../ && source install/setup.bash && ros2 launch explore_lite explore.launch.py'])
+    print(args.name_space)
     signal.signal(signal.SIGINT, signal_handler)
     main(args.name_space)
 

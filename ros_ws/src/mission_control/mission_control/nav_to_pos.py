@@ -142,7 +142,10 @@ def square_nav(name_space):
             # square = compute_new_square(square, goals_results)
             square = new_square_from_poses(navigator.getFeedback().current_pose.pose)
         except:
-            navigator.cancelTask()
+            try:
+                navigator.cancelTask()
+            except:
+                print('Navigator not initialized')
 
 # nav2_msgs.action.NavigateToPose_Feedback(current_pose=geometry_msgs.msg.PoseStamped(header=std_msgs.msg.Header(stamp=builtin_interfaces.msg.Time(sec=1712436970, nanosec=892889298), frame_id='robot1/map'), pose=geometry_msgs.msg.Pose(position=geometry_msgs.msg.Point(x=-0.2572483882703879, y=-0.4146586193160936, z=0.0), orientation=geometry_msgs.msg.Quaternion(x=0.0, y=0.0, z=0.8712225799436084, w=-0.4908881911356219))), navigation_time=builtin_interfaces.msg.Duration(sec=0, nanosec=120231597), estimated_time_remaining=builtin_interfaces.msg.Duration(sec=0, nanosec=0), number_of_recoveries=0, distance_remaining=0.17135821282863617)
 
