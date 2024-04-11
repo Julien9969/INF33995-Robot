@@ -55,7 +55,7 @@ class MissionSwitchService(Node):
             self.navProcess.send_signal(signal.SIGINT)
             time.sleep(0.1)
             self.navProcess.send_signal(signal.SIGINT)
-            time.sleep(2)
+            time.sleep(0.5)
             self.navProcess.send_signal(signal.SIGKILL)
             self.navProcess = None
             
@@ -63,7 +63,7 @@ class MissionSwitchService(Node):
                 self.navProcess2.send_signal(signal.SIGINT)
                 time.sleep(0.1)
                 self.navProcess2.send_signal(signal.SIGINT)
-                time.sleep(2)
+                time.sleep(0.5)
                 self.navProcess2.send_signal(signal.SIGKILL)
                 self.navProcess2 = None
 
