@@ -2,10 +2,6 @@ ros_ws/src/ros_gz_gazebo/worlds/diff_drive.sdf
 ros_ws/install
 ros_ws/build
 ros_ws/log
-*frames_2024*
-maps_saved/
-
-simulation/.venv
 
 file_transfer_ws/install
 file_transfer_ws/build
@@ -14,13 +10,12 @@ file_transfer_ws/log
 robot/log
 robot/update_queue
 
-__pycache__/
-simulation/.venv
+**/__pycache__
+**/.venv
 
 .vscode
 
-.venv/
-
+*frames_2024*
 maps_saved/
 my_debugging
 pcl_ws
