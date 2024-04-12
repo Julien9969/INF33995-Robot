@@ -8,7 +8,6 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
-# from mission_control.random_walk import main as random_walk_main
 
 class State(Enum):
     ON = "ON" 
@@ -19,7 +18,7 @@ START = "start"
 STOP = "stop"
 HOME = "home"
 
-class MissionSwitchService(Node): #TODO : print parameter of mission switch robot_id
+class MissionSwitchService(Node): 
     navProcess = None
     robot_id = ''
 
@@ -35,6 +34,7 @@ class MissionSwitchService(Node): #TODO : print parameter of mission switch robo
             self.get_logger().error(f'Error getting robot_id : {e} can be ignored if running with real robots')
         self.state = State.OFF
     
+    
     def start_process(self):
         if os.environ.get("ROBOT_ENV") == "SIMULATION":
             self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot{self.robot_id}'])
@@ -42,6 +42,7 @@ class MissionSwitchService(Node): #TODO : print parameter of mission switch robo
             self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot{os.environ.get("ROBOT_NUM")}'])
         
         self.get_logger().info(f'[robot{self.robot_id}] Started random walk')
+
 
     def stop_process(self):
         try:
@@ -55,6 +56,7 @@ class MissionSwitchService(Node): #TODO : print parameter of mission switch robo
             self.get_logger().info(f'[robot{self.robot_id}] Stopped random walk')
         except Exception as e:
             self.get_logger().error(f'[robot{self.robot_id}] Error stopping random walk : {e}')
+
 
     def call_back_home(self):
         self.state = State.OFF
@@ -71,8 +73,10 @@ class MissionSwitchService(Node): #TODO : print parameter of mission switch robo
         except Exception as e:
             self.get_logger().error(f'[robot{self.robot_id}] Error going back home : {e}')
 
+
     def get_environment(self):
         return 'simulated' if 'ROBOT_NUM' not in os.environ else 'real'
+
 
     def serve(self, request, response):
         command:str = str(request.command)
@@ -111,7 +115,6 @@ def main():
         rclpy.shutdown()
     except:
         pass
-
 
 
 if __name__ == '__main__':

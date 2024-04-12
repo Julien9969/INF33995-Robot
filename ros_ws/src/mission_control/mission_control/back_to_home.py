@@ -17,6 +17,13 @@ else:
     NOT_FAR = 0.10
 
 def back_to_home(name_space):
+    """
+    Navigate the robot back to the home position
+
+    Args:
+        name_space : namespace of the robot
+    """
+
     rclpy.init()
     navigator = BasicNavigator(namespace=name_space)
     goal_pose = PoseStamped()
