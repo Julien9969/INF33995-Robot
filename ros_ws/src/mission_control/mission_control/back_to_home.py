@@ -1,5 +1,6 @@
 import argparse
 from copy import deepcopy
+import os
 import random
 import time
 from geometry_msgs.msg import PoseStamped
@@ -8,6 +9,12 @@ import rclpy
 from rclpy.duration import Duration
 import sys
 
+if os.environ.get("ROBOT_ENV") == "SIMULATION":
+    HOME_POS = [-4.0, 0.0] # -4 -0.35 0.35
+    NOT_FAR = 0.70
+else:
+    HOME_POS = [0.0, 0.0]
+    NOT_FAR = 0.10
 
 def back_to_home(name_space):
     rclpy.init()
@@ -15,14 +22,14 @@ def back_to_home(name_space):
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = f'{name_space}/map'
     goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-    goal_pose.pose.position.x = 0.0
-    goal_pose.pose.position.y = 0.0
+    goal_pose.pose.position.x = HOME_POS[0]
+    goal_pose.pose.position.y = HOME_POS[1]
     navigator.goToPose(goal_pose)
 
     while not navigator.isTaskComplete():
         feedback = navigator.getFeedback()
         try:
-            if Duration.from_msg(feedback.navigation_time) > Duration(seconds=60.0) or feedback.distance_remaining < 0.10:
+            if Duration.from_msg(feedback.navigation_time) > Duration(seconds=50.0) or feedback.distance_remaining < NOT_FAR:
                 navigator.cancelTask()
                 break
             time.sleep(0.5)

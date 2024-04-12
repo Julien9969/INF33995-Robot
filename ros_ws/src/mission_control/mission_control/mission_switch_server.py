@@ -21,38 +21,27 @@ HOME = "home"
 
 class MissionSwitchService(Node): #TODO : print parameter of mission switch robot_id
     navProcess = None
-    navProcess2 = None
+    robot_id = ''
 
     def __init__(self):
         super().__init__('mission_switch')
         self.srv = self.create_service(MissionSwitch, 'mission_switch', self.serve)
-        self.declare_parameter('robot_id', rclpy.Parameter.Type.INTEGER)
-        # self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 10)
-        # self.timer= self.create_timer(0.5, self.timer_callback)
+        try:
+            self.declare_parameter('robot_id', rclpy.Parameter.Type.INTEGER)
+            self.robot_id = str(self.get_parameter('robot_id').value)
+            self.get_logger().info(f"[robot{self.robot_id}] Simulation mission switch started")
+        except Exception as e:
+            self.robot_id = os.environ.get("ROBOT_NUM")
+            self.get_logger().error(f'Error getting robot_id : {e} can be ignored if running with real robots')
         self.state = State.OFF
-        robot_id = self.get_parameter('robot_id')
-        self.get_logger().info("int: %s" %(str(robot_id.value),))
     
-    # def timer_callback(self):
-    #     if(self.state == State.ON ):
-    #         rotate_msg = Twist()
-    #         rotate_msg.linear.x = 1.0
-    #         rotate_msg.angular.z = 0.5
-    #         self.publisher_.publish(rotate_msg)
-
     def start_process(self):
-        # self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py'])
         if os.environ.get("ROBOT_ENV") == "SIMULATION":
-            # self.navProcess = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch.py use_sim_time:=false'])
-            self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot1'])
-            self.navProcess2 = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot2'])
-            # self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py use_sim_time:=false'])
+            self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot{self.robot_id}'])
         else:
-            print(f'robot{os.environ.get("ROBOT_NAME_SPACE")}')
             self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot{os.environ.get("ROBOT_NUM")}'])
-            # self.navProcess2 = subprocess.Popen(['/bin/bash', '-c', 'source install/setup.bash && ros2 launch explore_lite explore.launch2.py use_sim_time:=false'])
         
-        self.get_logger().info('Started random walk')
+        self.get_logger().info(f'[robot{self.robot_id}] Started random walk')
 
     def stop_process(self):
         try:
@@ -63,17 +52,9 @@ class MissionSwitchService(Node): #TODO : print parameter of mission switch robo
             self.navProcess.send_signal(signal.SIGKILL)
             self.navProcess = None
             
-            if os.environ.get("ROBOT_ENV") == "SIMULATION":
-                self.navProcess2.send_signal(signal.SIGINT)
-                time.sleep(0.1)
-                self.navProcess2.send_signal(signal.SIGINT)
-                time.sleep(0.5)
-                self.navProcess2.send_signal(signal.SIGKILL)
-                self.navProcess2 = None
-
-            self.get_logger().info('Stopped random walk')
+            self.get_logger().info(f'[robot{self.robot_id}] Stopped random walk')
         except Exception as e:
-            self.get_logger().info(f'Error stopping random walk : {e}')
+            self.get_logger().error(f'[robot{self.robot_id}] Error stopping random walk : {e}')
 
     def call_back_home(self):
         self.state = State.OFF
@@ -82,14 +63,13 @@ class MissionSwitchService(Node): #TODO : print parameter of mission switch robo
                 self.stop_process()
 
             if os.environ.get("ROBOT_ENV") == "SIMULATION":
-                self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot1'])
+                self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot{self.robot_id}'])
                 time.sleep(2)
-                self.navProcess2 = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot2'])
             else:
                 self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot{os.environ.get("ROBOT_NUM")}'])
-            self.get_logger().info('Going back home')
+            self.get_logger().info(f'[robot{self.robot_id}] Going back home')
         except Exception as e:
-            self.get_logger().info(f'Error going back home : {e}')
+            self.get_logger().error(f'[robot{self.robot_id}] Error going back home : {e}')
 
     def get_environment(self):
         return 'simulated' if 'ROBOT_NUM' not in os.environ else 'real'
@@ -97,7 +77,7 @@ class MissionSwitchService(Node): #TODO : print parameter of mission switch robo
     def serve(self, request, response):
         command:str = str(request.command)
 
-        self.get_logger().info(f'Incoming request, command: {command}, current state: {self.state}')
+        self.get_logger().info(f'[robot{self.robot_id}] Incoming request, command: {command}, current state: {self.state}')
 
         if command == START and self.state == State.OFF:
             self.state = State.ON
@@ -108,7 +88,6 @@ class MissionSwitchService(Node): #TODO : print parameter of mission switch robo
 
             self.stop_process()
             response.answer = f'{command} executed'
-            # self.publisher_.publish(Twist())
         elif command == HOME:
             self.state = State.OFF
             self.call_back_home()
