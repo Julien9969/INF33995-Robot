@@ -29,6 +29,7 @@ colcon build
 source /home/nvidia/INF3995-Robot/ros_ws/install/setup.bash
 ros2 launch robot_bringup robot_bringup.launch.py &
 
+# TODO log arguments see agilex repo start-robot.sh
 source /home/nvidia/agilex_ws/install/setup.bash
 ros2 launch limo_bringup limo_start.launch.py pub_odom_tf:=true &
 ros2 launch limo_bringup cartographer.launch.py &

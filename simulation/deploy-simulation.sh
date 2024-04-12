@@ -21,8 +21,8 @@ colcon build --cmake-args -DBUILD_TESTING=ON
 source install/setup.sh
 ros2 launch simulation_bringup simulation_slam.launch.py
 
-# sleep 5
-# cd /root/INF3995-Robot/file_transfer_ws
-# colcon build --symlink-install --cmake-args -DBUILD_TESTING=ON
-# source install/setup.sh
-# ros2 launch files_server_simulation simulation.launch.py &
+sleep 5
+cd /root/INF3995-Robot/file_transfer_ws
+colcon build --symlink-install --cmake-args -DBUILD_TESTING=ON
+source install/setup.sh
+ros2 launch files_server_simulation simulation.launch.py &
