@@ -16,13 +16,14 @@ rosdep install --from-paths /root/INF3995-Robot/ros_ws/src --ignore-src -r -i -y
 rosdep install --from-paths /root/INF3995-Robot/file_transfer_ws/src --ignore-src -r -i -y --rosdistro humble
 
 sleep 1
+cd /root/INF3995-Robot/file_transfer_ws
+colcon build --cmake-args -DBUILD_TESTING=ON
+source install/setup.sh
+ros2 launch files_server_simulation simulation.launch.py &
+
+sleep 5
+cd /root/INF3995-Robot/ros_ws
 mkdir -p "/usr/local/include/" && cp /opt/ros/humble/include/tf2_geometry_msgs/tf2_geometry_msgs/ /usr/local/include/ -r
 colcon build --cmake-args -DBUILD_TESTING=ON
 source install/setup.sh
-ros2 launch simulation_bringup simulation_slam.launch.py
-
-sleep 5
-cd /root/INF3995-Robot/file_transfer_ws
-colcon build --symlink-install --cmake-args -DBUILD_TESTING=ON
-source install/setup.sh
-ros2 launch files_server_simulation simulation.launch.py &
+ros2 launch simulation_bringup simulation_slam.launch.py &
