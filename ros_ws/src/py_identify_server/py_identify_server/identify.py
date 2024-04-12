@@ -24,7 +24,11 @@ class IdentifyService(Node):
             time.sleep(0.5)
 
         rotate_msg = Twist()
-        self.publisher_.publish(rotate_msg)
+        rotate_msg.angular.z = 0.0
+        rotate_msg.linear.x = 0.0
+
+        for i in range(5):
+            self.publisher_.publish(rotate_msg)
 
         return response
 
@@ -32,8 +36,8 @@ class IdentifyService(Node):
         rotate_msg = Twist()
 
         if os.environ.get("ROBOT_ENV") == "SIMULATION":
-            rotate_msg.angular.z = -0.5
-            rotate_msg.linear.x = 4.5
+            rotate_msg.angular.z = -5.5
+            rotate_msg.linear.x = 0.5
         else:
             rotate_msg.angular.z = -1.5
             rotate_msg.linear.x = 0.0
