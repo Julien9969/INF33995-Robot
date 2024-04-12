@@ -27,8 +27,11 @@ class IdentifyService(Node):
         rotate_msg.angular.z = 0.0
         rotate_msg.linear.x = 0.0
 
+        self.get_logger().info(f'Outgoing response, b: {response.b}')
+
         for i in range(5):
             self.publisher_.publish(rotate_msg)
+            time.sleep(0.3)
 
         return response
 
