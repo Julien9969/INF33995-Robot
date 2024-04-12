@@ -19,16 +19,19 @@ START = "start"
 STOP = "stop"
 HOME = "home"
 
-class MissionSwitchService(Node):
+class MissionSwitchService(Node): #TODO : print parameter of mission switch robot_id
     navProcess = None
     navProcess2 = None
 
     def __init__(self):
         super().__init__('mission_switch')
         self.srv = self.create_service(MissionSwitch, 'mission_switch', self.serve)
+        self.declare_parameter('robot_id', rclpy.Parameter.Type.INTEGER)
         # self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 10)
         # self.timer= self.create_timer(0.5, self.timer_callback)
         self.state = State.OFF
+        robot_id = self.get_parameter('robot_id')
+        self.get_logger().info("int: %s" %(str(robot_id.value),))
     
     # def timer_callback(self):
     #     if(self.state == State.ON ):
