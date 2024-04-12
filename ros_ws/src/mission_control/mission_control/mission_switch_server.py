@@ -52,7 +52,18 @@ class MissionSwitchService(Node):
             time.sleep(0.5)
             self.navProcess.send_signal(signal.SIGKILL)
             self.navProcess = None
-            
+            try:
+                publisher_ = self.create_publisher(Twist, f'cmd_vel', 10)
+                rotate_msg = Twist()
+                rotate_msg.angular.z = 0.0
+                rotate_msg.linear.x = 0.0
+                for i in range(5):
+                    publisher_.publish(rotate_msg)
+                    time.sleep(0.2)
+                # publisher_.destroy()
+            except Exception as e:
+                self.get_logger().error(f'[robot{self.robot_id}] Error stopping random walk set 0 : {e}')
+
             self.get_logger().info(f'[robot{self.robot_id}] Stopped random walk')
         except Exception as e:
             self.get_logger().error(f'[robot{self.robot_id}] Error stopping random walk : {e}')

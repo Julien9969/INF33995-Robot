@@ -15,6 +15,8 @@
 
 from copy import deepcopy
 import random
+import signal
+import sys
 import time, os
 from geometry_msgs.msg import PoseStamped
 from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
@@ -27,7 +29,7 @@ GOAL_W_ORIENTATION_IN_ARGS = 2
 TIMEOUT_TO_CANCEL = 20.0
 
 if os.environ.get("ROBOT_ENV") == "SIMULATION":
-    INCREMENT = 1.5
+    INCREMENT = 1.4
     NOT_FAR = 0.80
     print('Simulation')
 else:
@@ -41,6 +43,16 @@ INCREMENT_POINTS = [
     [INCREMENT, -INCREMENT],
     [-INCREMENT, -INCREMENT]
 ]
+
+def signal_handler(sig, frame):
+    global navigator
+    print('Stop navigation!')
+    try:
+        navigator.cancelTask()
+        navigator.destroyNode()
+    except:
+        print("Navigator not initialized")
+    sys.exit(0)
 
 def setGoalPos(navigator, goalPosInfo, name_space):
     goal_pose = PoseStamped()
@@ -79,11 +91,13 @@ def new_square_from_poses(pose):
     return new_square
 
 def square_nav(name_space):
+    signal.signal(signal.SIGINT, signal_handler)
+
     global navigator
     navigator = BasicNavigator(namespace=name_space)
     
     square = deepcopy(INCREMENT_POINTS)
-
+    random.shuffle(square)
     while True:
         goals_results = []
         not_far_from_goal = False
@@ -119,6 +133,7 @@ def square_nav(name_space):
                 elif result == TaskResult.FAILED:
                     navigator.get_logger().info(f'[{name_space}] Goal failed!')
                 else:
+                    navigator.clearAllCostmaps()
                     navigator.get_logger().info(f'[{name_space}] Goal has an invalid return status!')
             # square = compute_new_square(square, goals_results)
             square = new_square_from_poses(navigator.getFeedback().current_pose.pose)
