@@ -58,3 +58,6 @@ RUN apt update && apt install ros-humble-nav2* ros-humble-slam-toolbox -y
 
 COPY deploy-simulation.sh .
 RUN chmod +x /root/deploy-simulation.sh
+COPY start-files-server.sh .
+RUN chmod +x /root/start-files-server.sh
+RUN echo "export ROBOT_ENV=SIMULATION" >> /root/.bashrc
