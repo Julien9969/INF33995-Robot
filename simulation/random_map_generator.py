@@ -3,13 +3,19 @@ from pysdf import SDF, Link, Model, Visual, Geometry, Pose, Collision
 import os
 import random
 
-POSITION_ROBOT_1 = {'x': 4, 'y': 0, 'z': 0}
-POSITION_ROBOT_2 = {'x': -4, 'y': 0, 'z': 0}
+ROBOTS_POSITION = {'x': -4, 'y': 0, 'z': 0}
 
 def read_sdf(destination_sdf_path):
     with open(destination_sdf_path, "r") as f:
         gazebo_map_string = f.read()
     return SDF.from_xml(gazebo_map_string)
+
+def is_permitted_obstacle_position(x, obstacles_x=[]):
+    is_in_robot_startup_zone = ROBOTS_POSITION['x'] - 2 < x < ROBOTS_POSITION['x'] + 2
+    is_in_obstacle_zone = any([
+        obstacle_x - 2 < x and x < obstacle_x + 2 for obstacle_x in obstacles_x
+    ])
+    return not is_in_robot_startup_zone and not is_in_obstacle_zone
 
 def generate_obstacles():
     obstacles = Model(
@@ -17,19 +23,15 @@ def generate_obstacles():
         name="obstacles"
     )
 
+    obstacles_x = list()
     for i in range(3):
         while True:
+            sign = random.choice([-1, 1])
+            length = random.randint(3, 6)
+            y = sign * (5 - 0.5 * length)
             x = random.randrange(-4, 4)
-            y = random.randrange(-3, 3)
-            # If the obstacle is too close to the robot, we generate a new one
-            if not (
-                    (y < POSITION_ROBOT_1['y'] + 2 and y > POSITION_ROBOT_1['y'] - 2) \
-                    and (x < POSITION_ROBOT_1['x'] + 2 and x > POSITION_ROBOT_1['x'] - 2)
-                    ) and not (
-                    (y < POSITION_ROBOT_2['y'] + 2 and y > POSITION_ROBOT_2['y'] - 2) \
-                    and (x < POSITION_ROBOT_2['x'] + 2 and x > POSITION_ROBOT_2['x'] - 2)
-                ):
-                break
+            if is_permitted_obstacle_position(x, obstacles_x): break
+        obstacles_x.append(x)
 
         obstacles.links[0].add(
             Visual(
@@ -50,9 +52,9 @@ def generate_obstacles():
             )
         )
 
-        obstacles.links[0].visuals[i].geometry.box.size = [1, 1.5, 1]
+        obstacles.links[0].visuals[i].geometry.box.size = [0.1, length, 2]
         obstacles.links[0].visuals[i].add(Pose(text = f"{x} {y} 0 0 0 0"))
-        obstacles.links[0].colliders[i].geometry.box.size = [1, 1.5, 1]
+        obstacles.links[0].colliders[i].geometry.box.size = [0.1, length, 2]
         obstacles.links[0].colliders[i].add(Pose(text = f"{x} {y} 0 0 0 0"))
     return obstacles
 

@@ -1,0 +1,207 @@
+SIMULATION
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease
+Hit:2 http://security.ubuntu.com/ubuntu jammy-security InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu jammy-backports InRelease
+Hit:5 http://packages.osrfoundation.org/gazebo/ubuntu-stable jammy InRelease
+Hit:6 http://repo.ros2.org/ubuntu/main jammy InRelease
+Hit:7 http://packages.ros.org/ros2/ubuntu jammy InRelease
+Reading package lists...
+Building dependency tree...
+Reading state information...
+All packages are up to date.
+W: http://repo.ros2.org/ubuntu/main/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+ERROR: default sources list file already exists:
+	/etc/ros/rosdep/sources.list.d/20-default.list
+Please delete if you wish to re-initialize
+Warning: running 'rosdep update' as root is not recommended.
+  You should run 'sudo rosdep fix-permissions' and invoke 'rosdep update' again without sudo.
+reading in sources list data from /etc/ros/rosdep/sources.list.d
+Hit file:///usr/share/python3-rosdep2/debian.yaml
+Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/osx-homebrew.yaml
+Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/base.yaml
+Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/python.yaml
+Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/ruby.yaml
+Hit https://raw.githubusercontent.com/ros/rosdistro/master/releases/fuerte.yaml
+Query rosdistro index https://raw.githubusercontent.com/ros/rosdistro/master/index-v4.yaml
+Skip end-of-life distro "ardent"
+Skip end-of-life distro "bouncy"
+Skip end-of-life distro "crystal"
+Skip end-of-life distro "dashing"
+Skip end-of-life distro "eloquent"
+Skip end-of-life distro "foxy"
+Skip end-of-life distro "galactic"
+Skip end-of-life distro "groovy"
+Add distro "humble"
+Skip end-of-life distro "hydro"
+Skip end-of-life distro "indigo"
+Add distro "iron"
+Skip end-of-life distro "jade"
+Skip end-of-life distro "kinetic"
+Skip end-of-life distro "lunar"
+Skip end-of-life distro "melodic"
+Add distro "noetic"
+Add distro "rolling"
+updated cache in /root/.ros/rosdep/sources.cache
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease
+Hit:2 http://security.ubuntu.com/ubuntu jammy-security InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu jammy-backports InRelease
+Hit:5 http://repo.ros2.org/ubuntu/main jammy InRelease
+Hit:6 http://packages.ros.org/ros2/ubuntu jammy InRelease
+Hit:7 http://packages.osrfoundation.org/gazebo/ubuntu-stable jammy InRelease
+Reading package lists...
+Building dependency tree...
+Reading state information...
+All packages are up to date.
+W: http://repo.ros2.org/ubuntu/main/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 http://packages.osrfoundation.org/gazebo/ubuntu-stable jammy InRelease
+Hit:2 http://repo.ros2.org/ubuntu/main jammy InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu jammy InRelease
+Hit:4 http://security.ubuntu.com/ubuntu jammy-security InRelease
+Hit:5 http://packages.ros.org/ros2/ubuntu jammy InRelease
+Hit:6 http://archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:7 http://archive.ubuntu.com/ubuntu jammy-backports InRelease
+Reading package lists...
+Building dependency tree...
+Reading state information...
+All packages are up to date.
+W: http://repo.ros2.org/ubuntu/main/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+Requirement already satisfied: python-sdformat in /root/INF3995-Robot/simulation/.venv/lib/python3.10/site-packages (0.4.0)
+Requirement already satisfied: lxml<5.0.0,>=4.8.0 in /root/INF3995-Robot/simulation/.venv/lib/python3.10/site-packages (from python-sdformat) (4.9.4)
+Requirement already satisfied: numpy<2.0,>=1.0 in /root/INF3995-Robot/simulation/.venv/lib/python3.10/site-packages (from python-sdformat) (1.26.4)
+Wrote /etc/ros/rosdep/sources.list.d/20-default.list
+Recommended: please run
+
+	rosdep update
+
+Warning: running 'rosdep update' as root is not recommended.
+  You should run 'sudo rosdep fix-permissions' and invoke 'rosdep update' again without sudo.
+reading in sources list data from /etc/ros/rosdep/sources.list.d
+Hit file:///usr/share/python3-rosdep2/debian.yaml
+Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/osx-homebrew.yaml
+Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/base.yaml
+Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/python.yaml
+Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/ruby.yaml
+Hit https://raw.githubusercontent.com/ros/rosdistro/master/releases/fuerte.yaml
+Query rosdistro index https://raw.githubusercontent.com/ros/rosdistro/master/index-v4.yaml
+Skip end-of-life distro "ardent"
+Skip end-of-life distro "bouncy"
+Skip end-of-life distro "crystal"
+Skip end-of-life distro "dashing"
+Skip end-of-life distro "eloquent"
+Skip end-of-life distro "foxy"
+Skip end-of-life distro "galactic"
+Skip end-of-life distro "groovy"
+Add distro "humble"
+Skip end-of-life distro "hydro"
+Skip end-of-life distro "indigo"
+Add distro "iron"
+Skip end-of-life distro "jade"
+Skip end-of-life distro "kinetic"
+Skip end-of-life distro "lunar"
+Skip end-of-life distro "melodic"
+Add distro "noetic"
+Add distro "rolling"
+updated cache in /root/.ros/rosdep/sources.cache
+#All required rosdeps installed successfully
+#All required rosdeps installed successfully
+Starting >>> file_server_bringup
+Starting >>> files_server_simulation
+Starting >>> interfaces
+Starting >>> py_files_server
+Finished <<< files_server_simulation [1.31s]
+Finished <<< file_server_bringup [1.46s]
+Finished <<< interfaces [1.42s]
+--- stderr: py_files_server
+/usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+---
+Finished <<< py_files_server [2.01s]
+
+Summary: 4 packages finished [3.35s]
+  1 package had stderr output: py_files_server
+[INFO] [launch]: All log files can be found below /root/.ros/log/2024-03-12-16-33-17-644305-b2a90eb87e96-3777
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [files_server-1]: process started with pid [3779]
+[INFO] [files_server-2]: process started with pid [3781]
+Starting >>> ros_gz_description
+Starting >>> interfaces
+Starting >>> mission_control
+Starting >>> py_identify_server
+Starting >>> robot_bringup
+Finished <<< ros_gz_description [1.63s]
+Starting >>> ros_gz_gazebo
+Finished <<< robot_bringup [1.50s]
+Finished <<< interfaces [2.10s]
+Finished <<< ros_gz_gazebo [0.76s]
+Starting >>> simulation_bringup
+Finished <<< simulation_bringup [0.34s]
+--- stderr: mission_control
+/usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+---
+Finished <<< mission_control [2.75s]
+--- stderr: py_identify_server
+/usr/lib/python3/dist-packages/setuptools/command/easy_install.py:158: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+---
+Finished <<< py_identify_server [2.73s]
+
+Summary: 7 packages finished [3.99s]
+  2 packages had stderr output: mission_control py_identify_server
+[INFO] [launch]: All log files can be found below /root/.ros/log/2024-03-12-16-33-23-979924-b2a90eb87e96-4316
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [ruby $(which ign) gazebo-1]: process started with pid [4317]
+[INFO] [parameter_bridge-2]: process started with pid [4319]
+[INFO] [robot_state_publisher-3]: process started with pid [4322]
+[INFO] [robot_state_publisher-4]: process started with pid [4325]
+[INFO] [mission_switch-5]: process started with pid [4327]
+[INFO] [mission_switch-6]: process started with pid [4329]
+[INFO] [identify-7]: process started with pid [4331]
+[INFO] [identify-8]: process started with pid [4333]
+[robot_state_publisher-4] [WARN] [1710275604.404234950] [sdformat_urdf]: SDFormat link [base_footprint] has a <sensor>, but URDF does not support this
+[robot_state_publisher-4] [WARN] [1710275604.411313011] [kdl_parser]: The root link base_footprint has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-4] [INFO] [1710275604.411401533] [robot_state_publisher_2]: got segment base_footprint
+[robot_state_publisher-4] [INFO] [1710275604.411490351] [robot_state_publisher_2]: got segment front_left_wheel_link
+[robot_state_publisher-4] [INFO] [1710275604.411507262] [robot_state_publisher_2]: got segment front_right_wheel_link
+[robot_state_publisher-4] [INFO] [1710275604.411517661] [robot_state_publisher_2]: got segment rear_left_wheel_link
+[robot_state_publisher-4] [INFO] [1710275604.411526888] [robot_state_publisher_2]: got segment rear_right_wheel_link
+[robot_state_publisher-3] [WARN] [1710275604.493528792] [sdformat_urdf]: SDFormat link [base_footprint] has a <sensor>, but URDF does not support this
+[robot_state_publisher-3] [WARN] [1710275604.503696865] [kdl_parser]: The root link base_footprint has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-3] [INFO] [1710275604.503799307] [robot_state_publisher_1]: got segment base_footprint
+[robot_state_publisher-3] [INFO] [1710275604.503875731] [robot_state_publisher_1]: got segment front_left_wheel_link
+[robot_state_publisher-3] [INFO] [1710275604.503890894] [robot_state_publisher_1]: got segment front_right_wheel_link
+[robot_state_publisher-3] [INFO] [1710275604.503902697] [robot_state_publisher_1]: got segment rear_left_wheel_link
+[robot_state_publisher-3] [INFO] [1710275604.503913224] [robot_state_publisher_1]: got segment rear_right_wheel_link
+[ruby $(which ign) gazebo-1] QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+[parameter_bridge-2] [INFO] [1710275605.360708757] [ros_gz_bridge]: Creating ROS->GZ Bridge: [robot1/cmd_vel (geometry_msgs/msg/Twist) -> robot1/cmd_vel (gz.msgs.Twist)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710275605.362864322] [ros_gz_bridge]: Creating ROS->GZ Bridge: [robot2/cmd_vel (geometry_msgs/msg/Twist) -> robot2/cmd_vel (gz.msgs.Twist)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710275605.363467112] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710275605.364575251] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot1/odom (gz.msgs.Odometry) -> robot1/odom (nav_msgs/msg/Odometry)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710275605.367151402] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot1/scan (gz.msgs.LaserScan) -> robot1/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710275605.368787948] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot2/odom (gz.msgs.Odometry) -> robot2/odom (nav_msgs/msg/Odometry)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710275605.369509116] [ros_gz_bridge]: Creating GZ->ROS Bridge: [robot2/scan (gz.msgs.LaserScan) -> robot2/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-2] [INFO] [1710275605.370138249] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/clock)] (Lazy 0)
+[parameter_bridge-2] [WARN] [1710275605.370249487] [ros_gz_bridge]: Failed to create a bridge for topic [/clock] with ROS2 type [rosgraph_msgs/msg/clock] to topic [/clock] with Gazebo Transport type [gz.msgs.Clock]
+[ruby $(which ign) gazebo-1] libEGL warning: egl: failed to create dri2 screen
+[ruby $(which ign) gazebo-1] libEGL warning: egl: failed to create dri2 screen
+[ruby $(which ign) gazebo-1] libEGL warning: egl: failed to create dri2 screen
+[ruby $(which ign) gazebo-1] libEGL warning: egl: failed to create dri2 screen
+[identify-7] [INFO] [1710275778.614228871] [robot1.identify_service]: Incoming request, a: 4
+[parameter_bridge-2] [INFO] [1710275778.614695195] [ros_gz_bridge]: Passing message from ROS geometry_msgs/msg/Twist to Gazebo gz.msgs.Twist (showing msg only once per type)
