@@ -8,17 +8,17 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    use_sim_time = True
+    use_sim_time = LaunchConfiguration('use_sim_time', default=False)
     slam_params_file = LaunchConfiguration('slam_params_file')
 
     declare_use_sim_time_argument = DeclareLaunchArgument(
         'use_sim_time',
-        default_value='true',
+        default_value='false',
         description='Use simulation/Gazebo clock')
     declare_slam_params_file_cmd = DeclareLaunchArgument(
         'slam_params_file',
         default_value=os.path.join(get_package_share_directory("simulation_bringup"), #TODO:Changer le src pour un vrai setup
-                                   'config','slam_toolbox_params.yaml'),
+                                   'config',f'slam_toolbox_params_{os.environ["ROBOT_NUM"]}.yaml'),
         description='Full path to the ROS2 parameters file to use for the slam_toolbox node')
 
     start_async_slam_toolbox_node = Node(
