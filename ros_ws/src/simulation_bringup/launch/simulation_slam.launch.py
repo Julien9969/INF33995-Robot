@@ -32,7 +32,6 @@ def generate_launch_description():
 
     # Setup project paths
     launch_dir = os.path.join(get_package_share_directory('simulation_bringup'), 'launch')
-    map_merge_dir = os.path.join(get_package_share_directory('multirobot_map_merge'), 'launch')
 
     return LaunchDescription([
         GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
