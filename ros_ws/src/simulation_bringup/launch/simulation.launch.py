@@ -28,6 +28,7 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     # Configure ROS nodes for launch
+    log_level = LaunchConfiguration('log_level')
 
     # Setup project paths
     pkg_project_bringup = get_package_share_directory('simulation_bringup')
@@ -66,7 +67,8 @@ def generate_launch_description():
         parameters=[
             {'use_sim_time': True},
             {'robot_description': robot_desc_1},
-        ]
+        ],
+        arguments=['--ros-args', '--log-level', log_level],
     )
     robot_state_publisher_2 = Node(
         package='robot_state_publisher',
@@ -77,7 +79,8 @@ def generate_launch_description():
         parameters=[
             {'use_sim_time': True},
             {'robot_description': robot_desc_2},
-        ]
+        ],
+        arguments=['--ros-args', '--log-level', log_level],
     )
 
     # Visualize in RViz
@@ -96,6 +99,7 @@ def generate_launch_description():
             'config_file': os.path.join(pkg_project_bringup, 'config', 'simulation_bridge.yaml'),
             'qos_overrides./tf_static.publisher.durability': 'transient_local',
         }],
+        arguments=['--ros-args', '--log-level', log_level],
         output='screen'
     )
 
@@ -109,7 +113,8 @@ def generate_launch_description():
         #     'qos_overrides./tf_static.publisher.durability': 'transient_local',
         # }],
         namespace='robot1',
-        output='screen'
+        arguments=['--ros-args', '--log-level', log_level],
+        output='screen',
     )
     
     # Node pour identification:
@@ -122,6 +127,7 @@ def generate_launch_description():
         #     'qos_overrides./tf_static.publisher.durability': 'transient_local',
         # }],
         namespace='robot2',
+        arguments=['--ros-args', '--log-level', log_level],
         output='screen'
     )
     # Node pour mission control (start et stop mission):
@@ -131,6 +137,7 @@ def generate_launch_description():
         parameters=[
                 {'robot_id': 1},
             ],
+        arguments=['--ros-args', '--log-level', log_level],
         output='screen',
         namespace='robot1',
     )
@@ -141,6 +148,7 @@ def generate_launch_description():
         parameters=[
                 {'robot_id': 2},
             ],
+        arguments=['--ros-args', '--log-level', log_level],
         output='screen',
         namespace='robot2',
     )        

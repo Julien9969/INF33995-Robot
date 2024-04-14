@@ -222,6 +222,7 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([launch_dir, '/simulation.launch.py']),
             launch_arguments={
+                'log_level': log_level,
             }.items(),
         ),
     ])
