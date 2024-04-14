@@ -14,3 +14,8 @@ robot/update_queue
 **/.venv
 
 .vscode
+
+*frames_2024*
+maps_saved/
+my_debugging
+pcl_ws

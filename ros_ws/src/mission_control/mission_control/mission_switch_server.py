@@ -3,7 +3,7 @@ import time
 import os
 from interfaces.srv import MissionSwitch
 
-import sys
+import sys, subprocess, signal
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
@@ -16,42 +16,99 @@ class State(Enum):
 
 START = "start"
 STOP = "stop"
+HOME = "home"
 
-class MissionSwitchService(Node):
+class MissionSwitchService(Node): 
+    navProcess = None
+    robot_id = ''
 
     def __init__(self):
         super().__init__('mission_switch')
-        # TODO change the topic name
-
-        self.publisher_ = self.create_publisher(Twist, f'cmd_vel', 10)
-        self.timer= self.create_timer(0.5, self.timer_callback)
         self.srv = self.create_service(MissionSwitch, 'mission_switch', self.serve)
+        try:
+            self.declare_parameter('robot_id', rclpy.Parameter.Type.INTEGER)
+            self.robot_id = str(self.get_parameter('robot_id').value)
+            self.get_logger().info(f"[robot{self.robot_id}] Simulation mission switch started")
+        except Exception as e:
+            self.robot_id = os.environ.get("ROBOT_NUM")
+            self.get_logger().error(f'Error getting robot_id : {e} can be ignored if running with real robots')
         self.state = State.OFF
     
-    def timer_callback(self):
-        if(self.state == State.ON ):
-            rotate_msg = Twist()
-            rotate_msg.linear.x = 1.0
-            rotate_msg.angular.z = 0.5
-            self.publisher_.publish(rotate_msg)
+    
+    def start_process(self):
+        if os.environ.get("ROBOT_ENV") == "SIMULATION":
+            self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot{self.robot_id}'])
+        else:
+            self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/random_walk.py', '-n', f'robot{os.environ.get("ROBOT_NUM")}'])
+        
+        self.get_logger().info(f'[robot{self.robot_id}] Started random walk')
+
+
+    def stop_process(self):
+        try:
+            self.navProcess.send_signal(signal.SIGINT)
+            time.sleep(0.1)
+            self.navProcess.send_signal(signal.SIGINT)
+            time.sleep(0.5)
+            self.navProcess.send_signal(signal.SIGKILL)
+            self.navProcess = None
+            try:
+                publisher_ = self.create_publisher(Twist, f'cmd_vel', 10)
+                rotate_msg = Twist()
+                rotate_msg.angular.z = 0.0
+                rotate_msg.linear.x = 0.0
+                for i in range(5):
+                    publisher_.publish(rotate_msg)
+                    time.sleep(0.2)
+                # publisher_.destroy()
+            except Exception as e:
+                self.get_logger().error(f'[robot{self.robot_id}] Error stopping random walk set 0 : {e}')
+
+            self.get_logger().info(f'[robot{self.robot_id}] Stopped random walk')
+        except Exception as e:
+            self.get_logger().error(f'[robot{self.robot_id}] Error stopping random walk : {e}')
+
+
+    def call_back_home(self):
+        self.state = State.OFF
+        try:
+            if self.navProcess is not None:
+                self.stop_process()
+
+            if os.environ.get("ROBOT_ENV") == "SIMULATION":
+                self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot{self.robot_id}'])
+                time.sleep(2)
+            else:
+                self.navProcess = subprocess.Popen(['python3', '-u', 'src/mission_control/mission_control/back_to_home.py', '-n', f'robot{os.environ.get("ROBOT_NUM")}'])
+            self.get_logger().info(f'[robot{self.robot_id}] Going back home')
+        except Exception as e:
+            self.get_logger().error(f'[robot{self.robot_id}] Error going back home : {e}')
+
 
     def get_environment(self):
         return 'simulated' if 'ROBOT_NUM' not in os.environ else 'real'
 
+
     def serve(self, request, response):
         command:str = str(request.command)
 
-        self.get_logger().info(f'Incoming request, command: {command}, current state: {self.state}')
+        self.get_logger().info(f'[robot{self.robot_id}] Incoming request, command: {command}, current state: {self.state}')
 
         if command == START and self.state == State.OFF:
             self.state = State.ON
+            self.start_process()
             response.answer = f'{command} executed'
         elif command == STOP and self.state == State.ON:
             self.state = State.OFF
+
+            self.stop_process()
             response.answer = f'{command} executed'
-            self.publisher_.publish(Twist())
+        elif command == HOME:
+            self.state = State.OFF
+            self.call_back_home()
+            response.answer = f'{command} executed'
         else:
-            response.answer = 'unknown '
+            response.answer = 'unknown'
 
         response.environment = self.get_environment()
 
@@ -59,13 +116,16 @@ class MissionSwitchService(Node):
 
 
 def main():
-    rclpy.init()
+    try:
+        rclpy.init()
 
-    identify_service = MissionSwitchService()
+        identify_service = MissionSwitchService()
 
-    rclpy.spin(identify_service)
+        rclpy.spin(identify_service)
 
-    rclpy.shutdown()
+        rclpy.shutdown()
+    except:
+        pass
 
 
 if __name__ == '__main__':
