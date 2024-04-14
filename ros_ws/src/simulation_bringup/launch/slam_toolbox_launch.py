@@ -26,6 +26,12 @@ def generate_launch_description():
           slam_params_file,
           {'use_sim_time': use_sim_time}
         ],
+        remappings=[
+            ('/scan', f'/robot{os.environ["ROBOT_NUM"]}/scan'),
+            ('/map_metadata', f'/robot{os.environ["ROBOT_NUM"]}/map_metadata'),
+            ('/map', f'/robot{os.environ["ROBOT_NUM"]}/map'
+          )
+        ],
         package='slam_toolbox',
         namespace=f'robot{os.environ["ROBOT_NUM"]}',
         executable='async_slam_toolbox_node',
