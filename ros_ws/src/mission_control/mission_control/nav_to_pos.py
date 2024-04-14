@@ -105,6 +105,8 @@ def square_nav(name_space):
     else: 
         square = random.shuffle(deepcopy(INCREMENT_POINTS))
 
+    print(square)
+
     while True:
         goals_results = []
         not_far_from_goal = False
