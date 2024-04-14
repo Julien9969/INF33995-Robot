@@ -1,7 +1,11 @@
 ydlidar_ros2_driver_node:
   ros__parameters:
     port: /dev/ydlidar
+<<<<<<< HEAD:ros_ws/src/limo_bringup/param/ydlidar1.yaml
     frame_id: laser_frame_1
+=======
+    frame_id: laser_frame_2
+>>>>>>> dev:ros_ws/src/limo_bringup/param/ydlidar2.yaml
     ignore_array: ""
     baudrate: 115200
     lidar_type: 1

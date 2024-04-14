@@ -95,9 +95,14 @@ def square_nav(name_space):
 
     global navigator
     navigator = BasicNavigator(namespace=name_space)
-    
-    square = deepcopy(INCREMENT_POINTS)
-    random.shuffle(square)
+
+    if os.environ.get("ROBOT_NUM") is None:
+        namespace_value = int(name_space.split('robot')[1])
+        if namespace_value % 2 == 0:
+            square = [[namespace_value, INCREMENT]]
+        else:
+            square = [[namespace_value, 0]]
+
     while True:
         goals_results = []
         not_far_from_goal = False
