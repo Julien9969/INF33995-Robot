@@ -35,7 +35,7 @@ def generate_launch_description():
     pkg_project_description = get_package_share_directory('ros_gz_description')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
-    # Load the SDF files from "description" package
+    # # Load the SDF files from "description" package
     sdf_file_1 = os.path.join(pkg_project_description, 'models', 'limo_diff_drive_1', 'model.sdf')
     with open(sdf_file_1, 'r') as infp:
         robot_desc_1 = infp.read()
@@ -62,6 +62,7 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='robot_state_publisher_1',
         output='both',
+        namespace='robot1',
         parameters=[
             {'use_sim_time': True},
             {'robot_description': robot_desc_1},
@@ -72,6 +73,7 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='robot_state_publisher_2',
         output='both',
+        namespace='robot2',
         parameters=[
             {'use_sim_time': True},
             {'robot_description': robot_desc_2},
@@ -82,7 +84,7 @@ def generate_launch_description():
     # rviz = Node(
     #    package='rviz2',
     #    executable='rviz2',
-    #    arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'diff_drive.rviz')],
+    #    arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'limo_diff_drive.rviz')],
     #    condition=IfCondition(LaunchConfiguration('rviz'))
     # )
 
@@ -97,8 +99,8 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Node pour identification:
-        # Bridge ROS topics and Gazebo messages for establishing communication
+    # # Node pour identification:
+    #     # Bridge ROS topics and Gazebo messages for establishing communication
     identify1 = Node(
         package='py_identify_server',
         executable='identify',
@@ -126,6 +128,9 @@ def generate_launch_description():
     mission_switch1 = Node(
         package='mission_control',
         executable='mission_switch',
+        parameters=[
+                {'robot_id': 1},
+            ],
         output='screen',
         namespace='robot1',
     )
@@ -133,6 +138,9 @@ def generate_launch_description():
     mission_switch2 = Node(
         package='mission_control',
         executable='mission_switch',
+        parameters=[
+                {'robot_id': 2},
+            ],
         output='screen',
         namespace='robot2',
     )        
@@ -152,7 +160,25 @@ def generate_launch_description():
     )
 
 
+    # explore_2 = Node(
+    #     package='py_exploration_server',
+    #     executable='explore',
+    #     output='screen',
+    #     # namespace='robot2',
+    # )
+
+    # robot_localization_node = Node(
+    #    package='robot_localization',
+    #    executable='ekf_node',
+    #    name='ekf_filter_node',
+    #    output='screen',
+    #    parameters=[os.path.join(pkg_project_bringup, 'config', 'ekf.yaml'), {'use_sim_time': LaunchConfiguration('use_sim_time')}]
+    # )
+
     return LaunchDescription([
+        # DeclareLaunchArgument(name='use_sim_time', default_value='True',
+        #                                     description='Flag to enable use_sim_time'),
+        # robot_localization_node,
         gz_sim,
         # DeclareLaunchArgument('rviz', default_value='true', description='Open RViz.'),
         bridge,

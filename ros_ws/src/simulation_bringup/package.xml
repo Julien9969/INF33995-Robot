@@ -14,6 +14,7 @@
 
   <depend>ros_gz_description</depend>
   <depend>ros_gz_gazebo</depend>
+  <exec_depend>robot_localization</exec_depend>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
