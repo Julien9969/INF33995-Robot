@@ -103,9 +103,10 @@ def square_nav(name_space):
         else:
             square = [[namespace_value, 0]]
     else: 
+        print('Random square')
         square = random.shuffle(deepcopy(INCREMENT_POINTS))
 
-    print(square)
+    print("squre: ", square)
 
     while True:
         goals_results = []
