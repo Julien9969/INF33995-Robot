@@ -26,91 +26,26 @@ from launch_ros.actions import PushRosNamespace
 
 def generate_launch_description():
     # Configure ROS nodes for launch
-    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     map_subscribe_transient_local = LaunchConfiguration('map_subscribe_transient_local', default='true')
 
     # Setup project paths
     launch_dir = os.path.join(get_package_share_directory('simulation_bringup'), 'launch')
-    map_merge_dir = os.path.join(get_package_share_directory('multirobot_map_merge'), 'launch')
 
     return LaunchDescription([
         GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
             actions=[
-                PushRosNamespace(namespace='robot1'),
-                SetRemap(src='/cmd_vel',dst='cmd_vel'),
-                SetRemap(src='/odom',dst='odom'),
-                SetRemap(src='/scan',dst='scan'),
-                SetRemap(src='/imu',dst='imu'),
-                # SetRemap(src='tf',dst='/tf'),
-                # SetRemap(src='tf_static',dst='/tf_static'),
-
-                # SetRemap(src='/scan',dst='/robot1/scan'),
-
-                # TODO 2: mb try pose --> /pose or smthng, OR remap everything manually
-                # SetRemap(src='/clock',dst='/robot1/clock'),
-                # SetRemap(src='/parameter_events',dst='/robot1/parameter_events'),
-                SetRemap(src='/map',dst='/robot1/map'),
-                SetRemap(src='/map_metadata',dst='/robot1/map_metadata'),
-                SetRemap(src='/slam_toolbox/feedback',dst='/robot1/slam_toolbox/feedback'),
-                SetRemap(src='/slam_toolbox/graph_visualization',dst='/robot1/slam_toolbox/graph_visualization'),
-                SetRemap(src='/slam_toolbox/scan_visualization',dst='/robot1/slam_toolbox/scan_visualization'),
-                SetRemap(src='/slam_toolbox/update',dst='/robot1/slam_toolbox/update'),
-
-                # TODO: test if robot actually moves / why not?? (is there a robot1/... somewhere?)
-                # SetRemap(src='/cmd_vel',dst=f'/robot1/cmd_vel'),
-                # SetRemap(src='cmd_vel',dst=f'/robot1/cmd_vel'),
-                # SetRemap(src='/odom',dst=f'/robot1/odom'),
-                # SetRemap(src='odom',dst=f'/robot1/odom'),
-                # SetRemap(src='/scan',dst=f'/robot1/scan'),
-                # SetRemap(src='scan',dst=f'/robot1/scan'),
-                # SetRemap(src='/imu',dst=f'/robot1/imu'),
-                # SetRemap(src='imu',dst=f'/robot1/imu'),
-
-                IncludeLaunchDescription(
-                    PythonLaunchDescriptionSource([launch_dir, '/navigation_launch.py']),
-                    launch_arguments={
-                        # 'map': map_dir,
-                        'namespace':'robot1',
-                        'use_sim_time': use_sim_time,
-                        'map_subscribe_transient_local' : map_subscribe_transient_local,
-                        'params_file': os.path.join(get_package_share_directory('simulation_bringup'), 'config','nav2_params_1.yaml'),
-                    }.items(),
-                ),
-            ]
-        ),
-        GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
-            actions=[
-                # PushRosNamespace('robot1'),
+                # PushRosNamespace(f'robot{os.environ('ROBOT_NUM')}'),
                 # SetRemap(src='/cmd_vel',dst='cmd_vel'),
                 # SetRemap(src='/odom',dst='odom'),
-                SetRemap(src='/scan',dst='/robot1/scan'),
+                SetRemap(src='/scan',dst=f'/robot{os.environ('ROBOT_NUM')}/scan'),
 
-                # TODO 2: mb try pose --> /pose or smthng, OR remap everything manually
-                # SetRemap(src='/clock',dst='/robot1/clock'),
-                # SetRemap(src='/parameter_events',dst='/robot1/parameter_events'),
-                SetRemap(src='/map',dst='/robot1/map'),
-                SetRemap(src='/map_metadata',dst='/robot1/map_metadata'),
-                SetRemap(src='/slam_toolbox/feedback',dst='/robot1/slam_toolbox/feedback'),
-                SetRemap(src='/slam_toolbox/graph_visualization',dst='/robot1/slam_toolbox/graph_visualization'),
-                SetRemap(src='/slam_toolbox/scan_visualization',dst='/robot1/slam_toolbox/scan_visualization'),
-                SetRemap(src='/slam_toolbox/update',dst='/robot1/slam_toolbox/update'),
-
-
-
-
-                # SetRemap(src='/imu',dst='imu'),
-                # SetRemap(src='tf',dst='/tf'),
-                # SetRemap(src='tf_static',dst='/tf_static'),
-
-                # TODO: test if robot actually moves / why not?? (is there a robot1/... somewhere?)
-                # SetRemap(src='/cmd_vel',dst=f'/robot1/cmd_vel'),
-                # SetRemap(src='cmd_vel',dst=f'/robot1/cmd_vel'),
-                # SetRemap(src='/odom',dst=f'/robot1/odom'),
-                # SetRemap(src='odom',dst=f'/robot1/odom'),
-                # SetRemap(src='/scan',dst=f'/robot1/scan'),
-                # SetRemap(src='scan',dst=f'/robot1/scan'),
-                # SetRemap(src='/imu',dst=f'/robot1/imu'),
-                # SetRemap(src='imu',dst=f'/robot1/imu'),
+                SetRemap(src='/map',dst=f'/robot{os.environ('ROBOT_NUM')}/map'),
+                SetRemap(src='/map_metadata',dst=f'/robot{os.environ('ROBOT_NUM')}/map_metadata'),
+                SetRemap(src='/slam_toolbox/feedback',dst=f'/robot{os.environ('ROBOT_NUM')}/slam_toolbox/feedback'),
+                SetRemap(src='/slam_toolbox/graph_visualization',dst=f'/robot{os.environ('ROBOT_NUM')}/slam_toolbox/graph_visualization'),
+                SetRemap(src='/slam_toolbox/scan_visualization',dst=f'/robot{os.environ('ROBOT_NUM')}/slam_toolbox/scan_visualization'),
+                SetRemap(src='/slam_toolbox/update',dst=f'/robot{os.environ('ROBOT_NUM')}/slam_toolbox/update'),
 
                 IncludeLaunchDescription(
                     PythonLaunchDescriptionSource([launch_dir, '/slam_toolbox_launch.py']),
@@ -119,128 +54,10 @@ def generate_launch_description():
                         'use_sim_time': use_sim_time,
                         'map_subscribe_transient_local' : map_subscribe_transient_local,
                         'slam_params_file': os.path.join(get_package_share_directory("simulation_bringup"), #TODO:Changer le src pour un vrai setup
-                                   'config','slam_toolbox_params_1.yaml'),
-
+                                   'config',f'slam_toolbox_params_{os.environ('ROBOT_NUM')}.yaml'),
                     }.items(),
                 ),
             ]
-        ),
-
-        GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
-            actions=[
-                PushRosNamespace(namespace='robot2'),
-                SetRemap(src='/cmd_vel',dst='cmd_vel'),
-                SetRemap(src='/odom',dst='odom'),
-                SetRemap(src='/scan',dst='scan'),
-                SetRemap(src='/imu',dst='imu'),
-                # SetRemap(src='tf',dst='/tf'),
-                # SetRemap(src='tf_static',dst='/tf_static'),
-
-                # SetRemap(src='/scan',dst='/robot2/scan'),
-
-                # TODO 2: mb try pose --> /pose or smthng, OR remap everything manually
-                # SetRemap(src='/clock',dst='/robot2/clock'),
-                # SetRemap(src='/parameter_events',dst='/robot2/parameter_events'),
-                SetRemap(src='/map',dst='/robot2/map'),
-                SetRemap(src='/map_metadata',dst='/robot2/map_metadata'),
-                SetRemap(src='/slam_toolbox/feedback',dst='/robot2/slam_toolbox/feedback'),
-                SetRemap(src='/slam_toolbox/graph_visualization',dst='/robot2/slam_toolbox/graph_visualization'),
-                SetRemap(src='/slam_toolbox/scan_visualization',dst='/robot2/slam_toolbox/scan_visualization'),
-                SetRemap(src='/slam_toolbox/update',dst='/robot2/slam_toolbox/update'),
-
-                # TODO: test if robot actually moves / why not?? (is there a robot2/... somewhere?)
-                # SetRemap(src='/cmd_vel',dst=f'/robot2/cmd_vel'),
-                # SetRemap(src='cmd_vel',dst=f'/robot2/cmd_vel'),
-                # SetRemap(src='/odom',dst=f'/robot2/odom'),
-                # SetRemap(src='odom',dst=f'/robot2/odom'),
-                # SetRemap(src='/scan',dst=f'/robot2/scan'),
-                # SetRemap(src='scan',dst=f'/robot2/scan'),
-                # SetRemap(src='/imu',dst=f'/robot2/imu'),
-                # SetRemap(src='imu',dst=f'/robot2/imu'),
-
-                IncludeLaunchDescription(
-                    PythonLaunchDescriptionSource([launch_dir, '/navigation_launch.py']),
-                    launch_arguments={
-                        # 'map': map_dir,
-                        'namespace':'robot2',
-                        'use_sim_time': use_sim_time,
-                        'map_subscribe_transient_local' : map_subscribe_transient_local,
-                        'params_file': os.path.join(get_package_share_directory('simulation_bringup'), 'config','nav2_params_2.yaml'),
-                    }.items(),
-                ),
-            ]
-        ),
-        GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
-            actions=[
-                # PushRosNamespace('robot2'),
-                # SetRemap(src='/cmd_vel',dst='cmd_vel'),
-                # SetRemap(src='/odom',dst='odom'),
-                SetRemap(src='/scan',dst='/robot2/scan'),
-
-                # TODO 2: mb try pose --> /pose or smthng, OR remap everything manually
-                # SetRemap(src='/clock',dst='/robot2/clock'),
-                # SetRemap(src='/parameter_events',dst='/robot2/parameter_events'),
-                SetRemap(src='/map',dst='/robot2/map'),
-                SetRemap(src='/map_metadata',dst='/robot2/map_metadata'),
-                SetRemap(src='/slam_toolbox/feedback',dst='/robot2/slam_toolbox/feedback'),
-                SetRemap(src='/slam_toolbox/graph_visualization',dst='/robot2/slam_toolbox/graph_visualization'),
-                SetRemap(src='/slam_toolbox/scan_visualization',dst='/robot2/slam_toolbox/scan_visualization'),
-                SetRemap(src='/slam_toolbox/update',dst='/robot2/slam_toolbox/update'),
-
-
-
-
-                # SetRemap(src='/imu',dst='imu'),
-                # SetRemap(src='tf',dst='/tf'),
-                # SetRemap(src='tf_static',dst='/tf_static'),
-
-                # TODO: test if robot actually moves / why not?? (is there a robot2/... somewhere?)
-                # SetRemap(src='/cmd_vel',dst=f'/robot2/cmd_vel'),
-                # SetRemap(src='cmd_vel',dst=f'/robot2/cmd_vel'),
-                # SetRemap(src='/odom',dst=f'/robot2/odom'),
-                # SetRemap(src='odom',dst=f'/robot2/odom'),
-                # SetRemap(src='/scan',dst=f'/robot2/scan'),
-                # SetRemap(src='scan',dst=f'/robot2/scan'),
-                # SetRemap(src='/imu',dst=f'/robot2/imu'),
-                # SetRemap(src='imu',dst=f'/robot2/imu'),
-
-                IncludeLaunchDescription(
-                    PythonLaunchDescriptionSource([launch_dir, '/slam_toolbox_launch.py']),
-                    launch_arguments={
-                        # 'map': map_dir,
-                        'use_sim_time': use_sim_time,
-                        'map_subscribe_transient_local' : map_subscribe_transient_local,
-                        'slam_params_file': os.path.join(get_package_share_directory("simulation_bringup"), #TODO:Changer le src pour un vrai setup
-                                   'config','slam_toolbox_params_2.yaml'),
-                    }.items(),
-                ),
-            ]
-        ),
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([launch_dir, '/simulation.launch.py']),
-            launch_arguments={
-            }.items(),
-        ),
-
-        #############################
-        # Map Merge Nodes and utils!
-        #############################
-
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            name='static_tf_pub_laser',
-            arguments=[
-                '0', '0', '0', '0', '0', '0', '1', 'world', 'robot1/map'
-            ],
-        ),
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            name='static_tf_pub_laser',
-            arguments=[
-                '0', '0', '0', '0', '0', '0', '1', 'world', 'robot2/map'
-            ],
         ),
 
 
