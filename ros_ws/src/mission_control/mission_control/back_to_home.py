@@ -36,7 +36,7 @@ def back_to_home(name_space):
     while not navigator.isTaskComplete():
         feedback = navigator.getFeedback()
         try:
-            if Duration.from_msg(feedback.navigation_time) > Duration(seconds=50.0) or feedback.distance_remaining < NOT_FAR:
+            if Duration.from_msg(feedback.navigation_time) > Duration(seconds=25.0) or feedback.distance_remaining < NOT_FAR:
                 navigator.cancelTask()
                 break
             time.sleep(0.5)
