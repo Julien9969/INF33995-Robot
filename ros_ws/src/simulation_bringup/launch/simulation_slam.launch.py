@@ -35,17 +35,17 @@ def generate_launch_description():
     return LaunchDescription([
         GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
             actions=[
-                # PushRosNamespace(f'robot{os.environ("ROBOT_NUM")}'),
+                # PushRosNamespace(f'robot{os.environ["ROBOT_NUM"]}'),
                 # SetRemap(src='/cmd_vel',dst='cmd_vel'),
                 # SetRemap(src='/odom',dst='odom'),
-                SetRemap(src='/scan',dst=f'/robot{os.environ("ROBOT_NUM")}/scan'),
+                SetRemap(src='/scan',dst=f'/robot{os.environ["ROBOT_NUM"]}/scan'),
 
-                SetRemap(src='/map',dst=f'/robot{os.environ("ROBOT_NUM")}/map'),
-                SetRemap(src='/map_metadata',dst=f'/robot{os.environ("ROBOT_NUM")}/map_metadata'),
-                SetRemap(src='/slam_toolbox/feedback',dst=f'/robot{os.environ("ROBOT_NUM")}/slam_toolbox/feedback'),
-                SetRemap(src='/slam_toolbox/graph_visualization',dst=f'/robot{os.environ("ROBOT_NUM")}/slam_toolbox/graph_visualization'),
-                SetRemap(src='/slam_toolbox/scan_visualization',dst=f'/robot{os.environ("ROBOT_NUM")}/slam_toolbox/scan_visualization'),
-                SetRemap(src='/slam_toolbox/update',dst=f'/robot{os.environ("ROBOT_NUM")}/slam_toolbox/update'),
+                SetRemap(src='/map',dst=f'/robot{os.environ["ROBOT_NUM"]}/map'),
+                SetRemap(src='/map_metadata',dst=f'/robot{os.environ["ROBOT_NUM"]}/map_metadata'),
+                SetRemap(src='/slam_toolbox/feedback',dst=f'/robot{os.environ["ROBOT_NUM"]}/slam_toolbox/feedback'),
+                SetRemap(src='/slam_toolbox/graph_visualization',dst=f'/robot{os.environ["ROBOT_NUM"]}/slam_toolbox/graph_visualization'),
+                SetRemap(src='/slam_toolbox/scan_visualization',dst=f'/robot{os.environ["ROBOT_NUM"]}/slam_toolbox/scan_visualization'),
+                SetRemap(src='/slam_toolbox/update',dst=f'/robot{os.environ["ROBOT_NUM"]}/slam_toolbox/update'),
 
                 IncludeLaunchDescription(
                     PythonLaunchDescriptionSource([launch_dir, '/slam_toolbox_launch.py']),
@@ -54,7 +54,7 @@ def generate_launch_description():
                         'use_sim_time': use_sim_time,
                         'map_subscribe_transient_local' : map_subscribe_transient_local,
                         'slam_params_file': os.path.join(get_package_share_directory("simulation_bringup"), #TODO:Changer le src pour un vrai setup
-                                   'config',f'slam_toolbox_params_{os.environ("ROBOT_NUM")}.yaml'),
+                                   'config',f'slam_toolbox_params_{os.environ["ROBOT_NUM"]}.yaml'),
                     }.items(),
                 ),
             ]
