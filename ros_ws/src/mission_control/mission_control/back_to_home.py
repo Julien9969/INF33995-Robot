@@ -34,16 +34,16 @@ def back_to_home(name_space):
     navigator.goToPose(goal_pose)
 
     far = False
+    feedback = navigator.getFeedback()
 
-    while navigator.getResult() != TaskResult.SUCCESS and not far:
+    while feedback.distance_remaining > NOT_FAR:
         navigator.goToPose(goal_pose)
         
         while not navigator.isTaskComplete():
             feedback = navigator.getFeedback()
             try:
-                if Duration.from_msg(feedback.navigation_time) > Duration(seconds=15.0) or feedback.distance_remaining < NOT_FAR:
+                if Duration.from_msg(feedback.navigation_time) > Duration(seconds=15.0):
                     navigator.cancelTask()
-                    far = True
                     break
                 time.sleep(0.5)
             except:
