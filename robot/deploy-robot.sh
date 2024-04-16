@@ -1,14 +1,10 @@
 #!/bin/bash
 
-stop_ros_launches() {
-    processes=("ros2" "files_server" "static_transfor" "ydlidar_ros2_dr" "limo_base" "mission_switch" "identify" "parameter_bridg" "robot_state_pub" "cartographer_oc" "publisher" "static_transfor" "component_conta" "cartographer_oc")
-    for process in "${processes[@]}"; do
-        pkill -f $process
-    done
-    exit 0
-}
+processes=("ros2" "files_server" "static_transfor" "ydlidar_ros2_dr" "limo_base" "mission_switch" "identify" "parameter_bridg" "robot_state_pub" "cartographer_oc" "publisher" "static_transfor" "component_conta" "cartographer_oc")
+for process in "${processes[@]}"; do
+    killall -9 $process
+done
 
-pkill ros2
 # apt update -y
 
 echo "export ROBOT_ENV='ROBOT'" >> /home/nvidia/.bashrc
@@ -39,6 +35,6 @@ ros2 launch file_server_bringup robot_bringup.launch.py &
 sleep 4
 # TODO log arguments see agilex repo start-robot.sh
 aa
-./start-robot.sh error
+./start-robot.sh error &
 
 export ROBOT_ENV="ROBOT"
