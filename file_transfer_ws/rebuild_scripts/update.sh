@@ -4,10 +4,10 @@
 sleep 5
 echo $ROBOT_ENV
 
-# processes=("smoother_server" "ros2" "files_server" "static_transfor" "ydlidar_ros2_dr" "limo_base" "mission_switch" "identify" "parameter_bridg" "robot_state_pub" "cartographer_oc" "publisher" "static_transfor")
-processes=("smoother_server" "ros2" "files_server" "static_transfor" "ydlidar_ros2_dr" "limo_base" "mission_switch" "identify" "parameter_bridg" "robot_state_pub" "cartographer_oc" "publisher" "static_transfor" "controller_serv" "planner_server" "behavior_server" "bt_navigator" "waypoint_follow" "velocity_smooth" "lifecycle_manag" "async_slam_tool")
+processes=("ros2" "files_server" "static_transfor" "ydlidar_ros2_dr" "limo_base" "mission_switch" "identify" "parameter_bridg" "robot_state_pub" "cartographer_oc" "publisher" "static_transfor" "component_conta" "cartographer_oc" "python3" "cartographer_no")
+
 for process in "${processes[@]}"; do
-    pkill $process
+    killall -9 $process
 done
 
 apt update -y
