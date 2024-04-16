@@ -33,16 +33,23 @@ def back_to_home(name_space):
     goal_pose.pose.position.y = HOME_POS[1]
     navigator.goToPose(goal_pose)
 
-    while not navigator.isTaskComplete():
-        feedback = navigator.getFeedback()
-        try:
-            if Duration.from_msg(feedback.navigation_time) > Duration(seconds=25.0) or feedback.distance_remaining < NOT_FAR:
-                navigator.cancelTask()
-                break
-            time.sleep(0.5)
-        except:
-            print("distance remaining has not been calculated yet")
+    far = False
 
+    while navigator.getResult() != TaskResult.SUCCESS and not far:
+        navigator.goToPose(goal_pose)
+        
+        while not navigator.isTaskComplete():
+            feedback = navigator.getFeedback()
+            try:
+                if Duration.from_msg(feedback.navigation_time) > Duration(seconds=15.0) or feedback.distance_remaining < NOT_FAR:
+                    navigator.cancelTask()
+                    far = True
+                    break
+                time.sleep(0.5)
+            except:
+                print("distance remaining has not been calculated yet")
+
+    navigator.get_logger().info(f"Robot {name_space} back to home DONE!")
     rclpy.shutdown()
     return
 
