@@ -15,7 +15,8 @@ def is_permitted_obstacle_position(x, obstacles_x=[]):
     is_in_obstacle_zone = any([
         obstacle_x - 2 < x and x < obstacle_x + 2 for obstacle_x in obstacles_x
     ])
-    return not is_in_robot_startup_zone and not is_in_obstacle_zone
+    is_blacklisted_position = (x == -1 and 2 in obstacles_x) or (x == 2 and -1 in obstacles_x)
+    return not is_in_robot_startup_zone and not is_in_obstacle_zone and not is_blacklisted_position
 
 def generate_obstacles():
     obstacles = Model(
