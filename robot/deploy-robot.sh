@@ -36,6 +36,9 @@ sleep 4
 # TODO log arguments see agilex repo start-robot.sh
 cd ~/agilex_ws 
 source install/setup.sh
-./start-robot.sh error &
+
+ros2 launch limo_bringup limo_start.launch.py pub_odom_tf:=true &
+ros2 launch limo_bringup cartographer.launch.py log_level:=error &
+ros2 launch limo_bringup nav_bringup_launch.py log_level:=error &
 
 export ROBOT_ENV="ROBOT"
