@@ -34,7 +34,8 @@ ros2 launch file_server_bringup robot_bringup.launch.py &
 
 sleep 4
 # TODO log arguments see agilex repo start-robot.sh
-aa
+cd ~/agilex_ws 
+source install/setup.sh
 ./start-robot.sh error &
 
 export ROBOT_ENV="ROBOT"
