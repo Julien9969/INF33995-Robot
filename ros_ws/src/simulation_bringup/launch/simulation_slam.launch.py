@@ -28,10 +28,10 @@ def generate_launch_description():
     # Configure ROS nodes for launch
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     map_subscribe_transient_local = LaunchConfiguration('map_subscribe_transient_local', default='true')
+    log_level = LaunchConfiguration('log_level', default='error')
 
     # Setup project paths
     launch_dir = os.path.join(get_package_share_directory('simulation_bringup'), 'launch')
-    map_merge_dir = os.path.join(get_package_share_directory('multirobot_map_merge'), 'launch')
 
     return LaunchDescription([
         GroupAction( # pour remap le topic cmd_vel + odom + scan + imu dans nav
@@ -74,6 +74,7 @@ def generate_launch_description():
                         'use_sim_time': use_sim_time,
                         'map_subscribe_transient_local' : map_subscribe_transient_local,
                         'params_file': os.path.join(get_package_share_directory('simulation_bringup'), 'config','nav2_params_1.yaml'),
+                        'log_level': log_level,
                     }.items(),
                 ),
             ]
@@ -120,7 +121,7 @@ def generate_launch_description():
                         'map_subscribe_transient_local' : map_subscribe_transient_local,
                         'slam_params_file': os.path.join(get_package_share_directory("simulation_bringup"), #TODO:Changer le src pour un vrai setup
                                    'config','slam_toolbox_params_1.yaml'),
-
+                        'log_level': log_level,
                     }.items(),
                 ),
             ]
@@ -166,6 +167,7 @@ def generate_launch_description():
                         'use_sim_time': use_sim_time,
                         'map_subscribe_transient_local' : map_subscribe_transient_local,
                         'params_file': os.path.join(get_package_share_directory('simulation_bringup'), 'config','nav2_params_2.yaml'),
+                        'log_level': log_level,
                     }.items(),
                 ),
             ]
@@ -212,6 +214,7 @@ def generate_launch_description():
                         'map_subscribe_transient_local' : map_subscribe_transient_local,
                         'slam_params_file': os.path.join(get_package_share_directory("simulation_bringup"), #TODO:Changer le src pour un vrai setup
                                    'config','slam_toolbox_params_2.yaml'),
+                        'log_level': log_level,
                     }.items(),
                 ),
             ]
@@ -219,31 +222,7 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([launch_dir, '/simulation.launch.py']),
             launch_arguments={
+                'log_level': log_level,
             }.items(),
         ),
-
-        #############################
-        # Map Merge Nodes and utils!
-        #############################
-
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            name='static_tf_pub_laser',
-            arguments=[
-                '0', '0', '0', '0', '0', '0', '1', 'world', 'robot1/map'
-            ],
-        ),
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            name='static_tf_pub_laser',
-            arguments=[
-                '0', '0', '0', '0', '0', '0', '1', 'world', 'robot2/map'
-            ],
-        ),
-
-
-
-
     ])
