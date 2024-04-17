@@ -123,7 +123,7 @@ def square_nav(name_space):
                 while not navigator.isTaskComplete():
                     feedback = navigator.getFeedback()
 
-                    if Duration.from_msg(feedback.navigation_time) > Duration(seconds=10.0):
+                    if Duration.from_msg(feedback.navigation_time) > Duration(seconds=15.0):
                         # print(feedback)
                         navigator.cancelTask()
                         break
