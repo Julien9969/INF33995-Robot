@@ -13,7 +13,7 @@ INFINITY = float('inf')
 
 if os.environ.get("ROBOT_ENV") == "SIMULATION":
     HOME_POS = [-4.0, 0.0] # -4 -0.35 0.35
-    NOT_FAR = 0.70
+    NOT_FAR = 0.80
 else:
     HOME_POS = [0.0, 0.0]
     NOT_FAR = 0.10
@@ -43,7 +43,7 @@ def back_to_home(name_space):
             while not navigator.isTaskComplete():
                 feedback = navigator.getFeedback()
                 try:
-                    if Duration.from_msg(feedback.navigation_time) > Duration(seconds=15.0):
+                    if Duration.from_msg(feedback.navigation_time) > Duration(seconds=10.0):
                         navigator.cancelTask()
                         break
                     time.sleep(0.5)
