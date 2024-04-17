@@ -191,12 +191,12 @@ def generate_launch_description():
         # DeclareLaunchArgument('rviz', default_value='true', description='Open RViz.'),
         bridge,
         robot_state_publisher_1,
-        robot_state_publisher_2,
+        # robot_state_publisher_2,
         # rviz,
         mission_switch1,
-        mission_switch2,
+        # mission_switch2,
         identify1,
-        identify2,
+        # identify2,
         battery_robot1,
-        battery_robot2
+        # battery_robot2
     ])
