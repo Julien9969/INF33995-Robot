@@ -1,5 +1,21 @@
+ros_ws/src/ros_gz_gazebo/worlds/diff_drive.sdf
 ros_ws/install
 ros_ws/build
 ros_ws/log
 
+file_transfer_ws/install
+file_transfer_ws/build
+file_transfer_ws/log
+
+robot/log
+robot/update_queue
+
+**/__pycache__
+**/.venv
+
 .vscode
+
+*frames_2024*
+maps_saved/
+my_debugging
+pcl_ws

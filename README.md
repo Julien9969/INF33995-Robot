@@ -7,7 +7,7 @@ Pour rouler le docker du robot, il suffit de lancer le script `robot/launch-robo
 Si une erreur survient ou si pour tout autre raison vous souhaitez ne pas utiliser ce script, vous pouvez vous connecter directement au robot, cloner le dépot si ce n'est pas déjà fait, naviguer à `INF3995-Robot/robot/`, construire le robot avec `docker build -t docker-robot .` puis lancer le conteneur avec la commande suivante en remplacant les éléments entre crochet:
 
 ``` bash
-docker run -d --rm --network=host --ipc=host --pid=host --device=/dev/ttyTHS1 --device=/dev/ydlidar -v /home/nvidia/INF3995-Robot:/root/INF3995-Robot -v /tmp/.X11-unix:/tmp/.X11-unix --env ROS_DOMAIN_ID=62 --env ROBOT_NUM=<numéro_du_robot> docker-robot bash -c '/root/clean_workspace.sh && source /opt/ros/humble/setup.bash && cd root && /root/deploy-robot.sh && source /root/INF3995-Robot/ros_ws/install/setup.bash && <commande_ros_à_exécuter>'
+docker run -d --rm --network=host --device=/dev/ttyTHS1 --device=/dev/ydlidar -v /home/nvidia/INF3995-Robot:/root/INF3995-Robot -v /tmp/.X11-unix:/tmp/.X11-unix --env ROS_DOMAIN_ID=62 --env ROBOT_NUM=<numéro_du_robot> docker-robot bash -c '/root/clean_workspace.sh && source /opt/ros/humble/setup.bash && cd root && /root/deploy-robot.sh && source /root/INF3995-Robot/ros_ws/install/setup.bash && <commande_ros_à_exécuter>'
 ```
 
 ### Simulation
@@ -45,3 +45,8 @@ D'abord publish le ros2 topic pub --rate 1 /limo/cmd_vel... dans le backend
 ```
 ros2 topic echo /limo/cmd_vel
 ```
+
+
+rocker --x11 --device=/dev/dri --volume $(pwd):/root/INF3995-Robot --port 22900:22900 --port 22901:22901 --port 22902:22902 --port 22910-22921:22910-22921 --image-name=rosign --name=simulation-ign rosignbase 
+
+ros2 service call /robot1/files interfaces/srv/FilesServer "{command: files-tree, content: o}"
