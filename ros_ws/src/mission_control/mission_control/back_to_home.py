@@ -9,9 +9,11 @@ import rclpy
 from rclpy.duration import Duration
 import sys
 
+INFINITY = float('inf')
+
 if os.environ.get("ROBOT_ENV") == "SIMULATION":
     HOME_POS = [-4.0, 0.0] # -4 -0.35 0.35
-    NOT_FAR = 0.70
+    NOT_FAR = 0.80
 else:
     HOME_POS = [0.0, 0.0]
     NOT_FAR = 0.10
@@ -23,28 +25,40 @@ def back_to_home(name_space):
     Args:
         name_space : namespace of the robot
     """
-
     rclpy.init()
-    navigator = BasicNavigator(namespace=name_space)
-    goal_pose = PoseStamped()
-    goal_pose.header.frame_id = f'{name_space}/map'
-    goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-    goal_pose.pose.position.x = HOME_POS[0]
-    goal_pose.pose.position.y = HOME_POS[1]
-    navigator.goToPose(goal_pose)
+    try:
+        navigator = BasicNavigator(namespace=name_space)
+        goal_pose = PoseStamped()
+        goal_pose.header.frame_id = f'{name_space}/map'
+        goal_pose.header.stamp = navigator.get_clock().now().to_msg()
+        goal_pose.pose.position.x = HOME_POS[0]
+        goal_pose.pose.position.y = HOME_POS[1]
 
-    while not navigator.isTaskComplete():
-        feedback = navigator.getFeedback()
-        try:
-            if Duration.from_msg(feedback.navigation_time) > Duration(seconds=50.0) or feedback.distance_remaining < NOT_FAR:
-                navigator.cancelTask()
-                break
-            time.sleep(0.5)
-        except:
-            print("distance remaining has not been calculated yet")
+        distance_remaining = INFINITY
+        feedback = None
 
-    rclpy.shutdown()
-    return
+        while distance_remaining > NOT_FAR:
+            navigator.goToPose(goal_pose)
+            
+            while not navigator.isTaskComplete():
+                feedback = navigator.getFeedback()
+                try:
+                    if Duration.from_msg(feedback.navigation_time) > Duration(seconds=15.0):
+                        navigator.cancelTask()
+                        break
+                    time.sleep(0.5)
+                except:
+                    print("distance remaining has not been calculated yet")
+
+            if feedback is not None:
+                distance_remaining = feedback.distance_remaining
+                print(f"Distance remaining: {distance_remaining}")
+
+        navigator.get_logger().info(f"Robot {name_space} back to home DONE!")
+        rclpy.shutdown()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        rclpy.shutdown()
 
 
 if __name__ == '__main__':
